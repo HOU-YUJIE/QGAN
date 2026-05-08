@@ -1,0 +1,25 @@
+Training set class distribution:
+Label
+0    21804
+1     1025
+2      666
+3     3648
+4      781
+5     1361
+6     4534
+7      651
+8     1861
+9     1062
+Test set class distribution:
+Label
+0    5452
+1     256
+2     166
+3     912
+4     195
+5     340
+6    1134
+7     163
+8     466
+9     265
+Source code, reference list, result excel

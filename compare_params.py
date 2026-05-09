@@ -151,5 +151,23 @@ def main() -> None:
     print(f"  CTGAN generator/VQC generator: {ctgan_report['ctgan_generator_params'] / vqc_report['vqc_generator_params']:.2f}x")
 
 
+    """
+    CTGAN
+  output_dimensions: 2598
+  cond_vec_dim: 2505
+  generator_params: 11059452
+  discriminator_params: 13195777
+  total_params: 24255229
+
+    VQC
+  generator_params: 48
+  critic_params: 12545
+  total_params: 12593
+
+    Ratio
+  CTGAN/VQC total: 1926.09x
+  CTGAN generator/VQC generator: 230405.25x"""
+    
+    
 if __name__ == "__main__":
     main()

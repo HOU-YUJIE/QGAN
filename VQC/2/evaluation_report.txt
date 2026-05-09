@@ -1,0 +1,33 @@
+Category 2 Evaluation Report
+==================================================
+
+Real Data Samples: 666
+Synthetic Data Samples: 1334
+Number of Features: 16
+Average KS Statistic: 0.5708
+
+Detailed Metrics:
+--------------------------------------------------
+          Feature  Wasserstein_Distance  KS_Statistic
+      flow_byts_s          33290.300083      0.279540
+     pkt_len_mean            129.801513      0.389963
+      pkt_len_std             93.231506      0.390433
+ bwd_pkt_len_mean            206.394924      0.407490
+  bwd_pkt_len_max            327.930276      0.407490
+      pkt_len_var          78800.868744      0.411423
+      flow_pkts_s            249.552029      0.461931
+  fwd_pkt_len_max            863.676022      0.629192
+ fwd_pkt_len_mean            288.337564      0.633208
+init_fwd_win_byts          16270.560359      0.633634
+init_bwd_win_byts          22695.744035      0.639640
+  fwd_pkt_len_min             38.642254      0.692606
+      pkt_len_min             40.209694      0.739653
+     psh_flag_cnt              9.963882      0.740240
+    fwd_psh_flags              3.215274      0.771772
+   fwd_byts_b_avg          17376.934232      0.903904
+
+Generated Files:
+- evaluation_distributions.png
+- evaluation_correlations.png
+- evaluation_pca.png
+- evaluation_metrics.csv

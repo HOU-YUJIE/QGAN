@@ -157,46 +157,46 @@ def generate_data(num_samples):
     # # Physical and protocol constraints (Perfected Protocol Bounds)
     # print(">>> Executing strict physical truncation based on TCP/IP protocol specs...")
 
-    # # 1. 离散标志位强制整数化 (必须最先执行，作为后续因果掩码的基础)
+    # # 1. Force discrete flags to integers (must run first as the basis for causal masks)
     # flag_features = ['fwd_psh_flags', 'psh_flag_cnt']
     # for ff in flag_features:
     #     if ff in df_synthetic.columns:
     #         df_synthetic[ff] = np.round(df_synthetic[ff]).astype(int)
 
-    # # 2. 全局包长底线护城河 (修复逻辑覆盖 Bug)
-    # # 在进行任何大小比对之前，我们先强制“所有”长度特征绝不能小于以太网极限 54 字节
+    # # 2. Global packet-length baseline guardrail (fix logical coverage bug)
+    # # Before any size comparisons, enforce that all length features are at least the Ethernet minimum of 54 bytes
     # length_features = ['pkt_len_min', 'fwd_pkt_len_min', 'fwd_pkt_len_max', 'bwd_pkt_len_max', 'pkt_len_mean', 'fwd_pkt_len_mean', 'bwd_pkt_len_mean']
     # for lf in length_features:
     #     if lf in df_synthetic.columns:
     #         df_synthetic.loc[df_synthetic[lf] < 54.0, lf] = 54.0
 
-    # # 3. 增强版空载包吸附 (Widened Gravity Well)
-    # # 解决 fwd_pkt_len_min 逃逸卡在 0.93 的问题
+    # # 3. Enhanced zero-packet attraction (Widened Gravity Well)
+    # # Fix the issue where fwd_pkt_len_min gets stuck at 0.93
     # min_features = ['pkt_len_min', 'fwd_pkt_len_min']
     # for mf in min_features:
     #     if mf in df_synthetic.columns:
-    #         # 任何小于 150 字节的微小底噪，在物理上统归为 54 字节的控制包
+    #         # Any tiny noise below 150 bytes is physically mapped to 54-byte control packets
     #         df_synthetic.loc[df_synthetic[mf] < 150.0, mf] = 54.0
 
-    # # 4. MTU 极限约束
+    # # 4. MTU upper-bound constraint
     # max_features = ['fwd_pkt_len_max', 'bwd_pkt_len_max']
     # for max_f in max_features:
     #     if max_f in df_synthetic.columns:
     #         df_synthetic.loc[df_synthetic[max_f] > 1514.0, max_f] = 1514.0
 
-    # # 5. 终极因果掩码 - 解决 fwd_byts_b_avg 问题
+    # # 5. Ultimate causal mask - fix the fwd_byts_b_avg issue
     # if 'fwd_byts_b_avg' in df_synthetic.columns and 'fwd_psh_flags' in df_synthetic.columns:
     #     mask_no_flag = df_synthetic['fwd_psh_flags'] == 0
     #     mask_low_speed = df_synthetic['flow_byts_s'] < 500.0  
     #     df_synthetic.loc[mask_no_flag | mask_low_speed, 'fwd_byts_b_avg'] = 0.0
 
-    # # 6. 统计逻辑修复
-    # # 速度与方差不能为负
+    # # 6. Statistical logic fixes
+    # # Speed and variance cannot be negative
     # for col in ['flow_byts_s', 'flow_pkts_s', 'pkt_len_var', 'pkt_len_std']:
     #     if col in df_synthetic.columns:
     #         df_synthetic.loc[df_synthetic[col] < 0, col] = 0
 
-    # # 确保 min <= mean <= max (因为前面已经锁死了 >= 54，这里怎么覆盖都不会跌破 54 了)
+    # # Ensure min <= mean <= max (already locked to >= 54 above, so it cannot drop below 54)
     # if all(c in df_synthetic.columns for c in ['pkt_len_min', 'bwd_pkt_len_max']):
     #     mask_min_max = df_synthetic['pkt_len_min'] > df_synthetic['bwd_pkt_len_max']
     #     df_synthetic.loc[mask_min_max, 'pkt_len_min'] = df_synthetic.loc[mask_min_max, 'bwd_pkt_len_max']
@@ -210,6 +210,6 @@ def generate_data(num_samples):
     print(f"[√] Generated synthetic data saved to: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    # 计算需要生成的数量并执行生成
+    # Calculate how many samples to generate and run generation
     num_to_generate = calculate_samples_needed(TARGET_LABEL, TARGET_TOTAL_SAMPLES)
     generate_data(num_to_generate)

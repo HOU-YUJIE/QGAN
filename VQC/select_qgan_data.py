@@ -11,7 +11,7 @@ TARGET_SAMPLES = 2000
 
 # 2. Core merging workflow
 
-print(">>> [*] Building mixed real+synthetic QGAN balanced training set...")
+print(" Building mixed real+synthetic QGAN balanced training set...")
 
 balanced_dfs = []
 
@@ -59,7 +59,7 @@ for category in range(NUM_CLASSES):
 
 
 # 3. Shuffling
-print("\n>>> Aggregating and shuffling the merged dataset...")
+print("\n Aggregating and shuffling the merged dataset...")
 df_final_balanced = pd.concat(balanced_dfs, ignore_index=True)
 
 # Shuffle thoroughly to avoid MLP overfitting to class order

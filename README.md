@@ -19,7 +19,9 @@ qgan/
 ├── src/                          # Core source code modules
 │   ├── data/                     # Data preprocessing & splitting
 │   │   ├── split_dataset.py      # Train/test split (80:20 by category)
-│   │   └── data25to16.py         # Feature selection (25 → 16 dimensions)
+│   │   ├── clean_data.py         # Merge & clean raw MALAYAGT CSV exports
+│   │   ├── feature_selection.py  # Select top features (e.g., 25 → 16)
+│   │   └── data25to16.py         # Trim to 16 features used by models
 │   │
 │   ├── qgan/                     # Quantum GAN implementation
 │   │   ├── train.py              # QGAN training with WGAN discriminator
@@ -39,6 +41,7 @@ qgan/
 │   └── plot.py                   # Visualize quantum circuits
 │
 ├── data/                         # Data storage
+│   ├── MALAYAGT/                 # Raw MALAYAGT CSV exports (place here)
 │   └── processed/                # Processed datasets
 │       ├── selected_features_dataset.csv      # Full dataset (16 dims)
 │       ├── selected_features_train.csv        # 80% training split
@@ -90,6 +93,16 @@ Raw Dataset
     - Input:  Train/Test CSV files
     - Output: Updates same files in-place
     - Action: Select 16 key features from dataset
+
+[0] clean_data.py
+    - Input:  data/MALAYAGT/... (raw CSV folders)
+    - Output: data/processed/merged_cleaned_dataset.csv
+    - Action: Merge category folders, drop unwanted columns, remove NaNs
+
+[1] feature_selection.py
+    - Input:  data/processed/merged_cleaned_dataset.csv
+    - Output: data/processed/selected_features_dataset.csv
+    - Action: Correlation pruning + random-forest importance selection
 ```
 
 **Command:**
@@ -103,6 +116,11 @@ python src/data/split_dataset.py \
 
 # Step 2: Feature selection
 python src/data/data25to16.py
+
+# If starting from raw MalayaNetwork_GT CSV exports:
+# Place the raw CSVs under `data/processed/MalayaNetwork_GT/csv_output` then run:
+python src/data/clean_data.py
+python src/data/feature_selection.py
 ```
 
 ---

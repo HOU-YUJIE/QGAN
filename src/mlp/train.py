@@ -14,6 +14,8 @@ import warnings
 warnings.filterwarnings('ignore')
 from sklearn.metrics import confusion_matrix
 
+RESULTS_TEXT_PATH = "./outputs/results/result.txt"
+
 def set_global_seed(seed=42):
     print(f"Setting global random seed to {seed}...")
     
@@ -163,6 +165,14 @@ def train_and_evaluate(train_path, test_path, experiment_name):
         "Report": classification_report(all_targets, all_preds, digits=4)
     }
 
+def build_results_text(results):
+    lines = []
+    for result in results:
+        lines.append(f">>> Group: {result['Experiment']}" )
+        lines.append(result["Report"].rstrip())
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
 def plot_academic_confusion_matrix(y_true, y_pred, title="Confusion Matrix", save_path=None):
     """
     Plot and save the confusion matrix.
@@ -233,6 +243,11 @@ if __name__ == "__main__":
     for r in results:
         print(f"\n>>> Group: {r['Experiment']}")
         print(r['Report'])
+
+    os.makedirs(os.path.dirname(RESULTS_TEXT_PATH), exist_ok=True)
+    with open(RESULTS_TEXT_PATH, "w", encoding="utf-8") as f:
+        f.write(build_results_text(results))
+    print(f"\nResults text saved to: {RESULTS_TEXT_PATH}")
         
     df_results = pd.DataFrame(results)
     

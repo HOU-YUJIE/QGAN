@@ -1,0 +1,33 @@
+Category 9 Evaluation Report
+==================================================
+
+Real Data Samples: 1062
+Synthetic Data Samples: 938
+Number of Features: 16
+Average JS Distance: 0.3647
+
+Detailed Metrics:
+--------------------------------------------------
+          Feature  Wasserstein_Distance  JS_Distance
+      flow_byts_s          58330.961626     0.083081
+      pkt_len_var         111198.172353     0.160473
+   fwd_byts_b_avg          40797.768755     0.163057
+     psh_flag_cnt             14.773832     0.191962
+      flow_pkts_s            520.713591     0.195333
+      pkt_len_std             85.322818     0.223086
+    fwd_psh_flags              9.921074     0.228110
+ bwd_pkt_len_mean            181.892266     0.328924
+  fwd_pkt_len_max           1061.935987     0.357969
+  bwd_pkt_len_max            374.798599     0.366011
+ fwd_pkt_len_mean            328.501576     0.472790
+     pkt_len_mean            112.166897     0.480788
+init_fwd_win_byts          28953.189657     0.515657
+init_bwd_win_byts          24792.960257     0.517261
+  fwd_pkt_len_min            213.289049     0.759739
+      pkt_len_min            199.726936     0.791641
+
+Generated Files:
+- evaluation_distributions.png
+- evaluation_correlations.png
+- evaluation_pca.png
+- evaluation_metrics.csv

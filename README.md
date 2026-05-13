@@ -67,6 +67,10 @@ qgan/
 │       │   ├── CM_QGAN_Augmented.png
 │       │   ├── Experiment_Comparison_Chart.png
 │       │   └── single_layer_qgan.png
+│       ├── js_comparison/        # JS distance CSVs and per-category plots
+│       │   ├── js_comparison_category_01.csv
+│       │   ├── js_comparison_category_01.png
+│       │   └── js_comparison_summary_plot.png
 │       ├── samples.txt           # Category distribution statistics
 │       └── result.txt            # MLP evaluation metrics
 │

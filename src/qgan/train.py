@@ -1,3 +1,5 @@
+import argparse
+
 import pennylane as qml
 import torch
 import torch.nn as nn
@@ -12,7 +14,8 @@ import os
 import matplotlib.pyplot as plt
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RAW_FILE = os.path.join(BASE_DIR, "selected_features_class0_sample2000.csv")
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+RAW_FILE = os.path.join(PROJECT_ROOT, "data", "processed", "selected_features_train.csv")
 
 N_QUBITS = 16          
 N_LAYERS = 3           
@@ -20,15 +23,13 @@ BATCH_SIZE = 32
 LAMBDA_GP = 10
 N_CRITIC = 2
 
-TARGET_LABELS = [0]
-
 dev = qml.device("lightning.qubit", wires=N_QUBITS)
 #dev = qml.device("lightning.gpu", wires=N_QUBITS)
 
 @qml.qnode(dev, interface="torch", diff_method="adjoint")
 def qgan_circuit(inputs, weights):
-    # inputs: [batch_size, 16], weights: [N_LAYERS, 16]
-    
+    # inputs: [batch_size, 16], weights: [N_LAYERS, 2, 16]
+
     num_wires = list(range(14))  # 0~13: numerical feature register
     cat_wires = [14, 15]         # 14~15: categorical flag register
 
@@ -37,32 +38,41 @@ def qgan_circuit(inputs, weights):
         # Subsystem 1: Numerical feature register (Wires: 0 to 13)
 
         # Data re-injection: re-input first 14 continuous dimensions each layer
-        qml.AngleEmbedding(inputs[:, :14], wires=num_wires)
+        if l % 2 == 0:
+            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='X')
+        else:
+            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='Z')
 
         # Continuous space exploration (consume first 14 weight parameters)
         for i in num_wires:
-            qml.RY(weights[l, i], wires=i)
+            qml.RY(weights[l, 0, i], wires=i)
+            qml.RZ(weights[l, 1, i], wires=i)
 
         # Internal ring entanglement among continuous features
         for i in range(13):
             qml.CZ(wires=[i, i + 1])
         qml.CZ(wires=[13, 0])
 
+        qml.RY(weights[l, 0, 14], wires=14)
+        qml.RY(weights[l, 0, 15], wires=15) 
+
         # Subsystem 2: Discrete flag register (Wires: 14, 15)
         # Do not use AngleEmbedding to preserve discrete boundaries
         # Inject via RZ gates for phase perturbation only
-        qml.RZ(inputs[:, 14], wires=14)
-        qml.RZ(inputs[:, 15], wires=15)
+        qml.RZ(inputs[:, 14] * np.pi, wires=14)
+        qml.RZ(inputs[:, 15] * np.pi, wires=15)
 
         # fwd_psh_flags (Wire 14) as primary control (consume 15th weight)
-        qml.RY(weights[l, 14], wires=14)
+        qml.RY(weights[l, 1, 14], wires=14)
 
         # psh_flag_cnt (Wire 15) as dependent node (consume 16th weight)
         # Constraint: Wire 15 transitions only when Wire 14 activates
-        qml.CRY(weights[l, 15], wires=[14, 15])
+        qml.CRY(weights[l, 1, 15], wires=[14, 15])
 
         # Subsystem 3: Cross-register information interference (Numerical -> Categorical)
         # Establish causal entanglement between continuous flow metrics and discrete flags
+        qml.CNOT(wires=[0, 14])
+        qml.CNOT(wires=[6, 14])
         qml.CNOT(wires=[13, 14])
 
     return [qml.expval(qml.PauliZ(i)) for i in range(N_QUBITS)]
@@ -70,7 +80,7 @@ def qgan_circuit(inputs, weights):
 class TabularQuantumGenerator(nn.Module):
     def __init__(self, n_qubits, n_layers):
         super().__init__()
-        weight_shapes = {"weights": (n_layers, n_qubits)}
+        weight_shapes = {"weights": (n_layers, 2, n_qubits)}
         self.q_layer = qml.qnn.TorchLayer(qgan_circuit, weight_shapes)
 
     def forward(self, x):
@@ -108,6 +118,12 @@ def compute_gradient_penalty(D, real_samples, synthetic_samples, device):
 
 def main():
 
+    parser = argparse.ArgumentParser(description="Train QGAN for a specific category")
+    parser.add_argument("category", type=int, nargs="?", default=0, help="Target label to train (0-9)")
+    args = parser.parse_args()
+
+    TARGET_LABELS = [args.category]
+
     device = torch.device("cpu")
     #device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     if device.type == 'cuda':
@@ -128,7 +144,7 @@ def main():
     print(f"Dataset loaded: {RAW_FILE}")
 
     for target_label in TARGET_LABELS:
-        output_dir = os.path.join(BASE_DIR, str(target_label))
+        output_dir = os.path.join(PROJECT_ROOT, "outputs", "models", "qgan_0-9", str(target_label))
         os.makedirs(output_dir, exist_ok=True)
 
         print(f"\nLabel = {target_label}...")

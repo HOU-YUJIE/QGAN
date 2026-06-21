@@ -204,7 +204,8 @@ Real Data + Synthetic Data
 python src/fusion/select_qgan_data.py
 
 # Evaluate synthetic data quality
-python src/qgan/evaluate.py 0  # Per category
+python src/qgan/evaluate.py 0  # Evaluate one category
+python src/qgan/evaluate.py    # Evaluate all minority categories
 ```
 
 ---
@@ -286,7 +287,7 @@ for i in {0..9}; do python src/qgan/train.py $i; done
 for i in {0..9}; do python src/qgan/generate.py $i; done
 
 # Evaluation & fusion
-python src/qgan/evaluate.py
+python src/qgan/evaluate.py  # No argument = evaluate all minority categories
 python src/fusion/select_qgan_data.py
 
 # Classical baseline

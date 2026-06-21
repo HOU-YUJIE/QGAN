@@ -4,27 +4,27 @@ Category 7 Evaluation Report
 Real Data Samples: 651
 Synthetic Data Samples: 1349
 Number of Features: 16
-Average JS Distance: 0.3762
+Average JS Distance: 0.3383
 
 Detailed Metrics:
 --------------------------------------------------
           Feature  Wasserstein_Distance  JS_Distance
-      flow_pkts_s             77.366647     0.099814
-      flow_byts_s          42625.079044     0.139002
-   fwd_byts_b_avg          15260.529516     0.210730
-     psh_flag_cnt            119.407990     0.287225
- bwd_pkt_len_mean            152.625897     0.295007
-      pkt_len_var         183968.975673     0.322829
-  fwd_pkt_len_max           1344.715844     0.340762
-  bwd_pkt_len_max            467.507577     0.359678
-      pkt_len_std            133.793413     0.378787
-     pkt_len_mean            127.735079     0.396587
-    fwd_psh_flags             42.352472     0.397785
- fwd_pkt_len_mean            253.941882     0.464946
-init_bwd_win_byts          27332.361011     0.467037
-init_fwd_win_byts          23000.191810     0.469257
-      pkt_len_min             42.191020     0.652684
-  fwd_pkt_len_min             91.413189     0.736433
+      flow_byts_s          46388.162129     0.137537
+   fwd_byts_b_avg          22703.509858     0.153154
+      flow_pkts_s            106.181916     0.182363
+     psh_flag_cnt             50.189263     0.231192
+  fwd_pkt_len_max            578.941741     0.261878
+      pkt_len_var         184195.895384     0.305325
+ bwd_pkt_len_mean            143.779463     0.312263
+     pkt_len_mean            125.901441     0.316362
+ fwd_pkt_len_mean            124.357734     0.324002
+  bwd_pkt_len_max            504.484079     0.333199
+    fwd_psh_flags             52.724527     0.393910
+      pkt_len_std            208.454646     0.463568
+  fwd_pkt_len_min             12.118330     0.466604
+      pkt_len_min              7.468323     0.486205
+init_bwd_win_byts          24857.642595     0.522353
+init_fwd_win_byts          26972.548987     0.523144
 
 Generated Files:
 - evaluation_distributions.png

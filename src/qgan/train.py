@@ -1,224 +1,160 @@
-import argparse
+"""Train the QGAN (WGAN-GP) for one class.
 
-import pennylane as qml
+Engineering pass only - training behavior is identical to impg@735bdfc:
+same architecture (via circuit.py), same hyperparameters (via config.py),
+same preprocessing (log1p -> MinMax to [0, pi] per class).
+
+What changed:
+  * Circuit and all constants imported from shared modules (no local copies).
+  * Seeded (per-class offset so classes are not identical runs).
+  * Epoch log now records MEAN losses over the epoch; the previous log kept
+    only the last batch's instantaneous loss, which made the curves noise.
+
+Usage:
+    python src/qgan/train.py <category 0-9> [--seed 42]
+"""
+
+import argparse
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+import joblib
+import numpy as np
+import pandas as pd
 import torch
+import torch.autograd as autograd
 import torch.nn as nn
 import torch.optim as optim
-import pandas as pd
-import numpy as np
-import joblib
-from torch.utils.data import DataLoader, TensorDataset
-import torch.autograd as autograd
 from sklearn.preprocessing import MinMaxScaler
-import os
-import matplotlib.pyplot as plt
+from torch.utils.data import DataLoader, TensorDataset
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
-RAW_FILE = os.path.join(PROJECT_ROOT, "data", "processed", "selected_features_train.csv")
+from src.config import (
+    ADAM_BETAS,
+    BATCH_SIZE,
+    FEATURES16_TRAIN,
+    LABEL_COLUMN,
+    LAMBDA_GP,
+    LR_CRITIC,
+    LR_GENERATOR,
+    MANUAL_FEATURES_16,
+    N_CRITIC,
+    N_QUBITS,
+    SEED,
+    TOTAL_EPOCHS,
+    assert_feature_frame,
+    qgan_model_dir,
+    set_seed,
+)
+from src.qgan.circuit import TabularQuantumGenerator, sample_noise
 
-N_QUBITS = 16          
-N_LAYERS = 3           
-BATCH_SIZE = 32
-LAMBDA_GP = 10
-N_CRITIC = 2
-
-dev = qml.device("lightning.qubit", wires=N_QUBITS)
-#dev = qml.device("lightning.gpu", wires=N_QUBITS)
-
-@qml.qnode(dev, interface="torch", diff_method="adjoint")
-def qgan_circuit(inputs, weights):
-    # inputs: [batch_size, 16], weights: [N_LAYERS, 2, 16]
-
-    num_wires = list(range(14))  # 0~13: numerical feature register
-    cat_wires = [14, 15]         # 14~15: categorical flag register
-
-    for l in range(N_LAYERS):
-
-        # Subsystem 1: Numerical feature register (Wires: 0 to 13)
-
-        # Data re-injection: re-input first 14 continuous dimensions each layer
-        if l % 2 == 0:
-            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='X')
-        else:
-            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='Z')
-
-        # Continuous space exploration (consume first 14 weight parameters)
-        for i in num_wires:
-            qml.RY(weights[l, 0, i], wires=i)
-            qml.RZ(weights[l, 1, i], wires=i)
-
-        # Internal ring entanglement among continuous features
-        for i in range(13):
-            qml.CZ(wires=[i, i + 1])
-        qml.CZ(wires=[13, 0])
-
-        qml.RY(weights[l, 0, 14], wires=14)
-        qml.RY(weights[l, 0, 15], wires=15) 
-
-        # Subsystem 2: Discrete flag register (Wires: 14, 15)
-        # Do not use AngleEmbedding to preserve discrete boundaries
-        # Inject via RZ gates for phase perturbation only
-        qml.RZ(inputs[:, 14] * np.pi, wires=14)
-        qml.RZ(inputs[:, 15] * np.pi, wires=15)
-
-        # fwd_psh_flags (Wire 14) as primary control (consume 15th weight)
-        qml.RY(weights[l, 1, 14], wires=14)
-
-        # psh_flag_cnt (Wire 15) as dependent node (consume 16th weight)
-        # Constraint: Wire 15 transitions only when Wire 14 activates
-        qml.CRY(weights[l, 1, 15], wires=[14, 15])
-
-        # Subsystem 3: Cross-register information interference (Numerical -> Categorical)
-        # Establish causal entanglement between continuous flow metrics and discrete flags
-        qml.CNOT(wires=[0, 14])
-        qml.CNOT(wires=[6, 14])
-        qml.CNOT(wires=[13, 14])
-
-    return [qml.expval(qml.PauliZ(i)) for i in range(N_QUBITS)]
-
-class TabularQuantumGenerator(nn.Module):
-    def __init__(self, n_qubits, n_layers):
-        super().__init__()
-        weight_shapes = {"weights": (n_layers, 2, n_qubits)}
-        self.q_layer = qml.qnn.TorchLayer(qgan_circuit, weight_shapes)
-
-    def forward(self, x):
-        out = self.q_layer(x) 
-        
-        out_mapped = (out + 1.0) * (np.pi / 2.0)
-        return out_mapped
-
-class WGAN_Critic(nn.Module):
-    def __init__(self, input_dim):
+class WGANCritic(nn.Module):
+    def __init__(self, input_dim: int):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(input_dim, 128), nn.LeakyReLU(0.2),
             nn.Linear(128, 64), nn.LeakyReLU(0.2),
             nn.Linear(64, 32), nn.LeakyReLU(0.2),
-            nn.Linear(32, 1)
+            nn.Linear(32, 1),
         )
 
     def forward(self, x):
         return self.net(x)
 
-def compute_gradient_penalty(D, real_samples, synthetic_samples, device):
-    alpha = torch.rand((real_samples.size(0), 1)).to(device) 
-    interpolates = (alpha * real_samples + ((1 - alpha) * synthetic_samples)).requires_grad_(True)
-    d_interpolates = D(interpolates)
-    
-    gradient_targets = torch.ones((real_samples.size(0), 1), requires_grad=False).to(device) 
+
+def compute_gradient_penalty(critic, real, fake, device):
+    alpha = torch.rand((real.size(0), 1), device=device)
+    interpolates = (alpha * real + (1 - alpha) * fake).requires_grad_(True)
+    d_interp = critic(interpolates)
+    grad_targets = torch.ones((real.size(0), 1), device=device)
     gradients = autograd.grad(
-        outputs=d_interpolates, inputs=interpolates,
-        grad_outputs=gradient_targets, create_graph=True,
-        retain_graph=True, only_inputs=True,
-    )[0]
-    gradients = gradients.view(gradients.size(0), -1)
+        outputs=d_interp, inputs=interpolates, grad_outputs=grad_targets,
+        create_graph=True, retain_graph=True, only_inputs=True,
+    )[0].view(real.size(0), -1)
     return ((gradients.norm(2, dim=1) - 1) ** 2).mean()
 
-def main():
-
-    parser = argparse.ArgumentParser(description="Train QGAN for a specific category")
-    parser.add_argument("category", type=int, nargs="?", default=0, help="Target label to train (0-9)")
-    args = parser.parse_args()
-
-    TARGET_LABELS = [args.category]
-
+def train_one_class(target_label: int, seed: int) -> None:
+    set_seed(seed + target_label)  # per-class deterministic, mutually distinct
     device = torch.device("cpu")
-    #device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    if device.type == 'cuda':
-        torch.cuda.init()
 
-    feature_columns = [
-        # Numerical Register
-        'pkt_len_mean', 'fwd_pkt_len_mean', 'bwd_pkt_len_mean', 
-        'fwd_pkt_len_max', 'bwd_pkt_len_max', 'pkt_len_min', 'fwd_pkt_len_min',
-        'pkt_len_var', 'pkt_len_std', 'fwd_byts_b_avg',
-        'flow_byts_s', 'flow_pkts_s', 'init_bwd_win_byts', 'init_fwd_win_byts',
-        
-        # Categorical Register 
-        'fwd_psh_flags', 'psh_flag_cnt'
-    ]
+    df = pd.read_csv(FEATURES16_TRAIN)
+    assert_feature_frame(df, where=FEATURES16_TRAIN)
+    df_target = df[df[LABEL_COLUMN] == target_label]
+    X_raw = df_target[MANUAL_FEATURES_16].values
+    print(f"Label {target_label}: {X_raw.shape[0]} real rows from {FEATURES16_TRAIN}")
 
-    df = pd.read_csv(RAW_FILE)
-    print(f"Dataset loaded: {RAW_FILE}")
+    # Frozen preprocessing: log1p then per-class MinMax to [0, pi]
+    X_log = np.log1p(X_raw)
+    scaler = MinMaxScaler(feature_range=(0, np.pi))
+    X_scaled = scaler.fit_transform(X_log)
 
-    for target_label in TARGET_LABELS:
-        output_dir = os.path.join(PROJECT_ROOT, "outputs", "models", "qgan_0-9", str(target_label))
-        os.makedirs(output_dir, exist_ok=True)
+    loader = DataLoader(
+        TensorDataset(torch.FloatTensor(X_scaled)),
+        batch_size=BATCH_SIZE, shuffle=True, drop_last=True,
+    )
 
-        print(f"\nLabel = {target_label}...")
-        df_target = df[df['Label'] == target_label].copy()
-        X_raw = df_target[feature_columns].values
-        print(f" real data: {X_raw.shape[0]} ")
+    gen = TabularQuantumGenerator().to(device)
+    crit = WGANCritic(N_QUBITS).to(device)
+    opt_g = optim.Adam(gen.parameters(), lr=LR_GENERATOR, betas=ADAM_BETAS)
+    opt_d = optim.Adam(crit.parameters(), lr=LR_CRITIC, betas=ADAM_BETAS)
 
-        X_log = np.log1p(X_raw)
+    epoch_log = []
+    for epoch in range(TOTAL_EPOCHS):
+        d_losses, g_losses = [], []
+        for i, (real_batch,) in enumerate(loader):
+            real_batch = real_batch.to(device)
+            bs = real_batch.size(0)
 
-        local_scaler = MinMaxScaler(feature_range=(0, np.pi))
-        X_scaled = local_scaler.fit_transform(X_log)
-        
-        X_train = torch.FloatTensor(X_scaled)
-        loader_gan = DataLoader(TensorDataset(X_train), batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
+            # --- critic step ---
+            opt_d.zero_grad()
+            with torch.no_grad():
+                fake_batch = gen(sample_noise(bs, device))
+            loss_d = (crit(fake_batch).mean() - crit(real_batch).mean()
+                      + LAMBDA_GP * compute_gradient_penalty(crit, real_batch, fake_batch, device))
+            loss_d.backward()
+            opt_d.step()
+            d_losses.append(loss_d.item())
 
-        gen = TabularQuantumGenerator(N_QUBITS, N_LAYERS).to(device)
-        crit = WGAN_Critic(N_QUBITS).to(device)
-        
-        opt_g = optim.Adam(gen.parameters(), lr=0.015, betas=(0.0, 0.9)) 
-        opt_d = optim.Adam(crit.parameters(), lr=0.001, betas=(0.0, 0.9))
-        N_CRITIC_LOCAL = 2 
+            # --- generator step every N_CRITIC batches ---
+            if (i + 1) % N_CRITIC == 0:
+                opt_g.zero_grad()
+                loss_g = -crit(gen(sample_noise(bs, device))).mean()
+                loss_g.backward()
+                opt_g.step()
+                g_losses.append(loss_g.item())
 
-        print("starting training...")
+        d_mean = float(np.mean(d_losses)) if d_losses else float("nan")
+        g_mean = float(np.mean(g_losses)) if g_losses else float("nan")
+        epoch_log.append((epoch + 1, d_mean, g_mean))
+        print(f"Epoch [{epoch + 1:03d}/{TOTAL_EPOCHS}] | D(mean): {d_mean:.4f} | G(mean): {g_mean:.4f}")
 
-        TOTAL_EPOCHS = 50 
-        epoch_log = []
-        
-        for epoch in range(TOTAL_EPOCHS):
-            loss_d_val = 0
-            loss_g_val = 0
-            
-            for i, (real_batch,) in enumerate(loader_gan):
-                batch_size = real_batch.size(0)
-                real_batch = real_batch.to(device)
-                
-                opt_d.zero_grad()
-                noise = (torch.rand(batch_size, N_QUBITS) * np.pi).to(device)
-                with torch.no_grad():
-                    synthetic_batch = gen(noise)
-                    
-                loss_d = torch.mean(crit(synthetic_batch)) - torch.mean(crit(real_batch)) + \
-                         LAMBDA_GP * compute_gradient_penalty(crit, real_batch, synthetic_batch, device)
-                loss_d.backward()
-                opt_d.step()
-                loss_d_val = loss_d.item()
+    # --- persist ---
+    out_dir = qgan_model_dir(target_label)
+    os.makedirs(out_dir, exist_ok=True)
+    torch.save(gen.state_dict(), os.path.join(out_dir, "qgan_generator_weights.pth"))
+    joblib.dump(scaler, os.path.join(out_dir, "qgan_local_scaler.pkl"))
 
-                if (i + 1) % N_CRITIC_LOCAL == 0:
-                    opt_g.zero_grad()
-                    noise = (torch.rand(batch_size, N_QUBITS) * np.pi).to(device)
-                    loss_g = -torch.mean(crit(gen(noise)))
-                    loss_g.backward()
-                    opt_g.step()
-                    loss_g_val = loss_g.item()
+    with open(os.path.join(out_dir, "report.txt"), "w", encoding="utf-8") as f:
+        f.write(f"Target label: {target_label}\n")
+        f.write(f"Source file: {FEATURES16_TRAIN}\n")
+        f.write(f"Seed: {seed + target_label}\n")
+        f.write(f"Epochs: {TOTAL_EPOCHS}\nBatch size: {BATCH_SIZE}\n")
+        f.write("\nEpoch log (epoch, D loss mean, G loss mean):\n")
+        for e, d, g in epoch_log:
+            f.write(f"{e:03d}\t{d:.6f}\t{g:.6f}\n")
 
-            epoch_log.append((epoch + 1, loss_d_val, loss_g_val))
-            print(f"Epoch [{epoch + 1:03d}/{TOTAL_EPOCHS}] | D Loss: {loss_d_val:.4f} | G Loss: {loss_g_val:.4f}")
-        
-        torch.save(gen.state_dict(), os.path.join(output_dir, 'qgan_generator_weights.pth'))
-        joblib.dump(local_scaler, os.path.join(output_dir, 'qgan_local_scaler.pkl'))
+    print(f"Saved model, scaler and report for label {target_label} to: {out_dir}")
 
-        report_path = os.path.join(output_dir, 'report.txt')
-        with open(report_path, 'w', encoding='utf-8') as report_file:
-            report_file.write(f"Target label: {target_label}\n")
-            report_file.write(f"Source file: {RAW_FILE}\n")
-            report_file.write(f"Epochs: {TOTAL_EPOCHS}\n")
-            report_file.write(f"Batch size: {BATCH_SIZE}\n")
-            report_file.write("Last epoch losses:\n")
-            report_file.write(f"D Loss: {loss_d_val:.6f}\n")
-            report_file.write(f"G Loss: {loss_g_val:.6f}\n")
-            report_file.write("\nEpoch log:\n")
-            for epoch_index, d_loss, g_loss in epoch_log:
-                report_file.write(f"{epoch_index:03d}\t{d_loss:.6f}\t{g_loss:.6f}\n")
 
-        print(f"Saved training results for label {target_label} to: {output_dir}")
+def main():
+    parser = argparse.ArgumentParser(description="Train QGAN for one category")
+    parser.add_argument("category", type=int, nargs="?", default=0, help="Target label (0-9)")
+    parser.add_argument("--seed", type=int, default=SEED)
+    args = parser.parse_args()
+    train_one_class(args.category, args.seed)
+
 
 if __name__ == "__main__":
+    main()
     main()

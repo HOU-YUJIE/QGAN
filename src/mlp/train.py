@@ -1,3 +1,8 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 import pandas as pd
 import numpy as np
 import torch
@@ -9,51 +14,33 @@ from sklearn.metrics import accuracy_score, f1_score, classification_report, rec
 import matplotlib.pyplot as plt
 import seaborn as sns
 import random
-import os
 import warnings
 warnings.filterwarnings('ignore')
 from sklearn.metrics import confusion_matrix
 
+from src.config import (
+    FEATURES16_TRAIN,
+    FEATURES16_TEST,
+    BALANCED_QGAN_FILE,
+    BALANCED_CTGAN_FILE,
+    LABEL_COLUMN,
+    SEED,
+    set_seed,
+)
+
 RESULTS_TEXT_PATH = "./outputs/results/result.txt"
-
-def set_global_seed(seed=42):
-    print(f"Setting global random seed to {seed}...")
-    
-    # 1. Python built-in random module
-    random.seed(seed)
-    
-    # 2. OS-level environment variable
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    
-    # 3. Numpy random seed
-    np.random.seed(seed)
-    
-    # 4. PyTorch random seed (CPU)
-    torch.manual_seed(seed)
-    
-    # 5. PyTorch random seed (GPU)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)  
-        
-        # Force deterministic behavior for cuDNN
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
-
-
-
 
 # 1. Experiment configuration
 
 # Training file paths
 TRAIN_FILES = {
-    "Baseline": "./data/processed/selected_features_train.csv", 
-    "CTGAN Augmented": "./outputs/synthetic_data/Train_Balanced_CTGAN.csv",
-    "QGAN Augmented": "./outputs/synthetic_data/Train_Balanced_QGAN.csv"
+    "Baseline": FEATURES16_TRAIN, 
+    "CTGAN Augmented": BALANCED_CTGAN_FILE,
+    "QGAN Augmented": BALANCED_QGAN_FILE
 }
 
 # Real test set
-TEST_FILE = "./data/processed/selected_features_test.csv"
+TEST_FILE = FEATURES16_TEST
 
 INPUT_DIM = 16
 NUM_CLASSES = 10
@@ -100,12 +87,12 @@ def train_and_evaluate(train_path, test_path, experiment_name, scaler=None, feat
     
     # Determine feature column order. If a canonical feature_order is provided,
     # use it to ensure scaler columns align across experiments.
-    feature_cols = feature_order if feature_order is not None else [c for c in df_train.columns if c != 'Label']
+    feature_cols = feature_order if feature_order is not None else [c for c in df_train.columns if c != LABEL_COLUMN]
 
     X_train = df_train[feature_cols].values
-    y_train = df_train['Label'].values.astype(np.int64)
+    y_train = df_train[LABEL_COLUMN].values.astype(np.int64)
     X_test = df_test[feature_cols].values
-    y_test = df_test['Label'].values.astype(np.int64)
+    y_test = df_test[LABEL_COLUMN].values.astype(np.int64)
     
     # 2. Independent standardization
     # Use provided scaler (fitted on real baseline) when available to ensure
@@ -237,13 +224,13 @@ def plot_academic_confusion_matrix(y_true, y_pred, title="Confusion Matrix", sav
 # 4. Main function and visualization
 if __name__ == "__main__":
 
-    set_global_seed(seed=42)
+    set_seed(seed=SEED)
 
     results = []
     # Fit scaler on the real (Baseline) training data and use it for all experiments
     baseline_path = TRAIN_FILES.get("Baseline")
     baseline_df = pd.read_csv(baseline_path)
-    baseline_feature_order = [c for c in baseline_df.columns if c != 'Label']
+    baseline_feature_order = [c for c in baseline_df.columns if c != LABEL_COLUMN]
     baseline_X = baseline_df[baseline_feature_order].values
     baseline_scaler = StandardScaler().fit(baseline_X)
 

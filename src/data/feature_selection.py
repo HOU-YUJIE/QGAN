@@ -1,129 +1,128 @@
+"""Feature selection on the TRAIN split only (no leakage).
+
+Step-2 companion patch. The selection METHOD is unchanged from
+impg@735bdfc (Pearson |corr|>0.90 prefilter on train, then RF importance
+aggregated over stratified CV folds; mutual_info as alternative).
+
+What changed:
+  * Inputs/outputs come from src/config.py: reads split62_train/test.csv,
+    writes features25_train/test.csv (+ selected_features_25.json,
+    feature_importances.csv). Never overwrites its inputs.
+  * Metadata columns (session_id, Label_Name) are excluded from the
+    feature matrix - they exist for grouping/auditing only.
+  * The internal "split the merged file myself" fallback is REMOVED:
+    splitting is split_dataset.py's job (it enforces the session protocol
+    and leakage assertions); a second split path here would bypass both.
+
+Known step-3 TODO (deliberately not changed now): the Pearson prefilter
+misses nonlinear redundancy such as pkt_len_std = sqrt(pkt_len_var).
+
+Usage:
+    python src/data/feature_selection.py [--top-k 25] [--method rf]
+"""
+
 import argparse
-import os
 import json
-import pandas as pd
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 import numpy as np
+import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.feature_selection import mutual_info_classif
+from sklearn.model_selection import StratifiedKFold
 
+from src.config import (
+    FEATURE_IMPORTANCES_FILE,
+    MANUAL_FEATURES_16,
+    FEATURES25_TEST,
+    FEATURES25_TRAIN,
+    LABEL_COLUMN,
+    METADATA_COLUMNS,
+    SEED,
+    SELECTED25_JSON,
+    SPLIT62_TEST,
+    SPLIT62_TRAIN,
+)
 
-DEFAULT_MERGED = "./data/processed/merged_cleaned_dataset.csv"
-DEFAULT_OUT_TRAIN = "./data/processed/selected_features_train.csv"
-DEFAULT_OUT_TEST = "./data/processed/selected_features_test.csv"
 CORR_THRESHOLD = 0.90
 TOP_K_FEATURES = 25
 
 
-def aggregate_rf_importances(X: pd.DataFrame, y: pd.Series, n_splits: int = 5, seed: int = 42):
+def aggregate_rf_importances(X: pd.DataFrame, y: pd.Series, n_splits: int, seed: int):
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-    importances = np.zeros((n_splits, X.shape[1]), dtype=float)
-
-    for i, (train_idx, val_idx) in enumerate(skf.split(X, y)):
-        X_tr, y_tr = X.iloc[train_idx], y.iloc[train_idx]
-        rf = RandomForestClassifier(n_estimators=200, random_state=seed + i, n_jobs=-1, class_weight='balanced')
-        rf.fit(X_tr, y_tr)
+    importances = np.zeros((n_splits, X.shape[1]))
+    for i, (tr_idx, _) in enumerate(skf.split(X, y)):
+        rf = RandomForestClassifier(n_estimators=200, random_state=seed + i,
+                                    n_jobs=-1, class_weight="balanced")
+        rf.fit(X.iloc[tr_idx], y.iloc[tr_idx])
         importances[i, :] = rf.feature_importances_
-
-    mean_imp = importances.mean(axis=0)
-    std_imp = importances.std(axis=0)
-    return mean_imp, std_imp
+    return importances.mean(axis=0), importances.std(axis=0)
 
 
-def run_feature_selection(
-    train_df: pd.DataFrame,
-    test_df: pd.DataFrame,
-    out_train: str,
-    out_test: str,
-    top_k: int = TOP_K_FEATURES,
-    corr_threshold: float = CORR_THRESHOLD,
-    seed: int = 42,
-    method: str = 'rf',
-    n_splits: int = 5,
-):
-    label_col = 'Label' if 'Label' in train_df.columns else 'Label_ID'
-
-    X_train = train_df.drop(columns=[c for c in ['Label', 'Label_ID', 'Label_Name'] if c in train_df.columns])
-    y_train = train_df[label_col]
-
-    # Correlation-based prefilter on TRAIN only
-    corr_matrix = X_train.corr().abs()
-    upper_tri = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
-    to_drop_corr = [column for column in upper_tri.columns if any(upper_tri[column] > corr_threshold)]
-
-    if to_drop_corr:
-        print(f"Dropping {len(to_drop_corr)} correlated features (threshold={corr_threshold})")
-
-    X_train_filtered = X_train.drop(columns=to_drop_corr)
-
-    if method == 'rf':
-        mean_imp, std_imp = aggregate_rf_importances(X_train_filtered, y_train, n_splits=n_splits, seed=seed)
-        feature_importance_df = pd.DataFrame({'Feature': X_train_filtered.columns, 'ImportanceMean': mean_imp, 'ImportanceStd': std_imp})
-        feature_importance_df = feature_importance_df.sort_values(by='ImportanceMean', ascending=False)
-    elif method == 'mutual_info':
-        mi = mutual_info_classif(X_train_filtered.fillna(0), y_train, random_state=seed)
-        feature_importance_df = pd.DataFrame({'Feature': X_train_filtered.columns, 'ImportanceMean': mi, 'ImportanceStd': np.zeros_like(mi)})
-        feature_importance_df = feature_importance_df.sort_values(by='ImportanceMean', ascending=False)
-    else:
-        raise ValueError(f"Unknown method: {method}")
-
-    top_features = feature_importance_df['Feature'].head(top_k).tolist()
-    print("Top features (mean importance):")
-    print(feature_importance_df.head(top_k).to_string(index=False))
-
-    # Apply to train and test (ensure columns exist in both)
-    selected_cols = [f for f in top_features if f in train_df.columns and f in test_df.columns]
-
-    out_train_df = train_df[selected_cols].copy()
-    out_test_df = test_df[selected_cols].copy()
-
-    out_train_df['Label'] = train_df[label_col].values
-    out_test_df['Label'] = test_df[label_col].values
-
-    os.makedirs(os.path.dirname(out_train) or '.', exist_ok=True)
-    os.makedirs(os.path.dirname(out_test) or '.', exist_ok=True)
-
-    out_train_df.to_csv(out_train, index=False)
-    out_test_df.to_csv(out_test, index=False)
-
-    fi_out = os.path.join(os.path.dirname(out_train) or '.', "feature_importances.csv")
-    feature_importance_df.to_csv(fi_out, index=False)
-    sel_out = os.path.join(os.path.dirname(out_train) or '.', "selected_features.json")
-    with open(sel_out, 'w') as fh:
-        json.dump(selected_cols, fh, ensure_ascii=False, indent=2)
-
-    print(f"Saved selected features train/test: {out_train}, {out_test}")
-    print(f"Saved feature importances: {fi_out}")
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Feature selection. Uses TRAIN to select features (no leakage).")
-    parser.add_argument('--train-input', default=None, help='Path to training CSV (if omitted, will split merged input)')
-    parser.add_argument('--test-input', default=None, help='Path to test CSV (if omitted, will split merged input)')
-    parser.add_argument('--merged-input', default=DEFAULT_MERGED, help='Merged cleaned dataset (used if train/test not provided)')
-    parser.add_argument('--out-train', default=DEFAULT_OUT_TRAIN)
-    parser.add_argument('--out-test', default=DEFAULT_OUT_TEST)
-    parser.add_argument('--top-k', type=int, default=TOP_K_FEATURES)
-    parser.add_argument('--corr-threshold', type=float, default=CORR_THRESHOLD)
-    parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--method', choices=['rf', 'mutual_info'], default='rf', help='Feature scoring method')
-    parser.add_argument('--cv-splits', type=int, default=5, help='Number of CV splits for RF aggregation')
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Train-only feature selection")
+    parser.add_argument("--top-k", type=int, default=TOP_K_FEATURES)
+    parser.add_argument("--corr-threshold", type=float, default=CORR_THRESHOLD)
+    parser.add_argument("--corr-method", choices=["spearman", "pearson"], default="spearman",
+                        help="spearman catches monotone nonlinear redundancy (e.g. std vs var)")
+    parser.add_argument("--method", choices=["rf", "mutual_info"], default="rf")
+    parser.add_argument("--cv-splits", type=int, default=5)
+    parser.add_argument("--seed", type=int, default=SEED)
     args = parser.parse_args()
 
-    if args.train_input and args.test_input:
-        train_df = pd.read_csv(args.train_input)
-        test_df = pd.read_csv(args.test_input)
+    train_df = pd.read_csv(SPLIT62_TRAIN)
+    test_df = pd.read_csv(SPLIT62_TEST)
+
+    non_feature = [LABEL_COLUMN] + METADATA_COLUMNS
+    X_train = train_df.drop(columns=[c for c in non_feature if c in train_df.columns])
+    y_train = train_df[LABEL_COLUMN]
+
+    # --- correlation prefilter, TRAIN only (method frozen: Pearson) -------
+    corr = X_train.corr(method=args.corr_method).abs()
+    upper = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
+    to_drop = [c for c in upper.columns if any(upper[c] > args.corr_threshold)]
+    if to_drop:
+        print(f"[prefilter] dropping {len(to_drop)} correlated features "
+              f"(|{args.corr_method}| > {args.corr_threshold}): {to_drop}")
+    X_filt = X_train.drop(columns=to_drop)
+
+    # --- importance ranking, TRAIN only ------------------------------------
+    if args.method == "rf":
+        mean_imp, std_imp = aggregate_rf_importances(X_filt, y_train, args.cv_splits, args.seed)
     else:
-        if not os.path.exists(args.merged_input):
-            raise FileNotFoundError(f"Merged input not found: {args.merged_input}")
-        merged = pd.read_csv(args.merged_input)
-        if 'Label' not in merged.columns and 'Label_ID' in merged.columns:
-            merged['Label'] = merged['Label_ID']
+        mean_imp = mutual_info_classif(X_filt.fillna(0), y_train, random_state=args.seed)
+        std_imp = np.zeros_like(mean_imp)
 
-        train_df, test_df = train_test_split(merged, train_size=0.8, random_state=args.seed, stratify=merged['Label'])
+    fi = (pd.DataFrame({"Feature": X_filt.columns,
+                        "ImportanceMean": mean_imp, "ImportanceStd": std_imp})
+          .sort_values("ImportanceMean", ascending=False))
+    top = fi["Feature"].head(args.top_k).tolist()
+    print(f"[selected top-{args.top_k}]\n{fi.head(args.top_k).to_string(index=False)}")
 
-    run_feature_selection(train_df, test_df, args.out_train, args.out_test, top_k=args.top_k, corr_threshold=args.corr_threshold, seed=args.seed, method=args.method, n_splits=args.cv_splits)
+    # Output columns = top-k UNION the manual 16. The manual stage must never
+    # find its columns physically missing; picks outside the automated top-k
+    # are surfaced as warnings there, and the decision stays with the human.
+    extra = [m for m in MANUAL_FEATURES_16 if m not in top and m in train_df.columns]
+    if extra:
+        ranks = {f: i + 1 for i, f in enumerate(fi["Feature"])}
+        print(f"[union] appending manual features outside top-{args.top_k}: "
+              f"{[(m, f'rank {ranks.get(m)}') for m in extra]}")
+    cols = top + extra
+
+    # --- apply the SAME columns to both splits ------------------------------
+    for src_df, out_path in ((train_df, FEATURES25_TRAIN), (test_df, FEATURES25_TEST)):
+        out = src_df[cols + [LABEL_COLUMN]]
+        out.to_csv(out_path, index=False)
+        print(f"[saved] {out_path} ({len(out)} rows, {len(cols)} features)")
+
+    fi.to_csv(FEATURE_IMPORTANCES_FILE, index=False)
+    with open(SELECTED25_JSON, "w", encoding="utf-8") as f:
+        json.dump(top, f, ensure_ascii=False, indent=2)
+    print(f"[saved] {FEATURE_IMPORTANCES_FILE}\n[saved] {SELECTED25_JSON}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

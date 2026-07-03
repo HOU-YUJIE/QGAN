@@ -1,0 +1,123 @@
+{
+  "protocol": "session",
+  "seed": 42,
+  "test_ratio_target": 0.19999999999999996,
+  "input": "/home/maru/qgan/data/processed/merged_cleaned_dataset.csv",
+  "n_train": 25185,
+  "n_test": 6684,
+  "per_class": {
+    "0": {
+      "train": 12093,
+      "test": 3270,
+      "test_frac": 0.213
+    },
+    "1": {
+      "train": 727,
+      "test": 273,
+      "test_frac": 0.273
+    },
+    "2": {
+      "train": 482,
+      "test": 187,
+      "test_frac": 0.28
+    },
+    "3": {
+      "train": 3448,
+      "test": 697,
+      "test_frac": 0.168
+    },
+    "4": {
+      "train": 456,
+      "test": 322,
+      "test_frac": 0.414
+    },
+    "5": {
+      "train": 736,
+      "test": 380,
+      "test_frac": 0.341
+    },
+    "6": {
+      "train": 4426,
+      "test": 819,
+      "test_frac": 0.156
+    },
+    "7": {
+      "train": 582,
+      "test": 35,
+      "test_frac": 0.057
+    },
+    "8": {
+      "train": 1382,
+      "test": 458,
+      "test_frac": 0.249
+    },
+    "9": {
+      "train": 853,
+      "test": 243,
+      "test_frac": 0.222
+    }
+  },
+  "session_choices": {
+    "0": {
+      "test_sessions": [
+        "Bittorent_HomeBroadband_Nightime1"
+      ],
+      "test_fraction": 0.2128
+    },
+    "1": {
+      "test_sessions": [
+        "ChromeRDP_Campus_Daytime1"
+      ],
+      "test_fraction": 0.273
+    },
+    "2": {
+      "test_sessions": [
+        "Discord_PublicWifi_Nightime1"
+      ],
+      "test_fraction": 0.2795
+    },
+    "3": {
+      "test_sessions": [
+        "EAOrigin_5G_Daytime1",
+        "EAOrigin_HomeBroadband_Nighttime1"
+      ],
+      "test_fraction": 0.1682
+    },
+    "4": {
+      "test_sessions": [
+        "MicrosoftTeams_5G_Daytime1"
+      ],
+      "test_fraction": 0.4139
+    },
+    "5": {
+      "test_sessions": [
+        "Slack_Campus_Daytime1"
+      ],
+      "test_fraction": 0.3405
+    },
+    "6": {
+      "test_sessions": [
+        "Steam_5G_Daytime1"
+      ],
+      "test_fraction": 0.1561
+    },
+    "7": {
+      "test_sessions": [
+        "Teamviewer_HomeBroadband_Daytime1"
+      ],
+      "test_fraction": 0.0567
+    },
+    "8": {
+      "test_sessions": [
+        "Webex_HomeBroadband_Daytime1"
+      ],
+      "test_fraction": 0.2489
+    },
+    "9": {
+      "test_sessions": [
+        "Zoom_Campus_Daytime1"
+      ],
+      "test_fraction": 0.2217
+    }
+  }
+}

@@ -28,28 +28,33 @@ def merge_and_clean():
     if not os.path.exists(BASE_DIR):
         raise FileNotFoundError(f"BASE_DIR not found: {BASE_DIR}")
 
-    categories = [d for d in os.listdir(BASE_DIR) if os.path.isdir(os.path.join(BASE_DIR, d))]
-    
+    # Use a deterministic ordering for categories to ensure stable Label_ID assignment
+    categories = sorted([d for d in os.listdir(BASE_DIR) if os.path.isdir(os.path.join(BASE_DIR, d))])
     print(f"{len(categories)} folders: {categories}")
 
-    for label_idx, category_name in enumerate(categories):
+    # Create a mapping and persist it for reproducibility
+    label_mapping = {name: idx for idx, name in enumerate(categories)}
+    mapping_out = os.path.join(os.path.dirname(OUTPUT_FILE), "label_mapping.json")
+
+    for category_name in categories:
         folder_path = os.path.join(BASE_DIR, category_name)
         csv_files = glob.glob(os.path.join(folder_path, "*.csv"))
-        
+
+        label_idx = label_mapping[category_name]
         print(f"Processing {category_name} (Label: {label_idx}), contains {len(csv_files)} files...")
-        
+
         for file in csv_files:
             try:
                 df = pd.read_csv(file, low_memory=False)
-                
+
                 df.columns = df.columns.str.strip()
-                
+
                 cols_to_drop_actual = [col for col in COLUMNS_TO_DROP if col in df.columns]
                 df.drop(columns=cols_to_drop_actual, inplace=True)
-                
-                df['Label_ID'] = label_idx
+
+                df['Label'] = label_idx
                 df['Label_Name'] = category_name
-                
+
                 all_dataframes.append(df)
             except Exception as e:
                 print(f"reading {file} error: {e}")
@@ -82,6 +87,16 @@ def merge_and_clean():
         os.makedirs(out_dir, exist_ok=True)
 
     merged_df.to_csv(OUTPUT_FILE, index=False)
+
+    # write mapping file for downstream reproducibility
+    try:
+        import json
+        os.makedirs(os.path.dirname(mapping_out), exist_ok=True)
+        with open(mapping_out, "w") as fh:
+            json.dump(label_mapping, fh, ensure_ascii=False, indent=2)
+        print(f"Wrote label mapping to {mapping_out}")
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     merge_and_clean()

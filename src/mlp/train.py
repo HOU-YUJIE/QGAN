@@ -72,12 +72,12 @@ class TrafficClassifierMLP(nn.Module):
         super(TrafficClassifierMLP, self).__init__()
         self.network = nn.Sequential(
             nn.Linear(input_dim, 64),
-            nn.BatchNorm1d(64),
+            nn.LayerNorm(64),
             nn.ReLU(),
             nn.Dropout(0.1),
             
             nn.Linear(64, 32),
-            nn.BatchNorm1d(32),
+            nn.LayerNorm(32),
             nn.ReLU(),
             #nn.Dropout(0.2),
             
@@ -89,7 +89,7 @@ class TrafficClassifierMLP(nn.Module):
 
 
 # 3. Core training and evaluation functions
-def train_and_evaluate(train_path, test_path, experiment_name):
+def train_and_evaluate(train_path, test_path, experiment_name, scaler=None, feature_order=None):
     print(f"\n" + "="*50)
     print(f"Starting experiment: {experiment_name}")
     print("="*50)
@@ -98,17 +98,25 @@ def train_and_evaluate(train_path, test_path, experiment_name):
     df_train = pd.read_csv(train_path)
     df_test = pd.read_csv(test_path)
     
-    feature_cols = [c for c in df_train.columns if c != 'Label']
-    
+    # Determine feature column order. If a canonical feature_order is provided,
+    # use it to ensure scaler columns align across experiments.
+    feature_cols = feature_order if feature_order is not None else [c for c in df_train.columns if c != 'Label']
+
     X_train = df_train[feature_cols].values
     y_train = df_train['Label'].values.astype(np.int64)
     X_test = df_test[feature_cols].values
     y_test = df_test['Label'].values.astype(np.int64)
     
     # 2. Independent standardization
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    # Use provided scaler (fitted on real baseline) when available to ensure
+    # all experiments are transformed consistently. Otherwise fit a local scaler.
+    if scaler is None:
+        local_scaler = StandardScaler()
+        X_train_scaled = local_scaler.fit_transform(X_train)
+        X_test_scaled = local_scaler.transform(X_test)
+    else:
+        X_train_scaled = scaler.transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
     
     train_loader = DataLoader(TensorDataset(torch.FloatTensor(X_train_scaled), torch.LongTensor(y_train)), 
                               batch_size=BATCH_SIZE, shuffle=True)
@@ -232,9 +240,15 @@ if __name__ == "__main__":
     set_global_seed(seed=42)
 
     results = []
-    
+    # Fit scaler on the real (Baseline) training data and use it for all experiments
+    baseline_path = TRAIN_FILES.get("Baseline")
+    baseline_df = pd.read_csv(baseline_path)
+    baseline_feature_order = [c for c in baseline_df.columns if c != 'Label']
+    baseline_X = baseline_df[baseline_feature_order].values
+    baseline_scaler = StandardScaler().fit(baseline_X)
+
     for exp_name, train_file in TRAIN_FILES.items():
-        res = train_and_evaluate(train_file, TEST_FILE, exp_name)
+        res = train_and_evaluate(train_file, TEST_FILE, exp_name, scaler=baseline_scaler, feature_order=baseline_feature_order)
         results.append(res)
         
     print("\n" + "#"*50)

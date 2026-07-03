@@ -12,6 +12,35 @@ This project implements:
 
 ---
 
+## Dataset Distribution
+
+**Original Dataset (46,742 samples, 10 traffic categories):**
+
+| Category | Samples | % of Total | Category Name |
+|----------|---------|-----------|---------------|
+| 0        | 27,256  | 58.3%     | Bittorent |
+| 1        | 1,281   | 2.7%      | Chrome-RDP |
+| 2        | 832     | 1.8%      | Discord |
+| 3        | 4,560   | 9.8%      | EA-Origin |
+| 4        | 976     | 2.1%      | Microsoft Teams |
+| 5        | 1,701   | 3.6%      | Slack |
+| 6        | 5,668   | 12.1%     | Steam |
+| 7        | 814     | 1.7%      | TeamViewer |
+| 8        | 2,327   | 5.0%      | Webex |
+| 9        | 1,327   | 2.8%      | Zoom |
+
+**After 80:20 Train/Test Split:**
+- Training set: 37,388 samples (80%)
+- Test set: 9,349 samples (20%)
+- **Class imbalance ratio: 33.4:1** (class 0 vs class 2)
+
+**Key Characteristics:**
+- Highly imbalanced: Class 0 represents > 58% of total data
+- Long-tail distribution: 4 minority classes have < 1,000 training samples
+- Real-world network traffic pattern: benign traffic dominates, attacks/rare patterns are scarce
+
+---
+
 ## Project Structure
 
 ```
@@ -20,7 +49,7 @@ qgan/
 │   ├── data/                     # Data preprocessing & splitting
 │   │   ├── split_dataset.py      # Train/test split (80:20 by category)
 │   │   ├── clean_data.py         # Merge & clean raw MALAYAGT CSV exports
-│   │   ├── feature_selection.py  # Select top features (e.g., 25 → 16)
+│   │   ├── feature_selection.py  # Select top features from train split
 │   │   └── data25to16.py         # Trim to 16 features used by models
 │   │
 │   ├── qgan/                     # Quantum GAN implementation
@@ -43,7 +72,6 @@ qgan/
 ├── data/                         # Data storage
 │   ├── MALAYAGT/                 # Raw MALAYAGT CSV exports (place here)
 │   └── processed/                # Processed datasets
-│       ├── selected_features_dataset.csv      # Full dataset (16 dims)
 │       ├── selected_features_train.csv        # 80% training split
 │       └── selected_features_test.csv         # 20% test split
 │
@@ -83,49 +111,54 @@ qgan/
 
 ## Execution Flow
 
-### **Phase 1: Data Preparation**
+### **Phase 1: Data Preparation (updated)**
+
+This repository now enforces a safer, reproducible data-processing flow: deterministic label mapping, stratified split BEFORE any supervised feature selection (to avoid leakage), correlation prefiltering on the training set, and a stable feature scoring aggregated across CV folds.
 
 ```
 Raw Dataset
     ↓
-[1] split_dataset.py
-    - Input:  data/processed/selected_features_dataset.csv
-    - Output: selected_features_train.csv, selected_features_test.csv
-    - Action: 80:20 stratified split by Label
-    
-[2] data25to16.py
-    - Input:  Train/Test CSV files
-    - Output: Updates same files in-place
-    - Action: Select 16 key features from dataset
-
 [0] clean_data.py
-    - Input:  data/MALAYAGT/... (raw CSV folders)
-    - Output: data/processed/merged_cleaned_dataset.csv
-    - Action: Merge category folders, drop unwanted columns, remove NaNs
+    - Input:  raw MalayaNetwork_GT CSV folders under data/processed/MalayaNetwork_GT/csv_output
+    - Output: data/processed/merged_cleaned_dataset.csv and data/processed/label_mapping.json
+    - Action: Merge category folders, drop unwanted columns, remove NaNs, and write deterministic Label_ID mapping
 
-[1] feature_selection.py
+[1] split_dataset.py
     - Input:  data/processed/merged_cleaned_dataset.csv
-    - Output: data/processed/selected_features_dataset.csv
-    - Action: Correlation pruning + random-forest importance selection
+    - Output: data/processed/selected_features_train.csv, data/processed/selected_features_test.csv
+    - Action: 80:20 stratified split by Label (deterministic seed)
+
+[2] feature_selection.py
+    - Input:  selected train/test CSVs (or merged file to be split automatically)
+    - Output: data/processed/selected_features_train.csv, data/processed/selected_features_test.csv, data/processed/feature_importances.csv, data/processed/selected_features.json
+    - Action: Correlation pruning (TRAIN only) + feature scoring on TRAIN (aggregated RF importances across CV folds by default) → select top-K features and apply to TEST
 ```
 
-**Command:**
+**Recommended commands (order matters):**
 ```bash
-# Step 1: Split dataset
-python src/data/split_dataset.py \
-    --input data/processed/selected_features_dataset.csv \
-    --train-output data/processed/selected_features_train.csv \
-    --test-output data/processed/selected_features_test.csv \
-    --train-ratio 0.8
+# 0: Clean raw CSVs into a single merged file (also writes label_mapping.json)
+python3 src/data/clean_data.py
 
-# Step 2: Feature selection
-python src/data/data25to16.py
+# 1: Split merged data into train/test (stratified)
+python3 src/data/split_dataset.py
 
-# If starting from raw MalayaNetwork_GT CSV exports:
-# Place the raw CSVs under `data/processed/MalayaNetwork_GT/csv_output` then run:
-python src/data/clean_data.py
-python src/data/feature_selection.py
+# 2: Feature selection (operates on the train split, applies selection to test)
+python3 src/data/feature_selection.py --train-input data/processed/selected_features_train.csv --test-input data/processed/selected_features_test.csv --top-k 25
+
+# Alternative: run feature_selection directly on merged file (it will split internally):
+python3 src/data/feature_selection.py --merged-input data/processed/merged_cleaned_dataset.csv --top-k 25
 ```
+
+Outputs you will now see after feature selection:
+- `data/processed/selected_features_train.csv` — selected features for training (with `Label`)
+- `data/processed/selected_features_test.csv` — selected features for test (with `Label`)
+- `data/processed/feature_importances.csv` — per-feature mean/std importances (RF CV aggregation)
+- `data/processed/selected_features.json` — chosen feature list
+
+Notes:
+- `clean_data.py` now writes `label_mapping.json` to preserve the mapping from folder name → `Label_ID`.
+- `feature_selection.py` defaults to the RF-aggregated importances method; use `--method mutual_info` to try mutual information instead.
+- For reproducible results, set `--seed` and `--cv-splits` where appropriate.
 
 ---
 
@@ -204,7 +237,8 @@ Real Data + Synthetic Data
 python src/fusion/select_qgan_data.py
 
 # Evaluate synthetic data quality
-python src/qgan/evaluate.py 0  # Per category
+python src/qgan/evaluate.py 0  # Evaluate one category
+python src/qgan/evaluate.py    # Evaluate all minority categories
 ```
 
 ---
@@ -286,7 +320,7 @@ for i in {0..9}; do python src/qgan/train.py $i; done
 for i in {0..9}; do python src/qgan/generate.py $i; done
 
 # Evaluation & fusion
-python src/qgan/evaluate.py
+python src/qgan/evaluate.py  # No argument = evaluate all minority categories
 python src/fusion/select_qgan_data.py
 
 # Classical baseline
@@ -316,7 +350,69 @@ python experiments/compare_js_distance.py
 
 # Visualize single-layer quantum circuit
 python experiments/plot.py
+
+# Plot QGAN training history from saved report.txt files
+python experiments/plot_qgan_training_history.py
 ```
+
+---
+
+## Experimental Results
+
+### **MLP Classification Performance (10-class task)**
+
+**Weighted F1-Score Comparison:**
+
+| Strategy | Accuracy | Macro F1 | Weighted F1 | Macro Recall |
+|----------|----------|----------|-------------|---------------|
+| **Baseline** (Real Only) | 74.74% | 0.3672 | 0.7206 | 0.3503 |
+| **CTGAN Augmented** | 72.66% | 0.3780 | 0.7372 | 0.3760 |
+| **QGAN Augmented** | 68.72% | 0.3625 | 0.7129 | 0.3725 |
+
+**Key Findings:**
+
+1. **Class 0 Dominates Results:**
+   - Test set: Class 0 represents 58.3% of samples
+   - Weighted F1 is ~75% determined by class 0 performance
+   - Baseline F1 (0.9259) on class 0 contributes 0.5400 to weighted F1
+
+2. **Minority Class Challenge:**
+   - Despite QGAN data augmentation, minority class F1 < 0.3
+   - Class 2, 7: F1 ≈ 0.12-0.19 (extremely rare, hard to learn)
+   - Class 4, 5, 9: F1 ≈ 0.20-0.30 (still very difficult)
+
+3. **Limited Overall Improvement from Augmentation:**
+   - CTGAN: +2.3% weighted F1 over baseline (marginal gain)
+   - QGAN: -1.1% weighted F1 vs baseline (slight degradation)
+   - Macro F1 improvement: 0.3672 → 0.3780 (+3%, minimal)
+   - **Root cause:** Train-test distribution mismatch (balanced training, unbalanced testing)
+
+4. **Jensen-Shannon Distance Analysis (QGAN vs CTGAN):**
+   - QGAN achieves better feature-space similarity: -44% avg JS distance vs CTGAN
+   - Categories 1, 2, 8: QGAN > 34% improvement in distribution matching
+   - **Paradox:** Better synthetic distribution ≠ Better classification performance
+   - **Reason:** Improved synthetic data doesn't overcome fundamental label imbalance in decision boundary learning
+
+### **Why Augmentation Failed to Improve Performance**
+
+1. **Data Imbalance vs Decision Boundary Imbalance:**
+   - Rebalancing training data doesn't fix the asymmetric test set
+   - Model learns biased boundaries optimized for balanced data, performs worse on real (imbalanced) distribution
+
+2. **Minority Class Inherent Difficulty:**
+   - Even with synthetic data supplement, minority classes lack discriminative features
+   - 1,000+ samples of noise-like patterns can't compensate for 20k+ class 0 samples
+
+3. **Weighted vs Macro Metrics:**
+   - Weighted metrics hide minority class degradation
+   - Macro F1 improvement (3%) is the true metric for this imbalanced problem
+
+### **Recommended Improvements**
+
+- Use **class_weight** in training loss (instead of data rebalancing) to preserve natural decision boundaries
+- Focus on **minority class feature engineering** rather than quantity multiplication
+- Evaluate on **macro F1 / macro recall**, not weighted accuracy
+- Consider **threshold tuning** per-category instead of uniform classification threshold
 
 ---
 

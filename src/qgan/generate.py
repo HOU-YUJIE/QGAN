@@ -10,16 +10,19 @@ import sys
 
 # 0. Global configuration
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+
 CATEGORY = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 
-MODEL_FILE = f'./outputs/models/qgan_0-9/{CATEGORY}/qgan_generator_weights.pth'
-SCALER_FILE = f'./outputs/models/qgan_0-9/{CATEGORY}/qgan_local_scaler.pkl'
-OUTPUT_FILE = f'./outputs/models/qgan_0-9/{CATEGORY}/Synthetic_Traffic_16dim.csv'
+MODEL_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'qgan_generator_weights.pth')
+SCALER_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'qgan_local_scaler.pkl')
+OUTPUT_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'Synthetic_Traffic_16dim.csv')
 
 # Set target data volume
 TARGET_TOTAL_SAMPLES = 2000
 # Real data path for calculating samples to generate
-REAL_DATA_FILE = './data/processed/selected_features_train.csv'
+REAL_DATA_FILE = os.path.join(PROJECT_ROOT, 'data', 'processed', 'selected_features_train.csv')
 MAJORITY_LABELS = {0, 3, 6}
 
 N_QUBITS = 16
@@ -39,50 +42,58 @@ except Exception:
 # 1. Rebuild model architecture
 @qml.qnode(dev, interface="torch", diff_method="adjoint")
 def qgan_circuit(inputs, weights):
-    # inputs: [batch_size, 16], weights: [N_LAYERS, 16]
-    
-    # Define wire groups
+    # inputs: [batch_size, 16], weights: [N_LAYERS, 2, 16]
+
     num_wires = list(range(14))  # 0~13: numerical feature register
     cat_wires = [14, 15]         # 14~15: categorical flag register
 
     for l in range(N_LAYERS):
+
         # Subsystem 1: Numerical feature register (Wires: 0 to 13)
 
         # Data re-injection: re-input first 14 continuous dimensions each layer
-        qml.AngleEmbedding(inputs[:, :14], wires=num_wires)
+        if l % 2 == 0:
+            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='X')
+        else:
+            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='Z')
 
         # Continuous space exploration (consume first 14 weight parameters)
         for i in num_wires:
-            qml.RY(weights[l, i], wires=i)
+            qml.RY(weights[l, 0, i], wires=i)
+            qml.RZ(weights[l, 1, i], wires=i)
 
-        # Ring entanglement among continuous features (parameter-free CZ)
+        # Internal ring entanglement among continuous features
         for i in range(13):
             qml.CZ(wires=[i, i + 1])
         qml.CZ(wires=[13, 0])
 
+        qml.RY(weights[l, 0, 14], wires=14)
+        qml.RY(weights[l, 0, 15], wires=15) 
+
         # Subsystem 2: Discrete flag register (Wires: 14, 15)
         # Do not use AngleEmbedding to preserve discrete boundaries
         # Inject via RZ gates for phase perturbation only
-        qml.RZ(inputs[:, 14], wires=14)
-        qml.RZ(inputs[:, 15], wires=15)
+        qml.RZ(inputs[:, 14] * np.pi, wires=14)
+        qml.RZ(inputs[:, 15] * np.pi, wires=15)
 
         # fwd_psh_flags (Wire 14) as primary control (consume 15th weight)
-        qml.RY(weights[l, 14], wires=14)
+        qml.RY(weights[l, 1, 14], wires=14)
 
         # psh_flag_cnt (Wire 15) as dependent node (consume 16th weight)
         # Constraint: Wire 15 transitions only when Wire 14 activates
-        qml.CRY(weights[l, 15], wires=[14, 15])
+        qml.CRY(weights[l, 1, 15], wires=[14, 15])
 
         # Subsystem 3: Cross-register information interference (Numerical -> Categorical)
         # Establish causal entanglement between continuous flow metrics and discrete flags
-        # Use deterministic CNOT to avoid gradient explosion
+        qml.CNOT(wires=[0, 14])
+        qml.CNOT(wires=[6, 14])
         qml.CNOT(wires=[13, 14])
 
     return [qml.expval(qml.PauliZ(i)) for i in range(N_QUBITS)]
 class TabularQuantumGenerator(nn.Module):
     def __init__(self, n_qubits, n_layers):
         super().__init__()
-        weight_shapes = {"weights": (n_layers, n_qubits)}
+        weight_shapes = {"weights": (n_layers, 2, n_qubits)}
         self.q_layer = qml.qnn.TorchLayer(qgan_circuit, weight_shapes)
 
     def forward(self, x):
@@ -123,6 +134,8 @@ def generate_data(num_samples):
 
     if not os.path.exists(MODEL_FILE) or not os.path.exists(SCALER_FILE):
         raise FileNotFoundError(f"Model or scaler file not found: {MODEL_FILE} or {SCALER_FILE}.")
+
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
     print(">>> Loading QGAN generator and preprocessor...")
     # Initialize empty skeleton and move to device

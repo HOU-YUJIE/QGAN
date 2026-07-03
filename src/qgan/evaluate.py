@@ -1,3 +1,5 @@
+import argparse
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -163,10 +165,15 @@ def plot_pca_overlap(df_real, df_synthetic, output_dir):
     print(f"   -> Saved as {output_path}")
 
 if __name__ == "__main__":
-    # Evaluate each minority category only
+    parser = argparse.ArgumentParser(description="Evaluate QGAN synthetic data for a specific category")
+    parser.add_argument("category", type=int, nargs="?", default=None, help="Target label to evaluate (0-9)")
+    args = parser.parse_args()
+
+    target_labels = [args.category] if args.category is not None else MINORITY_LABELS
+
     base_dir = Path("./outputs/models/qgan_0-9")
     
-    for category in MINORITY_LABELS:
+    for category in target_labels:
         print(f"\n{'='*60}")
         print(f"Evaluating Category {category}")
         print('='*60)

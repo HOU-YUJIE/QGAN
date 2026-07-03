@@ -49,7 +49,7 @@ qgan/
 │   ├── data/                     # Data preprocessing & splitting
 │   │   ├── split_dataset.py      # Train/test split (80:20 by category)
 │   │   ├── clean_data.py         # Merge & clean raw MALAYAGT CSV exports
-│   │   ├── feature_selection.py  # Select top features (e.g., 25 → 16)
+│   │   ├── feature_selection.py  # Select top features from train split
 │   │   └── data25to16.py         # Trim to 16 features used by models
 │   │
 │   ├── qgan/                     # Quantum GAN implementation
@@ -72,7 +72,6 @@ qgan/
 ├── data/                         # Data storage
 │   ├── MALAYAGT/                 # Raw MALAYAGT CSV exports (place here)
 │   └── processed/                # Processed datasets
-│       ├── selected_features_dataset.csv      # Full dataset (16 dims)
 │       ├── selected_features_train.csv        # 80% training split
 │       └── selected_features_test.csv         # 20% test split
 │
@@ -112,49 +111,54 @@ qgan/
 
 ## Execution Flow
 
-### **Phase 1: Data Preparation**
+### **Phase 1: Data Preparation (updated)**
+
+This repository now enforces a safer, reproducible data-processing flow: deterministic label mapping, stratified split BEFORE any supervised feature selection (to avoid leakage), correlation prefiltering on the training set, and a stable feature scoring aggregated across CV folds.
 
 ```
 Raw Dataset
     ↓
-[1] split_dataset.py
-    - Input:  data/processed/selected_features_dataset.csv
-    - Output: selected_features_train.csv, selected_features_test.csv
-    - Action: 80:20 stratified split by Label
-    
-[2] data25to16.py
-    - Input:  Train/Test CSV files
-    - Output: Updates same files in-place
-    - Action: Select 16 key features from dataset
-
 [0] clean_data.py
-    - Input:  data/MALAYAGT/... (raw CSV folders)
-    - Output: data/processed/merged_cleaned_dataset.csv
-    - Action: Merge category folders, drop unwanted columns, remove NaNs
+    - Input:  raw MalayaNetwork_GT CSV folders under data/processed/MalayaNetwork_GT/csv_output
+    - Output: data/processed/merged_cleaned_dataset.csv and data/processed/label_mapping.json
+    - Action: Merge category folders, drop unwanted columns, remove NaNs, and write deterministic Label_ID mapping
 
-[1] feature_selection.py
+[1] split_dataset.py
     - Input:  data/processed/merged_cleaned_dataset.csv
-    - Output: data/processed/selected_features_dataset.csv
-    - Action: Correlation pruning + random-forest importance selection
+    - Output: data/processed/selected_features_train.csv, data/processed/selected_features_test.csv
+    - Action: 80:20 stratified split by Label (deterministic seed)
+
+[2] feature_selection.py
+    - Input:  selected train/test CSVs (or merged file to be split automatically)
+    - Output: data/processed/selected_features_train.csv, data/processed/selected_features_test.csv, data/processed/feature_importances.csv, data/processed/selected_features.json
+    - Action: Correlation pruning (TRAIN only) + feature scoring on TRAIN (aggregated RF importances across CV folds by default) → select top-K features and apply to TEST
 ```
 
-**Command:**
+**Recommended commands (order matters):**
 ```bash
-# Step 1: Split dataset
-python src/data/split_dataset.py \
-    --input data/processed/selected_features_dataset.csv \
-    --train-output data/processed/selected_features_train.csv \
-    --test-output data/processed/selected_features_test.csv \
-    --train-ratio 0.8
+# 0: Clean raw CSVs into a single merged file (also writes label_mapping.json)
+python3 src/data/clean_data.py
 
-# Step 2: Feature selection
-python src/data/data25to16.py
+# 1: Split merged data into train/test (stratified)
+python3 src/data/split_dataset.py
 
-# If starting from raw MalayaNetwork_GT CSV exports:
-# Place the raw CSVs under `data/processed/MalayaNetwork_GT/csv_output` then run:
-python src/data/clean_data.py
-python src/data/feature_selection.py
+# 2: Feature selection (operates on the train split, applies selection to test)
+python3 src/data/feature_selection.py --train-input data/processed/selected_features_train.csv --test-input data/processed/selected_features_test.csv --top-k 25
+
+# Alternative: run feature_selection directly on merged file (it will split internally):
+python3 src/data/feature_selection.py --merged-input data/processed/merged_cleaned_dataset.csv --top-k 25
 ```
+
+Outputs you will now see after feature selection:
+- `data/processed/selected_features_train.csv` — selected features for training (with `Label`)
+- `data/processed/selected_features_test.csv` — selected features for test (with `Label`)
+- `data/processed/feature_importances.csv` — per-feature mean/std importances (RF CV aggregation)
+- `data/processed/selected_features.json` — chosen feature list
+
+Notes:
+- `clean_data.py` now writes `label_mapping.json` to preserve the mapping from folder name → `Label_ID`.
+- `feature_selection.py` defaults to the RF-aggregated importances method; use `--method mutual_info` to try mutual information instead.
+- For reproducible results, set `--seed` and `--cv-splits` where appropriate.
 
 ---
 

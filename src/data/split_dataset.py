@@ -27,8 +27,8 @@ def main() -> None:
     parser.add_argument(
         "-i",
         "--input",
-        default=os.path.join("data", "processed", "selected_features_dataset.csv"),
-        help="Input CSV file path",
+        default=os.path.join("data", "processed", "merged_cleaned_dataset.csv"),
+        help="Input CSV file path (default: merged_cleaned_dataset.csv)",
     )
     parser.add_argument(
         "-tr",

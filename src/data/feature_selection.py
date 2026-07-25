@@ -80,14 +80,26 @@ def main() -> None:
     X_train = train_df.drop(columns=[c for c in non_feature if c in train_df.columns])
     y_train = train_df[LABEL_COLUMN]
 
-    # --- correlation prefilter, TRAIN only (method frozen: Pearson) -------
+    # --- correlation prefilter, TRAIN only, importance-guided --------------
+    # For each correlated pair we KEEP the member with higher preliminary RF
+    # importance (previously: drop-later-column order, which could discard
+    # the better twin and misalign with the manual-16 analysis).
+    prelim = RandomForestClassifier(n_estimators=100, random_state=args.seed,
+                                    n_jobs=-1, class_weight="balanced")
+    prelim.fit(X_train, y_train)
+    prelim_rank = pd.Series(prelim.feature_importances_,
+                            index=X_train.columns).sort_values(ascending=False)
     corr = X_train.corr(method=args.corr_method).abs()
-    upper = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
-    to_drop = [c for c in upper.columns if any(upper[c] > args.corr_threshold)]
+    kept_cols = []
+    for feat in prelim_rank.index:
+        if all(corr.loc[feat, k] <= args.corr_threshold for k in kept_cols):
+            kept_cols.append(feat)
+    to_drop = [c for c in X_train.columns if c not in kept_cols]
     if to_drop:
         print(f"[prefilter] dropping {len(to_drop)} correlated features "
-              f"(|{args.corr_method}| > {args.corr_threshold}): {to_drop}")
-    X_filt = X_train.drop(columns=to_drop)
+              f"(|{args.corr_method}| > {args.corr_threshold}, keeping the "
+              f"higher-importance twin): {to_drop}")
+    X_filt = X_train[kept_cols]
 
     # --- importance ranking, TRAIN only ------------------------------------
     if args.method == "rf":

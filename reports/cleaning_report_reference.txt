@@ -1,0 +1,67 @@
+
+[load] merged shape: (46742, 79)
+[dropna] removed 0 rows; per class:
+Label_Name
+Bittorent          0
+ChromeRDP          0
+Discord            0
+EA Origin          0
+Microsoft Teams    0
+Slack              0
+Steam              0
+Teamviewer         0
+Webex              0
+Zoom               0
+[zero-variance] dropped 14 cols: ['fwd_seg_size_min', 'fwd_urg_flags', 'bwd_urg_flags', 'urg_flag_cnt', 'ece_flag_cnt', 'active_max', 'active_min', 'active_mean', 'active_std', 'idle_max', 'idle_min', 'idle_mean', 'idle_std', 'cwr_flag_count']
+[label-conflict] dropped 7331 rows in 55 conflicting groups; per class:
+Label_Name
+Bittorent          4508
+ChromeRDP           259
+Discord             161
+EA Origin           412
+Microsoft Teams     198
+Slack               548
+Steam               421
+Teamviewer          194
+Webex               411
+Zoom                219
+[dedup] dropped 7542 duplicate rows; per class:
+Label_Name
+Bittorent          7385
+ChromeRDP            22
+Discord               2
+EA Origin             3
+Microsoft Teams       0
+Slack                37
+Steam                 2
+Teamviewer            3
+Webex                76
+Zoom                 12
+
+[final] shape: (31869, 65) (62 features + session_id + labels)
+[final] rows per class:
+Label_Name
+Bittorent          15363
+ChromeRDP           1000
+Discord              669
+EA Origin           4145
+Microsoft Teams      778
+Slack               1116
+Steam               5245
+Teamviewer           617
+Webex               1840
+Zoom                1096
+[final] sessions per class:
+Label_Name
+Bittorent          5
+ChromeRDP          3
+Discord            3
+EA Origin          4
+Microsoft Teams    2
+Slack              2
+Steam              4
+Teamviewer         2
+Webex              3
+Zoom               3
+[saved] /home/claude/step0/data/processed/merged_cleaned_dataset.csv
+[saved] /home/claude/step0/data/processed/label_mapping.json

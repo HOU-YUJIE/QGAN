@@ -63,6 +63,27 @@ def qgan_synthetic_file(label: int) -> str:
     return os.path.join(qgan_model_dir(label), "Synthetic_Traffic_16dim.csv")
 
 
+# --- generator-agnostic layout (QGAN / CTGAN / classical control) ----------
+def generator_model_dir(generator: str, label: int) -> str:
+    """generator in {"qgan", "ctgan", "classical"}. qgan keeps its legacy path."""
+    if generator == "qgan":
+        return qgan_model_dir(label)
+    return os.path.join(OUTPUTS_DIR, "models", generator, str(label))
+
+
+def synthetic_file(generator: str, label: int) -> str:
+    return os.path.join(generator_model_dir(generator, label), "synthetic.csv")
+
+
+# --- training-set conditions for the downstream comparison -----------------
+CONDITIONS_DIR = os.path.join(DATA_PROCESSED_DIR, "conditions")
+TRAIN_CONDITIONS = ["baseline", "undersample", "oversample", "smote", "qgan", "ctgan", "classical"]
+
+
+def condition_file(name: str) -> str:
+    return os.path.join(CONDITIONS_DIR, f"Train_{name}.csv")
+
+
 # ---------------------------------------------------------------------------
 # Reproducibility
 # ---------------------------------------------------------------------------
@@ -178,4 +199,4 @@ N_CRITIC = 2          # generator updated every N_CRITIC-th batch
 LR_GENERATOR = 0.015
 LR_CRITIC = 0.001
 ADAM_BETAS = (0.0, 0.9)
-TOTAL_EPOCHS = 50
+TOTAL_EPOCHS = 100

@@ -34,11 +34,11 @@ from scipy.stats import wasserstein_distance
 from torch.utils.data import DataLoader, TensorDataset
 
 from src.config import (
-    ADAM_BETAS, BATCH_SIZE, FEATURES16_TRAIN, LABEL_COLUMN, LAMBDA_GP,
+    ADAM_BETAS, generator_model_dir, BATCH_SIZE, FEATURES16_TRAIN, LABEL_COLUMN, LAMBDA_GP,
     LR_CRITIC, LR_GENERATOR, MANUAL_FEATURES_16, N_CRITIC, N_QUBITS, SEED,
     TOTAL_EPOCHS, assert_feature_frame, qgan_model_dir, set_seed,
 )
-from src.qgan.circuit import TabularQuantumGenerator, sample_noise
+from src.qgan.circuit import build_generator, count_params, sample_noise
 from src.qgan.preprocessing import PREPROC_KINDS, fit_preproc, inverse_preproc
 
 VAL_FRACTION = 0.15
@@ -118,12 +118,15 @@ def train_one_class(target_label: int, seed: int, circuit: str, preproc: str,
     loader = DataLoader(TensorDataset(torch.FloatTensor(X_scaled)),
                         batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
 
-    gen = TabularQuantumGenerator(circuit).to(device)
+    gen = build_generator(circuit).to(device)
+    print(f"generator {circuit}: {count_params(gen)} trainable parameters")
     crit = WGANCritic(N_QUBITS).to(device)
     opt_g = optim.Adam(gen.parameters(), lr=LR_GENERATOR, betas=ADAM_BETAS)
     opt_d = optim.Adam(crit.parameters(), lr=LR_CRITIC, betas=ADAM_BETAS)
 
-    out_dir = out_dir or qgan_model_dir(target_label)
+    if out_dir is None:
+        out_dir = (generator_model_dir("classical", target_label)
+                   if circuit == "classical" else qgan_model_dir(target_label))
     os.makedirs(out_dir, exist_ok=True)
 
     epoch_log, best = [], {"score": float("inf"), "epoch": -1}
@@ -197,7 +200,7 @@ def main():
     p = argparse.ArgumentParser(description="Train QGAN for one category")
     p.add_argument("category", type=int, nargs="?", default=0)
     p.add_argument("--seed", type=int, default=SEED)
-    p.add_argument("--circuit", choices=["v1", "v2"], default="v2")
+    p.add_argument("--circuit", choices=["v1", "v2", "classical"], default="v2")
     p.add_argument("--preproc", choices=list(PREPROC_KINDS), default="quantile")
     p.add_argument("--epochs", type=int, default=TOTAL_EPOCHS)
     p.add_argument("--patience", type=int, default=6,

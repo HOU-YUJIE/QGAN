@@ -121,6 +121,38 @@ class TabularQuantumGenerator(nn.Module):
         return (out + 1.0) * (np.pi / 2.0)
 
 
+class ClassicalGenerator(nn.Module):
+    """Parameter-matched classical control for the quantum generator.
+
+    16 -> hidden(4) -> 16 with sigmoid*pi output: 148 parameters vs v2's 144.
+    Same latent prior, same output range, same training harness - the ONLY
+    difference is quantum circuit vs tiny MLP. This is the control that the
+    parameter-efficiency claim requires.
+    """
+
+    def __init__(self, hidden: int = 4):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(N_QUBITS, hidden), nn.Tanh(),
+            nn.Linear(hidden, N_QUBITS), nn.Sigmoid(),
+        )
+        self.version = "classical"
+
+    def forward(self, x):
+        return self.net(x / np.pi) * np.pi  # in [0, pi], like the quantum outputs
+
+
+def build_generator(version: str) -> nn.Module:
+    """Factory used by train.py and generate.py (via the model manifest)."""
+    if version == "classical":
+        return ClassicalGenerator()
+    return TabularQuantumGenerator(version)
+
+
+def count_params(model: nn.Module) -> int:
+    return sum(p.numel() for p in model.parameters())
+
+
 def sample_noise(batch_size: int, device=None) -> torch.Tensor:
     noise = torch.rand(batch_size, N_QUBITS) * np.pi
     return noise.to(device) if device is not None else noise

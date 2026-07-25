@@ -44,7 +44,7 @@ xargs -P "$PARALLEL_JOBS" -I{} bash -c '
     echo "[skip] ${tag} already complete"; exit 0
   fi
   echo "[start] ${tag}"
-  OMP_NUM_THREADS=$THREADS_PER_JOB python -u src/qgan/train.py "$cls" \
+  OMP_NUM_THREADS=$THREADS_PER_JOB python src/qgan/train.py "$cls" \
       --circuit "$circ" --preproc "$prep" --seed "$seed" \
       --epochs "$EPOCHS" --out-dir "$out" > "logs/${tag}.log" 2>&1 \
     && echo "[done ] ${tag}" || echo "[FAIL ] ${tag} (see logs/${tag}.log)"

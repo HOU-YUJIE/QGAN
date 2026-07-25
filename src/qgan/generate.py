@@ -27,11 +27,11 @@ import pandas as pd
 import torch
 
 from src.config import (
-    DISCRETE_FEATURES, FEATURES16_TRAIN, LABEL_COLUMN, MANUAL_FEATURES_16,
+    DISCRETE_FEATURES, generator_model_dir, synthetic_file, FEATURES16_TRAIN, LABEL_COLUMN, MANUAL_FEATURES_16,
     SEED, TARGET_TOTAL_SAMPLES, get_majority_labels, qgan_model_dir,
     qgan_synthetic_file, set_seed,
 )
-from src.qgan.circuit import TabularQuantumGenerator, sample_noise
+from src.qgan.circuit import build_generator, sample_noise
 from src.qgan.preprocessing import inverse_preproc
 
 # ordering constraints that must hold for physically consistent flows;
@@ -76,10 +76,11 @@ def samples_needed(category: int) -> int:
     return n
 
 
-def generate(category: int, num_samples: int, do_postprocess: bool = True) -> None:
+def generate(category: int, num_samples: int, do_postprocess: bool = True,
+             generator: str = "qgan") -> None:
     if num_samples <= 0:
         return
-    model_dir = qgan_model_dir(category)
+    model_dir = generator_model_dir(generator, category)
     manifest_path = os.path.join(model_dir, "model_manifest.json")
     if not os.path.exists(manifest_path):
         raise FileNotFoundError(f"{manifest_path} missing - run train.py {category} first.")
@@ -91,7 +92,7 @@ def generate(category: int, num_samples: int, do_postprocess: bool = True) -> No
     weights = os.path.join(model_dir, "weights_best.pth")
     if not os.path.exists(weights):
         weights = os.path.join(model_dir, "weights_last.pth")
-    gen = TabularQuantumGenerator(manifest["circuit_version"])
+    gen = build_generator(manifest["circuit_version"])
     gen.load_state_dict(torch.load(weights, map_location="cpu"))
     gen.eval()
     preproc_state = joblib.load(os.path.join(model_dir, "preproc.pkl"))
@@ -108,7 +109,7 @@ def generate(category: int, num_samples: int, do_postprocess: bool = True) -> No
         df_syn = postprocess(df_syn, real[real[LABEL_COLUMN] == category])
     df_syn[LABEL_COLUMN] = category
 
-    out_path = qgan_synthetic_file(category)
+    out_path = synthetic_file(generator, category)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     df_syn.to_csv(out_path, index=False)
     print(f"[OK] {len(df_syn)} synthetic rows -> {out_path}"
@@ -120,9 +121,11 @@ def main():
     p.add_argument("category", type=int, nargs="?", default=0)
     p.add_argument("--seed", type=int, default=SEED)
     p.add_argument("--no-postprocess", action="store_true")
+    p.add_argument("--generator", choices=["qgan", "classical"], default="qgan",
+                   help="which trained generator's model dir to load and where to write synthetic.csv")
     a = p.parse_args()
     set_seed(a.seed + a.category)
-    generate(a.category, samples_needed(a.category), not a.no_postprocess)
+    generate(a.category, samples_needed(a.category), not a.no_postprocess, a.generator)
 
 
 if __name__ == "__main__":

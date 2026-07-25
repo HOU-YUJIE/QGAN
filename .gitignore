@@ -10,3 +10,6 @@ outputs/synthetic*/
 # keep small committed metadata
 !data/processed/label_mapping.json
 !data/processed/feature_importances.csv
+
+MIGRATION.md
+*.zip

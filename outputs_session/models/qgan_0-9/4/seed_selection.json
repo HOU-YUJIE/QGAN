@@ -1,0 +1,18 @@
+{
+  "selected_dir": "outputs/models/seedsel/qgan/4/s42",
+  "best_score": 0.44688730628044965,
+  "candidates": [
+    [
+      0.4469,
+      "s42"
+    ],
+    [
+      0.5215,
+      "s44"
+    ],
+    [
+      0.645,
+      "s43"
+    ]
+  ]
+}

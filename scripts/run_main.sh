@@ -20,11 +20,16 @@ set -u
 cd "$(dirname "$0")/.."
 export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
 
-MULTI_SEED_CLASSES="2 4"
-SINGLE_SEED_CLASSES="1 5 7 8 9"
+MULTI_SEED_CLASSES="2 7"
+SINGLE_SEED_CLASSES="1 4 5 8 9"
 MULTI_SEEDS="42 43 44"
 SKIP_QGAN_TRAIN=${SKIP_QGAN_TRAIN:-0}
 mkdir -p logs
+
+PROTO=$(python -c "import json;print(json.load(open('data/processed/split_manifest.json'))['protocol'])")
+if [ "$PROTO" = "random" ] && [ "$MULTI_SEED_CLASSES" != "2 7" ]; then
+  echo "FATAL: protocol=random but MULTI_SEED_CLASSES='$MULTI_SEED_CLASSES' (expect '2 7')"; exit 1
+fi
 
 canon () {  # canonical model dir for generator $1 class $2
   python -c "import sys; sys.path.insert(0,'.'); from src.config import generator_model_dir; print(generator_model_dir('$1', $2))"

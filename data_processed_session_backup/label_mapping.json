@@ -1,0 +1,12 @@
+{
+  "Bittorent": 0,
+  "ChromeRDP": 1,
+  "Discord": 2,
+  "EA Origin": 3,
+  "Microsoft Teams": 4,
+  "Slack": 5,
+  "Steam": 6,
+  "Teamviewer": 7,
+  "Webex": 8,
+  "Zoom": 9
+}

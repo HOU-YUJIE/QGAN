@@ -1,0 +1,18 @@
+{
+  "selected_dir": "outputs/models/seedsel/classical/4/s44",
+  "best_score": 0.5511742529832898,
+  "candidates": [
+    [
+      0.5512,
+      "s44"
+    ],
+    [
+      0.571,
+      "s43"
+    ],
+    [
+      0.7258,
+      "s42"
+    ]
+  ]
+}

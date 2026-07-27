@@ -1,0 +1,84 @@
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +6.4240 | G -0.4318
+Epoch 002 | D +1.2795 | G -1.3362
+Epoch 003 | D +1.6192 | G -0.3154
+Epoch 004 | D +0.9064 | G -0.0407
+Epoch 005 | D +0.0964 | G +0.1095 | W1 0.5028 corr 0.4647 score 0.9676 *best*
+Epoch 006 | D -0.8348 | G +0.3914
+Epoch 007 | D -1.3839 | G +0.9206
+Epoch 008 | D -1.6637 | G +1.1385
+Epoch 009 | D -2.2834 | G +0.8761
+Epoch 010 | D -2.8440 | G +0.5125 | W1 0.4454 corr 0.3218 score 0.7671 *best*
+Epoch 011 | D -3.0430 | G +0.3697
+Epoch 012 | D -3.2128 | G -0.1167
+Epoch 013 | D -3.2641 | G -0.2606
+Epoch 014 | D -3.2878 | G -0.7268
+Epoch 015 | D -3.3082 | G +0.3849 | W1 0.4447 corr 0.3497 score 0.7944
+Epoch 016 | D -3.1243 | G +0.3003
+Epoch 017 | D -3.3107 | G -0.3593
+Epoch 018 | D -3.2030 | G -0.3448
+Epoch 019 | D -3.1616 | G -0.0365
+Epoch 020 | D -3.1685 | G -0.0990 | W1 0.4305 corr 0.3335 score 0.7640 *best*
+Epoch 021 | D -3.1635 | G -0.5459
+Epoch 022 | D -2.8045 | G +0.1265
+Epoch 023 | D -3.1650 | G +0.4825
+Epoch 024 | D -2.7046 | G -0.9032
+Epoch 025 | D -2.8440 | G -0.6182 | W1 0.3910 corr 0.3006 score 0.6916 *best*
+Epoch 026 | D -2.6967 | G -0.8946
+Epoch 027 | D -2.5388 | G -0.7989
+Epoch 028 | D -2.4246 | G -0.6993
+Epoch 029 | D -2.3179 | G -1.0136
+Epoch 030 | D -2.0875 | G -1.1826 | W1 0.2981 corr 0.2706 score 0.5687 *best*
+Epoch 031 | D -2.0824 | G -1.0502
+Epoch 032 | D -1.8459 | G -1.1216
+Epoch 033 | D -1.8649 | G -0.7441
+Epoch 034 | D -1.6115 | G -1.2123
+Epoch 035 | D -1.6395 | G -0.8954 | W1 0.1968 corr 0.2929 score 0.4897 *best*
+Epoch 036 | D -1.5579 | G -1.0214
+Epoch 037 | D -1.5306 | G -1.2121
+Epoch 038 | D -1.4136 | G -0.5404
+Epoch 039 | D -1.4041 | G -1.0012
+Epoch 040 | D -1.4139 | G -0.3997 | W1 0.2207 corr 0.2482 score 0.4688 *best*
+Epoch 041 | D -1.2684 | G -0.9502
+Epoch 042 | D -1.2856 | G -0.2945
+Epoch 043 | D -1.3603 | G -0.7858
+Epoch 044 | D -1.2695 | G -0.4782
+Epoch 045 | D -1.3141 | G -0.5110 | W1 0.1924 corr 0.3032 score 0.4957
+Epoch 046 | D -1.2356 | G -0.7729
+Epoch 047 | D -1.1869 | G -0.3840
+Epoch 048 | D -1.1754 | G -0.3554
+Epoch 049 | D -1.1783 | G -0.2592
+Epoch 050 | D -1.1401 | G +0.1464 | W1 0.2134 corr 0.2206 score 0.4340 *best*
+Epoch 051 | D -1.0236 | G +0.1651
+Epoch 052 | D -0.9687 | G -0.5227
+Epoch 053 | D -0.9235 | G -0.1433
+Epoch 054 | D -1.0474 | G +0.0085
+Epoch 055 | D -1.0130 | G -0.1398 | W1 0.2909 corr 0.2053 score 0.4962
+Epoch 056 | D -1.0284 | G +0.1433
+Epoch 057 | D -0.9552 | G +0.0421
+Epoch 058 | D -0.9783 | G +0.3787
+Epoch 059 | D -0.9630 | G +0.5149
+Epoch 060 | D -0.9983 | G +0.7097 | W1 0.2134 corr 0.2494 score 0.4629
+Epoch 061 | D -1.0287 | G +0.6540
+Epoch 062 | D -1.0426 | G +0.8002
+Epoch 063 | D -1.0463 | G +1.2381
+Epoch 064 | D -1.0826 | G +0.6982
+Epoch 065 | D -1.0655 | G +1.1614 | W1 0.1884 corr 0.2467 score 0.4350
+Epoch 066 | D -1.0645 | G +1.0002
+Epoch 067 | D -1.1514 | G +1.1192
+Epoch 068 | D -1.0713 | G +0.9518
+Epoch 069 | D -1.1741 | G +0.9179
+Epoch 070 | D -1.1300 | G +0.9457 | W1 0.2373 corr 0.2346 score 0.4718
+Epoch 071 | D -1.1538 | G +1.1729
+Epoch 072 | D -1.1655 | G +1.1900
+Epoch 073 | D -1.1779 | G +1.6989
+Epoch 074 | D -1.1566 | G +1.2555
+Epoch 075 | D -1.2128 | G +1.2345 | W1 0.2410 corr 0.2390 score 0.4800
+Epoch 076 | D -1.1563 | G +1.0430
+Epoch 077 | D -1.1867 | G +0.8561
+Epoch 078 | D -1.2856 | G +0.5122
+Epoch 079 | D -1.1883 | G +1.1465
+Epoch 080 | D -1.2446 | G +0.9022 | W1 0.2494 corr 0.2008 score 0.4502
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 80.
+[saved] best epoch 50 (score 0.4340) -> outputs/models/seedsel/classical/7/s43

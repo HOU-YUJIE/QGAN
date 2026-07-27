@@ -1,0 +1,172 @@
+nohup: ignoring input
+[train] classical c1 s42 -> /home/maru/qgan/outputs/models/classical/1
+[train] classical c4 s42 -> /home/maru/qgan/outputs/models/classical/4
+[train] classical c5 s42 -> /home/maru/qgan/outputs/models/classical/5
+[train] classical c8 s42 -> /home/maru/qgan/outputs/models/classical/8
+[train] classical c9 s42 -> /home/maru/qgan/outputs/models/classical/9
+[train] classical c2 s42 -> outputs/models/seedsel/classical/2/s42
+[train] classical c2 s43 -> outputs/models/seedsel/classical/2/s43
+[train] classical c2 s44 -> outputs/models/seedsel/classical/2/s44
+[select] classical c2: s44 (score 0.3749) -> /home/maru/qgan/outputs/models/classical/2
+[train] classical c7 s42 -> outputs/models/seedsel/classical/7/s42
+[train] classical c7 s43 -> outputs/models/seedsel/classical/7/s43
+[train] classical c7 s44 -> outputs/models/seedsel/classical/7/s44
+[select] classical c7: s42 (score 0.3865) -> /home/maru/qgan/outputs/models/classical/7
+[done] generation (see logs/main_generate.log)
+[done] ctgan
+majority classes (derived): [0, 3, 6] | target 2000
+[baseline] 25495 rows -> /home/maru/qgan/data/processed/conditions/Train_baseline.csv
+[undersample] 11693 rows -> /home/maru/qgan/data/processed/conditions/Train_undersample.csv
+[oversample] 20000 rows -> /home/maru/qgan/data/processed/conditions/Train_oversample.csv
+[smote] 20000 rows -> /home/maru/qgan/data/processed/conditions/Train_smote.csv
+[qgan] 20000 rows -> /home/maru/qgan/data/processed/conditions/Train_qgan.csv
+[ctgan] 20000 rows -> /home/maru/qgan/data/processed/conditions/Train_ctgan.csv
+[classical] 20000 rows -> /home/maru/qgan/data/processed/conditions/Train_classical.csv
+[saved] /home/maru/qgan/data/processed/conditions/build_manifest.json
+conditions: ['baseline', 'undersample', 'oversample', 'smote', 'qgan', 'ctgan', 'classical'] | seeds: [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+[baseline     seed 42] macro-F1 0.4093 acc 0.7383 (best epoch 28)
+[baseline     seed 43] macro-F1 0.4084 acc 0.7267 (best epoch 22)
+[baseline     seed 44] macro-F1 0.4202 acc 0.7402 (best epoch 30)
+[baseline     seed 45] macro-F1 0.4447 acc 0.7510 (best epoch 75)
+[baseline     seed 46] macro-F1 0.4352 acc 0.7502 (best epoch 66)
+[baseline     seed 47] macro-F1 0.4322 acc 0.7480 (best epoch 60)
+[baseline     seed 48] macro-F1 0.4281 acc 0.7429 (best epoch 45)
+[baseline     seed 49] macro-F1 0.4630 acc 0.7603 (best epoch 99)
+[baseline     seed 50] macro-F1 0.4330 acc 0.7474 (best epoch 59)
+[baseline     seed 51] macro-F1 0.3945 acc 0.7280 (best epoch 19)
+[undersample  seed 42] macro-F1 0.4042 acc 0.6916 (best epoch 29)
+[undersample  seed 43] macro-F1 0.4126 acc 0.7088 (best epoch 33)
+[undersample  seed 44] macro-F1 0.4536 acc 0.7314 (best epoch 87)
+[undersample  seed 45] macro-F1 0.4288 acc 0.7140 (best epoch 43)
+[undersample  seed 46] macro-F1 0.3945 acc 0.6938 (best epoch 16)
+[undersample  seed 47] macro-F1 0.4487 acc 0.7217 (best epoch 66)
+[undersample  seed 48] macro-F1 0.4252 acc 0.7142 (best epoch 38)
+[undersample  seed 49] macro-F1 0.4459 acc 0.7242 (best epoch 58)
+[undersample  seed 50] macro-F1 0.4364 acc 0.7198 (best epoch 53)
+[undersample  seed 51] macro-F1 0.4560 acc 0.7324 (best epoch 88)
+[oversample   seed 42] macro-F1 0.4426 acc 0.6845 (best epoch 51)
+[oversample   seed 43] macro-F1 0.4396 acc 0.6847 (best epoch 43)
+[oversample   seed 44] macro-F1 0.4538 acc 0.6963 (best epoch 88)
+[oversample   seed 45] macro-F1 0.4449 acc 0.6845 (best epoch 59)
+[oversample   seed 46] macro-F1 0.4518 acc 0.6974 (best epoch 79)
+[oversample   seed 47] macro-F1 0.4535 acc 0.6920 (best epoch 87)
+[oversample   seed 48] macro-F1 0.4589 acc 0.7046 (best epoch 97)
+[oversample   seed 49] macro-F1 0.4511 acc 0.7011 (best epoch 63)
+[oversample   seed 50] macro-F1 0.4470 acc 0.6903 (best epoch 52)
+[oversample   seed 51] macro-F1 0.4453 acc 0.6919 (best epoch 49)
+[smote        seed 42] macro-F1 0.4456 acc 0.6966 (best epoch 73)
+[smote        seed 43] macro-F1 0.4429 acc 0.6905 (best epoch 72)
+[smote        seed 44] macro-F1 0.4205 acc 0.6831 (best epoch 26)
+[smote        seed 45] macro-F1 0.4481 acc 0.6950 (best epoch 93)
+[smote        seed 46] macro-F1 0.4445 acc 0.6920 (best epoch 51)
+[smote        seed 47] macro-F1 0.4438 acc 0.6938 (best epoch 35)
+[smote        seed 48] macro-F1 0.4431 acc 0.6919 (best epoch 58)
+[smote        seed 49] macro-F1 0.4630 acc 0.7035 (best epoch 99)
+[smote        seed 50] macro-F1 0.4425 acc 0.6890 (best epoch 54)
+[smote        seed 51] macro-F1 0.4645 acc 0.7135 (best epoch 99)
+[qgan         seed 42] macro-F1 0.4170 acc 0.7027 (best epoch 57)
+[qgan         seed 43] macro-F1 0.4187 acc 0.7051 (best epoch 56)
+[qgan         seed 44] macro-F1 0.4302 acc 0.7120 (best epoch 94)
+[qgan         seed 45] macro-F1 0.4146 acc 0.7036 (best epoch 48)
+[qgan         seed 46] macro-F1 0.4234 acc 0.7024 (best epoch 65)
+[qgan         seed 47] macro-F1 0.3955 acc 0.6828 (best epoch 23)
+[qgan         seed 48] macro-F1 0.4175 acc 0.7049 (best epoch 49)
+[qgan         seed 49] macro-F1 0.4167 acc 0.6964 (best epoch 49)
+[qgan         seed 50] macro-F1 0.4169 acc 0.7027 (best epoch 60)
+[qgan         seed 51] macro-F1 0.4100 acc 0.7047 (best epoch 39)
+[ctgan        seed 42] macro-F1 0.4152 acc 0.7065 (best epoch 50)
+[ctgan        seed 43] macro-F1 0.4343 acc 0.7171 (best epoch 59)
+[ctgan        seed 44] macro-F1 0.4179 acc 0.7154 (best epoch 52)
+[ctgan        seed 45] macro-F1 0.4144 acc 0.7096 (best epoch 48)
+[ctgan        seed 46] macro-F1 0.4188 acc 0.7151 (best epoch 58)
+[ctgan        seed 47] macro-F1 0.4240 acc 0.7080 (best epoch 85)
+[ctgan        seed 48] macro-F1 0.4349 acc 0.7174 (best epoch 54)
+[ctgan        seed 49] macro-F1 0.4281 acc 0.7198 (best epoch 58)
+[ctgan        seed 50] macro-F1 0.4203 acc 0.7105 (best epoch 46)
+[ctgan        seed 51] macro-F1 0.4277 acc 0.7179 (best epoch 85)
+[classical    seed 42] macro-F1 0.4356 acc 0.7069 (best epoch 62)
+[classical    seed 43] macro-F1 0.4305 acc 0.7016 (best epoch 77)
+[classical    seed 44] macro-F1 0.4224 acc 0.7044 (best epoch 71)
+[classical    seed 45] macro-F1 0.4226 acc 0.7041 (best epoch 64)
+[classical    seed 46] macro-F1 0.4224 acc 0.7077 (best epoch 57)
+[classical    seed 47] macro-F1 0.4107 acc 0.6884 (best epoch 36)
+[classical    seed 48] macro-F1 0.4212 acc 0.6972 (best epoch 54)
+[classical    seed 49] macro-F1 0.4255 acc 0.7027 (best epoch 66)
+[classical    seed 50] macro-F1 0.4217 acc 0.7008 (best epoch 44)
+[classical    seed 51] macro-F1 0.4170 acc 0.6905 (best epoch 50)
+
+========================================================================
+MLP evaluation | 10 seeds [42, 43, 44, 45, 46, 47, 48, 49, 50, 51] | test rows: 6374
+========================================================================
+
+            accuracy         macro_precision         macro_recall         macro_f1        
+                mean     std            mean     std         mean     std     mean     std
+condition                                                                                 
+baseline      0.7433  0.0104          0.4881  0.0214       0.4162  0.0188   0.4269  0.0197
+undersample   0.7152  0.0140          0.4472  0.0196       0.4438  0.0215   0.4306  0.0214
+oversample    0.6927  0.0071          0.4476  0.0062       0.4946  0.0061   0.4489  0.0059
+smote         0.6949  0.0084          0.4436  0.0100       0.4903  0.0133   0.4458  0.0121
+qgan          0.7017  0.0077          0.4321  0.0101       0.4301  0.0096   0.4161  0.0090
+ctgan         0.7137  0.0047          0.4513  0.0217       0.4370  0.0086   0.4236  0.0075
+classical     0.7004  0.0065          0.4295  0.0085       0.4376  0.0076   0.4230  0.0068
+
+significance (paired by seed, macro-F1):
+             dF1_vs_undersample  p_t_vs_undersample  p_wilcoxon_vs_undersample  dF1_vs_baseline  p_t_vs_baseline  p_wilcoxon_vs_baseline
+condition                                                                                                                               
+baseline                -0.0037              0.6887                     0.9219              NaN              NaN                     NaN
+undersample                 NaN                 NaN                        NaN           0.0037           0.6887                  0.9219
+oversample               0.0183              0.0208                     0.0195           0.0220           0.0041                  0.0059
+smote                    0.0152              0.0713                     0.0645           0.0190           0.0233                  0.0020
+qgan                    -0.0145              0.1063                     0.1055          -0.0108           0.1500                  0.1309
+ctgan                   -0.0070              0.3331                     0.2754          -0.0033           0.6478                  0.5566
+classical               -0.0076              0.3792                     0.3750          -0.0039           0.5830                  0.8457
+
+per-class F1 (mean over seeds):
+             f1_class_0  f1_class_1  f1_class_2  f1_class_3  f1_class_4  f1_class_5  f1_class_6  f1_class_7  f1_class_8  f1_class_9
+condition                                                                                                                          
+baseline         0.9399      0.2242      0.2555      0.6771      0.2990      0.2658      0.7476      0.1143      0.4120      0.3331
+undersample      0.9290      0.2269      0.2520      0.7013      0.3172      0.2861      0.7567      0.1054      0.3958      0.3357
+oversample       0.9179      0.2636      0.2301      0.7097      0.3727      0.2949      0.7411      0.1793      0.4044      0.3749
+smote            0.9177      0.2693      0.2376      0.7126      0.3676      0.2794      0.7502      0.1818      0.3899      0.3522
+qgan             0.9176      0.2276      0.2276      0.6964      0.2936      0.2628      0.7365      0.0938      0.3839      0.3208
+ctgan            0.9270      0.2188      0.2128      0.6989      0.3164      0.2624      0.7484      0.1081      0.3978      0.3451
+classical        0.9148      0.2268      0.2269      0.7003      0.3249      0.2876      0.7368      0.1196      0.3830      0.3088
+
+reading guide: dF1_vs_undersample > 0 with small p is the only
+result that can credit a generator; dF1_vs_baseline conflates
+rebalancing with synthesis quality.
+generators: ['qgan', 'ctgan', 'classical'] | classes: [np.int64(1), np.int64(2), np.int64(4), np.int64(5), np.int64(7), np.int64(8), np.int64(9)]
+[qgan      class 1] JS 0.272 | W1 0.263 | corrMAD 0.263 | C2ST 1.000 | DCR 15.909 copy% 0.0%
+[qgan      class 2] JS 0.327 | W1 0.295 | corrMAD 0.207 | C2ST 1.000 | DCR 20.067 copy% 0.0%
+[qgan      class 4] JS 0.318 | W1 0.287 | corrMAD 0.238 | C2ST 1.000 | DCR 26.212 copy% 0.0%
+[qgan      class 5] JS 0.339 | W1 0.279 | corrMAD 0.233 | C2ST 1.000 | DCR 15.260 copy% 0.0%
+[qgan      class 7] JS 0.303 | W1 0.293 | corrMAD 0.223 | C2ST 0.999 | DCR 9.197 copy% 0.0%
+[qgan      class 8] JS 0.315 | W1 0.211 | corrMAD 0.257 | C2ST 1.000 | DCR 19.425 copy% 0.0%
+[qgan      class 9] JS 0.332 | W1 0.219 | corrMAD 0.177 | C2ST 0.999 | DCR 44.956 copy% 0.0%
+[ctgan     class 1] JS 0.383 | W1 0.369 | corrMAD 0.257 | C2ST 1.000 | DCR 27.901 copy% 0.0%
+[ctgan     class 2] JS 0.475 | W1 0.309 | corrMAD 0.216 | C2ST 1.000 | DCR 58.931 copy% 0.0%
+[ctgan     class 4] JS 0.476 | W1 0.355 | corrMAD 0.259 | C2ST 1.000 | DCR 54.790 copy% 0.0%
+[ctgan     class 5] JS 0.446 | W1 0.294 | corrMAD 0.249 | C2ST 1.000 | DCR 36.063 copy% 0.0%
+[ctgan     class 7] JS 0.411 | W1 0.269 | corrMAD 0.234 | C2ST 1.000 | DCR 18.453 copy% 0.0%
+[ctgan     class 8] JS 0.365 | W1 0.213 | corrMAD 0.203 | C2ST 1.000 | DCR 39.110 copy% 0.0%
+[ctgan     class 9] JS 0.425 | W1 0.335 | corrMAD 0.187 | C2ST 1.000 | DCR 66.560 copy% 0.0%
+[classical class 1] JS 0.238 | W1 0.220 | corrMAD 0.218 | C2ST 1.000 | DCR 7.734 copy% 0.0%
+[classical class 2] JS 0.190 | W1 0.192 | corrMAD 0.215 | C2ST 0.999 | DCR 25.076 copy% 0.0%
+[classical class 4] JS 0.268 | W1 0.285 | corrMAD 0.242 | C2ST 1.000 | DCR 21.584 copy% 0.0%
+[classical class 5] JS 0.231 | W1 0.247 | corrMAD 0.192 | C2ST 1.000 | DCR 13.463 copy% 0.0%
+[classical class 7] JS 0.243 | W1 0.190 | corrMAD 0.268 | C2ST 0.999 | DCR 6.290 copy% 0.0%
+[classical class 8] JS 0.204 | W1 0.161 | corrMAD 0.258 | C2ST 0.999 | DCR 20.342 copy% 0.0%
+[classical class 9] JS 0.221 | W1 0.173 | corrMAD 0.245 | C2ST 1.000 | DCR 25.874 copy% 0.0%
+
+mean over classes (lower better except c2st_auc->0.5, dcr_ratio->~1):
+           js_quantile  std_w1  corr_mad  c2st_auc  dcr_ratio  copy_frac
+generator                                                               
+classical       0.2277  0.2098    0.2338    0.9995    17.1947        0.0
+ctgan           0.4260  0.3063    0.2292    1.0000    43.1156        0.0
+qgan            0.3151  0.2639    0.2283    0.9995    21.5750        0.0
+
+reading guide: for quantile-preprocessed runs, judge on corr_* and
+c2st_auc; js/w1 match by construction. dcr_ratio << 1 or copy_frac
+high = memorization, disqualifying regardless of other scores; c2st_auc
+well BELOW 0.5 is also a memorization signature (copies pass as real).
+[ALL DONE] see outputs/results/

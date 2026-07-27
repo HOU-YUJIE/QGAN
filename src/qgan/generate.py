@@ -1,233 +1,132 @@
-import pennylane as qml
-import torch
-import torch.nn as nn
-import pandas as pd
-import numpy as np
-import joblib
+"""Generate synthetic samples for one class from a trained QGAN.
+
+Step-4 version. Reads model_manifest.json for circuit version, preprocessing
+kind and feature order - the generator is reconstructed exactly as trained,
+so a train/generate mismatch is structurally impossible. Loads the BEST
+checkpoint (validation-selected), falling back to the last.
+
+Postprocessing (on by default, --no-postprocess to disable for ablation):
+  1. clip all features at >= 0 (traffic statistics are non-negative)
+  2. round discrete flag features to integers, clip to the training support
+  3. repair ordering constraints (min <= mean <= max chains) by sorting
+
+Usage:
+    python src/qgan/generate.py <category> [--no-postprocess] [--seed 42]
+"""
+
+import argparse
+import json
 import os
 import sys
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-# 0. Global configuration
+import joblib
+import numpy as np
+import pandas as pd
+import torch
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+from src.config import (
+    DISCRETE_FEATURES, generator_model_dir, synthetic_file, FEATURES16_TRAIN, LABEL_COLUMN, MANUAL_FEATURES_16,
+    SEED, TARGET_TOTAL_SAMPLES, get_majority_labels, qgan_model_dir,
+    qgan_synthetic_file, set_seed,
+)
+from src.qgan.circuit import build_generator, sample_noise
+from src.qgan.preprocessing import inverse_preproc
 
-CATEGORY = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-
-MODEL_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'qgan_generator_weights.pth')
-SCALER_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'qgan_local_scaler.pkl')
-OUTPUT_FILE = os.path.join(PROJECT_ROOT, 'outputs', 'models', 'qgan_0-9', str(CATEGORY), 'Synthetic_Traffic_16dim.csv')
-
-# Set target data volume
-TARGET_TOTAL_SAMPLES = 2000
-# Real data path for calculating samples to generate
-REAL_DATA_FILE = os.path.join(PROJECT_ROOT, 'data', 'processed', 'selected_features_train.csv')
-MAJORITY_LABELS = {0, 3, 6}
-
-N_QUBITS = 16
-N_LAYERS = 3
-TARGET_LABEL = CATEGORY
-
-device = torch.device("cpu")
-print(f"Current generation device: {device}")
-
-# Load PennyLane simulator
-try:
-    dev = qml.device("lightning.qubit", wires=N_QUBITS)
-except Exception:
-    dev = qml.device("default.qubit", wires=N_QUBITS)
+# ordering constraints that must hold for physically consistent flows;
+# repaired by sorting the group values row-wise (ascending)
+ORDER_CHAINS = [
+    ("fwd_pkt_len_min", "fwd_pkt_len_mean", "fwd_pkt_len_max"),
+    ("pkt_len_min", "pkt_len_mean"),
+    ("bwd_pkt_len_min", "bwd_seg_size_avg"),
+]
 
 
-# 1. Rebuild model architecture
-@qml.qnode(dev, interface="torch", diff_method="adjoint")
-def qgan_circuit(inputs, weights):
-    # inputs: [batch_size, 16], weights: [N_LAYERS, 2, 16]
+def postprocess(df_syn: pd.DataFrame, df_real_class: pd.DataFrame) -> pd.DataFrame:
+    df = df_syn.copy()
+    feat = [c for c in df.columns if c != LABEL_COLUMN]
 
-    num_wires = list(range(14))  # 0~13: numerical feature register
-    cat_wires = [14, 15]         # 14~15: categorical flag register
+    # 1. non-negativity
+    df[feat] = df[feat].clip(lower=0)
 
-    for l in range(N_LAYERS):
+    # 2. discrete flags: integers within the training support
+    for c in DISCRETE_FEATURES:
+        if c in df.columns:
+            hi = int(df_real_class[c].max())
+            df[c] = df[c].round().clip(0, hi).astype(int)
 
-        # Subsystem 1: Numerical feature register (Wires: 0 to 13)
+    # 3. ordering repair
+    for chain in ORDER_CHAINS:
+        cols = [c for c in chain if c in df.columns]
+        if len(cols) >= 2:
+            df[cols] = np.sort(df[cols].values, axis=1)
+    return df
 
-        # Data re-injection: re-input first 14 continuous dimensions each layer
-        if l % 2 == 0:
-            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='X')
-        else:
-            qml.AngleEmbedding(inputs[:, :14], wires=num_wires, rotation='Z')
 
-        # Continuous space exploration (consume first 14 weight parameters)
-        for i in num_wires:
-            qml.RY(weights[l, 0, i], wires=i)
-            qml.RZ(weights[l, 1, i], wires=i)
-
-        # Internal ring entanglement among continuous features
-        for i in range(13):
-            qml.CZ(wires=[i, i + 1])
-        qml.CZ(wires=[13, 0])
-
-        qml.RY(weights[l, 0, 14], wires=14)
-        qml.RY(weights[l, 0, 15], wires=15) 
-
-        # Subsystem 2: Discrete flag register (Wires: 14, 15)
-        # Do not use AngleEmbedding to preserve discrete boundaries
-        # Inject via RZ gates for phase perturbation only
-        qml.RZ(inputs[:, 14] * np.pi, wires=14)
-        qml.RZ(inputs[:, 15] * np.pi, wires=15)
-
-        # fwd_psh_flags (Wire 14) as primary control (consume 15th weight)
-        qml.RY(weights[l, 1, 14], wires=14)
-
-        # psh_flag_cnt (Wire 15) as dependent node (consume 16th weight)
-        # Constraint: Wire 15 transitions only when Wire 14 activates
-        qml.CRY(weights[l, 1, 15], wires=[14, 15])
-
-        # Subsystem 3: Cross-register information interference (Numerical -> Categorical)
-        # Establish causal entanglement between continuous flow metrics and discrete flags
-        qml.CNOT(wires=[0, 14])
-        qml.CNOT(wires=[6, 14])
-        qml.CNOT(wires=[13, 14])
-
-    return [qml.expval(qml.PauliZ(i)) for i in range(N_QUBITS)]
-class TabularQuantumGenerator(nn.Module):
-    def __init__(self, n_qubits, n_layers):
-        super().__init__()
-        weight_shapes = {"weights": (n_layers, 2, n_qubits)}
-        self.q_layer = qml.qnn.TorchLayer(qgan_circuit, weight_shapes)
-
-    def forward(self, x):
-        out = self.q_layer(x)
-        out_mapped = (out + 1.0) * (np.pi / 2.0)
-        return out_mapped
-
-# 2. Calculate how many samples to generate
-def calculate_samples_needed(category, target_total):
-    if category in MAJORITY_LABELS:
-        print(f"--- Category {category} is a majority class; no generation needed ---")
+def samples_needed(category: int) -> int:
+    majority = get_majority_labels(FEATURES16_TRAIN)
+    if category in majority:
+        print(f"Category {category} is a majority class; nothing to generate.")
         return 0
+    df = pd.read_csv(FEATURES16_TRAIN, usecols=[LABEL_COLUMN])
+    real_count = int((df[LABEL_COLUMN] == category).sum())
+    n = max(0, TARGET_TOTAL_SAMPLES - real_count)
+    print(f"Category {category}: real={real_count}, target={TARGET_TOTAL_SAMPLES}, to generate={n}")
+    return n
 
-    try:
-        # Read real dataset
-        df_real = pd.read_csv(REAL_DATA_FILE)
-        real_count = len(df_real[df_real['Label'] == category])
-        
-        samples_to_generate = max(0, target_total - real_count)
-        
-        print(f"--- Generation plan for category {category} ---")
-        print(f"Real samples: {real_count}")
-        print(f"Target total: {target_total}")
-        print(f"To generate: {samples_to_generate}")
-        print("-------------------------------")
-        
-        return samples_to_generate
-    except Exception as e:
-        print(f"Unable to read real dataset {REAL_DATA_FILE}, defaulting to generate 1000 samples. Error: {e}")
-        return 1000
 
-# 2. Generation workflow
-
-def generate_data(num_samples):
+def generate(category: int, num_samples: int, do_postprocess: bool = True,
+             generator: str = "qgan") -> None:
     if num_samples <= 0:
-        print(f">>> Category {TARGET_LABEL} already has >= {TARGET_TOTAL_SAMPLES} real samples; no generation needed.")
         return
+    model_dir = generator_model_dir(generator, category)
+    manifest_path = os.path.join(model_dir, "model_manifest.json")
+    if not os.path.exists(manifest_path):
+        raise FileNotFoundError(f"{manifest_path} missing - run train.py {category} first.")
+    with open(manifest_path, encoding="utf-8") as f:
+        manifest = json.load(f)
+    assert manifest["feature_order"] == MANUAL_FEATURES_16, \
+        "feature order in manifest differs from config - retrain before generating"
 
-    if not os.path.exists(MODEL_FILE) or not os.path.exists(SCALER_FILE):
-        raise FileNotFoundError(f"Model or scaler file not found: {MODEL_FILE} or {SCALER_FILE}.")
+    weights = os.path.join(model_dir, "weights_best.pth")
+    if not os.path.exists(weights):
+        weights = os.path.join(model_dir, "weights_last.pth")
+    gen = build_generator(manifest["circuit_version"])
+    gen.load_state_dict(torch.load(weights, map_location="cpu"))
+    gen.eval()
+    preproc_state = joblib.load(os.path.join(model_dir, "preproc.pkl"))
+    print(f"Loaded {os.path.basename(weights)} (circuit {manifest['circuit_version']}, "
+          f"preproc {manifest['preproc']}, best epoch {manifest['best_epoch']})")
 
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-
-    print(">>> Loading QGAN generator and preprocessor...")
-    # Initialize empty skeleton and move to device
-    gen = TabularQuantumGenerator(N_QUBITS, N_LAYERS).to(device)
-    
-    # Load trained weights
-    gen.load_state_dict(torch.load(MODEL_FILE, map_location=device))
-    gen.eval()  # Switch to evaluation mode
-    
-    # Load scaler
-    local_scaler = joblib.load(SCALER_FILE)
-    
-    feature_columns = [
-        # Numerical Register
-        'pkt_len_mean', 'fwd_pkt_len_mean', 'bwd_pkt_len_mean', 
-        'fwd_pkt_len_max', 'bwd_pkt_len_max', 'pkt_len_min', 'fwd_pkt_len_min',
-        'pkt_len_var', 'pkt_len_std', 'fwd_byts_b_avg',
-        'flow_byts_s', 'flow_pkts_s', 'init_bwd_win_byts', 'init_fwd_win_byts',
-        
-        # Categorical Register 
-        'fwd_psh_flags', 'psh_flag_cnt'
-    ]
-
-    print(f">>> Generating {num_samples} samples using quantum circuit...")
     with torch.no_grad():
-        noise = (torch.rand(num_samples, N_QUBITS) * np.pi).to(device)
-        synthetic_data_pi = gen(noise).cpu().numpy()
+        fake_pi = gen(sample_noise(num_samples)).numpy()
+    synthetic = inverse_preproc(preproc_state, fake_pi)
+    df_syn = pd.DataFrame(synthetic, columns=MANUAL_FEATURES_16)
 
-    print(">>> Performing inverse transform (Inverse Log1p & Scaler)...")
-    synthetic_data_log = local_scaler.inverse_transform(synthetic_data_pi)
-    synthetic_data_real_scale = np.expm1(synthetic_data_log)
+    if do_postprocess:
+        real = pd.read_csv(FEATURES16_TRAIN)
+        df_syn = postprocess(df_syn, real[real[LABEL_COLUMN] == category])
+    df_syn[LABEL_COLUMN] = category
 
-    df_synthetic = pd.DataFrame(synthetic_data_real_scale, columns=feature_columns)
-    df_synthetic['Label'] = TARGET_LABEL
-    
+    out_path = synthetic_file(generator, category)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    df_syn.to_csv(out_path, index=False)
+    print(f"[OK] {len(df_syn)} synthetic rows -> {out_path}"
+          + ("" if do_postprocess else "  (postprocess DISABLED)"))
 
-    # # Physical and protocol constraints (Perfected Protocol Bounds)
-    # print(">>> Executing strict physical truncation based on TCP/IP protocol specs...")
 
-    # # 1. Force discrete flags to integers (must run first as the basis for causal masks)
-    # flag_features = ['fwd_psh_flags', 'psh_flag_cnt']
-    # for ff in flag_features:
-    #     if ff in df_synthetic.columns:
-    #         df_synthetic[ff] = np.round(df_synthetic[ff]).astype(int)
+def main():
+    p = argparse.ArgumentParser(description="Generate synthetic samples for one category")
+    p.add_argument("category", type=int, nargs="?", default=0)
+    p.add_argument("--seed", type=int, default=SEED)
+    p.add_argument("--no-postprocess", action="store_true")
+    p.add_argument("--generator", choices=["qgan", "classical"], default="qgan",
+                   help="which trained generator's model dir to load and where to write synthetic.csv")
+    a = p.parse_args()
+    set_seed(a.seed + a.category)
+    generate(a.category, samples_needed(a.category), not a.no_postprocess, a.generator)
 
-    # # 2. Global packet-length baseline guardrail (fix logical coverage bug)
-    # # Before any size comparisons, enforce that all length features are at least the Ethernet minimum of 54 bytes
-    # length_features = ['pkt_len_min', 'fwd_pkt_len_min', 'fwd_pkt_len_max', 'bwd_pkt_len_max', 'pkt_len_mean', 'fwd_pkt_len_mean', 'bwd_pkt_len_mean']
-    # for lf in length_features:
-    #     if lf in df_synthetic.columns:
-    #         df_synthetic.loc[df_synthetic[lf] < 54.0, lf] = 54.0
-
-    # # 3. Enhanced zero-packet attraction (Widened Gravity Well)
-    # # Fix the issue where fwd_pkt_len_min gets stuck at 0.93
-    # min_features = ['pkt_len_min', 'fwd_pkt_len_min']
-    # for mf in min_features:
-    #     if mf in df_synthetic.columns:
-    #         # Any tiny noise below 150 bytes is physically mapped to 54-byte control packets
-    #         df_synthetic.loc[df_synthetic[mf] < 150.0, mf] = 54.0
-
-    # # 4. MTU upper-bound constraint
-    # max_features = ['fwd_pkt_len_max', 'bwd_pkt_len_max']
-    # for max_f in max_features:
-    #     if max_f in df_synthetic.columns:
-    #         df_synthetic.loc[df_synthetic[max_f] > 1514.0, max_f] = 1514.0
-
-    # # 5. Ultimate causal mask - fix the fwd_byts_b_avg issue
-    # if 'fwd_byts_b_avg' in df_synthetic.columns and 'fwd_psh_flags' in df_synthetic.columns:
-    #     mask_no_flag = df_synthetic['fwd_psh_flags'] == 0
-    #     mask_low_speed = df_synthetic['flow_byts_s'] < 500.0  
-    #     df_synthetic.loc[mask_no_flag | mask_low_speed, 'fwd_byts_b_avg'] = 0.0
-
-    # # 6. Statistical logic fixes
-    # # Speed and variance cannot be negative
-    # for col in ['flow_byts_s', 'flow_pkts_s', 'pkt_len_var', 'pkt_len_std']:
-    #     if col in df_synthetic.columns:
-    #         df_synthetic.loc[df_synthetic[col] < 0, col] = 0
-
-    # # Ensure min <= mean <= max (already locked to >= 54 above, so it cannot drop below 54)
-    # if all(c in df_synthetic.columns for c in ['pkt_len_min', 'bwd_pkt_len_max']):
-    #     mask_min_max = df_synthetic['pkt_len_min'] > df_synthetic['bwd_pkt_len_max']
-    #     df_synthetic.loc[mask_min_max, 'pkt_len_min'] = df_synthetic.loc[mask_min_max, 'bwd_pkt_len_max']
-            
-    # if all(c in df_synthetic.columns for c in ['pkt_len_mean', 'bwd_pkt_len_max']):
-    #     mask_mean_max = df_synthetic['pkt_len_mean'] > df_synthetic['bwd_pkt_len_max']
-    #     df_synthetic.loc[mask_mean_max, 'bwd_pkt_len_max'] = df_synthetic.loc[mask_mean_max, 'pkt_len_mean']
-
-    # Save generated data
-    df_synthetic.to_csv(OUTPUT_FILE, index=False)
-    print(f"[√] Generated synthetic data saved to: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    # Calculate how many samples to generate and run generation
-    num_to_generate = calculate_samples_needed(TARGET_LABEL, TARGET_TOTAL_SAMPLES)
-    generate_data(num_to_generate)
+    main()

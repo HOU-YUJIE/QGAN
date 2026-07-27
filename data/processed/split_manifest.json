@@ -1,0 +1,61 @@
+{
+  "protocol": "random",
+  "seed": 42,
+  "test_ratio_target": 0.19999999999999996,
+  "input": "/home/maru/qgan/data/processed/merged_cleaned_dataset.csv",
+  "n_train": 25495,
+  "n_test": 6374,
+  "per_class": {
+    "0": {
+      "train": 12290,
+      "test": 3073,
+      "test_frac": 0.2
+    },
+    "1": {
+      "train": 800,
+      "test": 200,
+      "test_frac": 0.2
+    },
+    "2": {
+      "train": 535,
+      "test": 134,
+      "test_frac": 0.2
+    },
+    "3": {
+      "train": 3316,
+      "test": 829,
+      "test_frac": 0.2
+    },
+    "4": {
+      "train": 622,
+      "test": 156,
+      "test_frac": 0.201
+    },
+    "5": {
+      "train": 893,
+      "test": 223,
+      "test_frac": 0.2
+    },
+    "6": {
+      "train": 4196,
+      "test": 1049,
+      "test_frac": 0.2
+    },
+    "7": {
+      "train": 494,
+      "test": 123,
+      "test_frac": 0.199
+    },
+    "8": {
+      "train": 1472,
+      "test": 368,
+      "test_frac": 0.2
+    },
+    "9": {
+      "train": 877,
+      "test": 219,
+      "test_frac": 0.2
+    }
+  },
+  "session_choices": {}
+}

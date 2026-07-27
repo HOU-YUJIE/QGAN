@@ -1,0 +1,2296 @@
+nohup: ignoring input
+30 runs planned (classes [7, 9, 8] x hidden [4, 8, 16, 32, 64] x seeds [42, 43], 100 epochs)
+[train] c7 h4 (148 params) s42
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +7.1916 | G +0.0897
+Epoch 002 | D +2.3598 | G +0.2537
+Epoch 003 | D +0.9548 | G +0.2517
+Epoch 004 | D -0.0750 | G +0.4515
+Epoch 005 | D -1.0364 | G +0.7730 | W1 0.5287 corr 0.3370 score 0.8657 *best*
+Epoch 006 | D -1.5978 | G +0.9599
+Epoch 007 | D -1.7244 | G +0.8960
+Epoch 008 | D -1.9481 | G +0.7842
+Epoch 009 | D -2.7710 | G +1.2405
+Epoch 010 | D -3.0610 | G +0.8997 | W1 0.4293 corr 0.3312 score 0.7605 *best*
+Epoch 011 | D -3.1911 | G +0.2173
+Epoch 012 | D -3.3454 | G +0.1219
+Epoch 013 | D -3.3435 | G -0.1861
+Epoch 014 | D -3.4012 | G +0.0053
+Epoch 015 | D -3.2497 | G +0.1744 | W1 0.4082 corr 0.3688 score 0.7769
+Epoch 016 | D -3.2142 | G +0.1060
+Epoch 017 | D -3.2380 | G -0.1099
+Epoch 018 | D -3.1419 | G -0.3199
+Epoch 019 | D -3.0301 | G -0.0536
+Epoch 020 | D -2.8878 | G -0.6139 | W1 0.3444 corr 0.4111 score 0.7555 *best*
+Epoch 021 | D -2.8073 | G -0.5438
+Epoch 022 | D -2.7458 | G -0.9300
+Epoch 023 | D -2.5971 | G -0.2074
+Epoch 024 | D -2.5273 | G +0.0170
+Epoch 025 | D -2.4657 | G -0.2345 | W1 0.3172 corr 0.3087 score 0.6259 *best*
+Epoch 026 | D -2.2912 | G -0.5645
+Epoch 027 | D -2.2021 | G -0.7050
+Epoch 028 | D -2.0470 | G -0.7066
+Epoch 029 | D -1.8587 | G -0.5770
+Epoch 030 | D -1.8406 | G -0.3957 | W1 0.3034 corr 0.2751 score 0.5785 *best*
+Epoch 031 | D -1.6472 | G -0.3750
+Epoch 032 | D -1.6064 | G -0.9469
+Epoch 033 | D -1.4779 | G -0.4784
+Epoch 034 | D -1.4663 | G -0.8749
+Epoch 035 | D -1.3146 | G -0.5571 | W1 0.2073 corr 0.2826 score 0.4899 *best*
+Epoch 036 | D -1.3160 | G -0.7174
+Epoch 037 | D -1.2028 | G -1.0131
+Epoch 038 | D -1.2613 | G -0.8091
+Epoch 039 | D -1.1187 | G -0.7618
+Epoch 040 | D -1.1697 | G -0.9699 | W1 0.2125 corr 0.2805 score 0.4930
+Epoch 041 | D -1.1627 | G -1.2232
+Epoch 042 | D -1.1126 | G -0.9813
+Epoch 043 | D -1.0973 | G -1.2892
+Epoch 044 | D -1.0107 | G -0.9541
+Epoch 045 | D -1.0562 | G -0.7990 | W1 0.2092 corr 0.2905 score 0.4997
+Epoch 046 | D -1.0550 | G -0.8441
+Epoch 047 | D -1.0380 | G -1.0248
+Epoch 048 | D -1.0851 | G -1.0602
+Epoch 049 | D -1.0391 | G -0.5035
+Epoch 050 | D -1.1021 | G -0.5819 | W1 0.2457 corr 0.2270 score 0.4727 *best*
+Epoch 051 | D -1.1530 | G -0.4834
+Epoch 052 | D -1.1832 | G -0.4681
+Epoch 053 | D -1.0686 | G +0.0439
+Epoch 054 | D -1.1298 | G -0.2146
+Epoch 055 | D -1.2740 | G -0.5204 | W1 0.2642 corr 0.2530 score 0.5172
+Epoch 056 | D -1.2407 | G -0.2709
+Epoch 057 | D -1.4171 | G -0.0353
+Epoch 058 | D -1.3248 | G -0.1061
+Epoch 059 | D -1.3125 | G +0.1093
+Epoch 060 | D -1.2803 | G +0.0435 | W1 0.2905 corr 0.2446 score 0.5352
+Epoch 061 | D -1.2308 | G +0.0161
+Epoch 062 | D -1.3324 | G -0.1735
+Epoch 063 | D -1.3507 | G -0.1818
+Epoch 064 | D -1.3449 | G -0.1099
+Epoch 065 | D -1.3741 | G +0.0953 | W1 0.2562 corr 0.2457 score 0.5018
+Epoch 066 | D -1.3509 | G +0.1573
+Epoch 067 | D -1.2969 | G +0.2245
+Epoch 068 | D -1.3280 | G -0.1650
+Epoch 069 | D -1.3650 | G -0.0322
+Epoch 070 | D -1.3220 | G -0.3099 | W1 0.1701 corr 0.2191 score 0.3892 *best*
+Epoch 071 | D -1.3269 | G +0.0943
+Epoch 072 | D -1.3757 | G -0.4299
+Epoch 073 | D -1.4209 | G +0.1610
+Epoch 074 | D -1.3061 | G -0.2781
+Epoch 075 | D -1.3396 | G +0.1107 | W1 0.2364 corr 0.2436 score 0.4800
+Epoch 076 | D -1.3493 | G +0.1314
+Epoch 077 | D -1.3939 | G +0.0713
+Epoch 078 | D -1.4100 | G -0.0324
+Epoch 079 | D -1.3360 | G +0.1126
+Epoch 080 | D -1.3578 | G +0.2017 | W1 0.2057 corr 0.2769 score 0.4826
+Epoch 081 | D -1.3250 | G +0.2714
+Epoch 082 | D -1.3800 | G +0.8277
+Epoch 083 | D -1.2625 | G +0.6150
+Epoch 084 | D -1.3002 | G +0.1230
+Epoch 085 | D -1.3579 | G +0.2990 | W1 0.2593 corr 0.2393 score 0.4986
+Epoch 086 | D -1.3107 | G +0.1816
+Epoch 087 | D -1.3609 | G +0.3859
+Epoch 088 | D -1.2832 | G +0.0651
+Epoch 089 | D -1.3153 | G +0.0160
+Epoch 090 | D -1.3194 | G +0.5509 | W1 0.3122 corr 0.2561 score 0.5684
+Epoch 091 | D -1.2511 | G +0.3015
+Epoch 092 | D -1.2793 | G +0.4327
+Epoch 093 | D -1.2893 | G +0.2986
+Epoch 094 | D -1.2643 | G +0.3149
+Epoch 095 | D -1.3066 | G +0.5906 | W1 0.1887 corr 0.2610 score 0.4497
+Epoch 096 | D -1.2940 | G +0.5536
+Epoch 097 | D -1.2760 | G +0.6418
+Epoch 098 | D -1.2527 | G +0.2558
+Epoch 099 | D -1.3405 | G +0.2503
+Epoch 100 | D -1.3208 | G +0.6209 | W1 0.2131 corr 0.2431 score 0.4562
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 100.
+[saved] best epoch 70 (score 0.3892) -> outputs/models/capacity_sweep/c7_h4_s42
+[train] c7 h4 (148 params) s43
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +6.4240 | G -0.4318
+Epoch 002 | D +1.2795 | G -1.3362
+Epoch 003 | D +1.6192 | G -0.3154
+Epoch 004 | D +0.9064 | G -0.0407
+Epoch 005 | D +0.0964 | G +0.1095 | W1 0.5028 corr 0.4647 score 0.9676 *best*
+Epoch 006 | D -0.8348 | G +0.3914
+Epoch 007 | D -1.3839 | G +0.9206
+Epoch 008 | D -1.6637 | G +1.1385
+Epoch 009 | D -2.2834 | G +0.8761
+Epoch 010 | D -2.8443 | G +0.5111 | W1 0.4454 corr 0.3205 score 0.7659 *best*
+Epoch 011 | D -3.0363 | G +0.3435
+Epoch 012 | D -3.2058 | G -0.1154
+Epoch 013 | D -3.2514 | G -0.2531
+Epoch 014 | D -3.3047 | G -0.7201
+Epoch 015 | D -3.3101 | G +0.2987 | W1 0.4451 corr 0.3368 score 0.7819
+Epoch 016 | D -3.0935 | G +0.3888
+Epoch 017 | D -3.3216 | G -0.3160
+Epoch 018 | D -3.2364 | G -0.4241
+Epoch 019 | D -3.1627 | G -0.2331
+Epoch 020 | D -3.1563 | G -0.0609 | W1 0.4273 corr 0.3331 score 0.7604 *best*
+Epoch 021 | D -3.0880 | G -0.5031
+Epoch 022 | D -2.8548 | G -0.0704
+Epoch 023 | D -3.0911 | G +0.2136
+Epoch 024 | D -2.6999 | G -0.8137
+Epoch 025 | D -2.7553 | G -0.8016 | W1 0.3881 corr 0.2979 score 0.6861 *best*
+Epoch 026 | D -2.6462 | G -0.9655
+Epoch 027 | D -2.4224 | G -0.8812
+Epoch 028 | D -2.3159 | G -0.7606
+Epoch 029 | D -2.2141 | G -1.0632
+Epoch 030 | D -1.9666 | G -1.2033 | W1 0.2803 corr 0.2837 score 0.5640 *best*
+Epoch 031 | D -1.9479 | G -1.1482
+Epoch 032 | D -1.7517 | G -1.1821
+Epoch 033 | D -1.7441 | G -0.8999
+Epoch 034 | D -1.5030 | G -1.0919
+Epoch 035 | D -1.5631 | G -0.8459 | W1 0.1925 corr 0.2884 score 0.4809 *best*
+Epoch 036 | D -1.4964 | G -0.9574
+Epoch 037 | D -1.4343 | G -1.0934
+Epoch 038 | D -1.3855 | G -0.5915
+Epoch 039 | D -1.3776 | G -0.8382
+Epoch 040 | D -1.4127 | G -0.3053 | W1 0.2312 corr 0.2700 score 0.5012
+Epoch 041 | D -1.2614 | G -0.5274
+Epoch 042 | D -1.2804 | G -0.1432
+Epoch 043 | D -1.3444 | G -0.4556
+Epoch 044 | D -1.2948 | G -0.2250
+Epoch 045 | D -1.3244 | G -0.2303 | W1 0.1931 corr 0.2855 score 0.4785 *best*
+Epoch 046 | D -1.3125 | G -0.4172
+Epoch 047 | D -1.2483 | G +0.0146
+Epoch 048 | D -1.2313 | G +0.1031
+Epoch 049 | D -1.2806 | G +0.4091
+Epoch 050 | D -1.2221 | G +0.7511 | W1 0.2099 corr 0.2509 score 0.4608 *best*
+Epoch 051 | D -1.1762 | G +0.6541
+Epoch 052 | D -1.1307 | G +0.2321
+Epoch 053 | D -1.0583 | G +0.4081
+Epoch 054 | D -1.1197 | G +1.0078
+Epoch 055 | D -1.0424 | G +0.2728 | W1 0.2604 corr 0.2171 score 0.4775
+Epoch 056 | D -1.0279 | G +0.3309
+Epoch 057 | D -0.9061 | G +0.1357
+Epoch 058 | D -0.9810 | G +0.4301
+Epoch 059 | D -0.9486 | G +0.6925
+Epoch 060 | D -0.9931 | G +0.4374 | W1 0.2422 corr 0.2452 score 0.4874
+Epoch 061 | D -0.9854 | G +0.4496
+Epoch 062 | D -0.9982 | G +0.4996
+Epoch 063 | D -1.0196 | G +0.7820
+Epoch 064 | D -1.0804 | G +0.3631
+Epoch 065 | D -1.0938 | G +0.8968 | W1 0.1838 corr 0.2577 score 0.4415 *best*
+Epoch 066 | D -1.0963 | G +0.8581
+Epoch 067 | D -1.1704 | G +0.9682
+Epoch 068 | D -1.1503 | G +0.5133
+Epoch 069 | D -1.1661 | G +0.5854
+Epoch 070 | D -1.1524 | G +0.7882 | W1 0.2385 corr 0.2412 score 0.4797
+Epoch 071 | D -1.1597 | G +0.7677
+Epoch 072 | D -1.2030 | G +0.8155
+Epoch 073 | D -1.2386 | G +1.3954
+Epoch 074 | D -1.1236 | G +1.0270
+Epoch 075 | D -1.2005 | G +0.9722 | W1 0.3662 corr 0.2356 score 0.6017
+Epoch 076 | D -1.1902 | G +1.1156
+Epoch 077 | D -1.2531 | G +1.0365
+Epoch 078 | D -1.2700 | G +0.9579
+Epoch 079 | D -1.2823 | G +1.2595
+Epoch 080 | D -1.2763 | G +1.0719 | W1 0.2717 corr 0.2158 score 0.4875
+Epoch 081 | D -1.2618 | G +1.2202
+Epoch 082 | D -1.2662 | G +1.2375
+Epoch 083 | D -1.2886 | G +1.6475
+Epoch 084 | D -1.3284 | G +1.4956
+Epoch 085 | D -1.2828 | G +1.0809 | W1 0.3993 corr 0.2004 score 0.5997
+Epoch 086 | D -1.3030 | G +1.5624
+Epoch 087 | D -1.1708 | G +1.4934
+Epoch 088 | D -1.2435 | G +1.4070
+Epoch 089 | D -1.1587 | G +1.3956
+Epoch 090 | D -1.1638 | G +1.0341 | W1 0.4718 corr 0.1495 score 0.6214
+Epoch 091 | D -1.2779 | G +1.3789
+Epoch 092 | D -1.1554 | G +0.9148
+Epoch 093 | D -1.1384 | G +1.1701
+Epoch 094 | D -1.1410 | G +1.1316
+Epoch 095 | D -1.1414 | G +1.5864 | W1 0.2485 corr 0.1946 score 0.4431
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 95.
+[saved] best epoch 65 (score 0.4415) -> outputs/models/capacity_sweep/c7_h4_s43
+[train] c7 h8 (280 params) s42
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +6.1596 | G +0.3548
+Epoch 002 | D +2.1784 | G +0.3784
+Epoch 003 | D +1.1011 | G +0.4338
+Epoch 004 | D -0.1475 | G +0.5263
+Epoch 005 | D -1.1611 | G +0.3676 | W1 0.4807 corr 0.3181 score 0.7987 *best*
+Epoch 006 | D -1.6949 | G +0.4258
+Epoch 007 | D -2.1709 | G +1.2212
+Epoch 008 | D -2.2202 | G +1.3148
+Epoch 009 | D -2.7149 | G +0.7938
+Epoch 010 | D -2.8471 | G +0.5145 | W1 0.4368 corr 0.3025 score 0.7393 *best*
+Epoch 011 | D -3.0913 | G +0.1794
+Epoch 012 | D -3.3040 | G +0.6628
+Epoch 013 | D -3.1844 | G +0.5377
+Epoch 014 | D -3.0476 | G +0.3291
+Epoch 015 | D -3.1626 | G -0.3661 | W1 0.4187 corr 0.3211 score 0.7399
+Epoch 016 | D -3.0607 | G +0.7267
+Epoch 017 | D -3.0160 | G +0.5770
+Epoch 018 | D -2.9023 | G +0.3622
+Epoch 019 | D -2.8091 | G +0.3331
+Epoch 020 | D -2.6768 | G +0.4874 | W1 0.3359 corr 0.3689 score 0.7047 *best*
+Epoch 021 | D -2.4748 | G +0.1630
+Epoch 022 | D -2.2423 | G +0.0586
+Epoch 023 | D -2.0826 | G +0.0002
+Epoch 024 | D -1.9297 | G +0.1521
+Epoch 025 | D -1.7954 | G -0.7089 | W1 0.2589 corr 0.3955 score 0.6544 *best*
+Epoch 026 | D -1.5683 | G -0.5759
+Epoch 027 | D -1.4403 | G -0.5623
+Epoch 028 | D -1.5190 | G +0.0279
+Epoch 029 | D -1.3343 | G -0.0061
+Epoch 030 | D -1.1714 | G +0.3471 | W1 0.1923 corr 0.3884 score 0.5807 *best*
+Epoch 031 | D -1.2057 | G -0.0341
+Epoch 032 | D -1.1848 | G +0.3372
+Epoch 033 | D -1.0350 | G -0.0309
+Epoch 034 | D -1.0197 | G -0.3416
+Epoch 035 | D -0.9302 | G +0.2418 | W1 0.2958 corr 0.2780 score 0.5737 *best*
+Epoch 036 | D -0.9123 | G -1.0881
+Epoch 037 | D -0.9193 | G +0.1914
+Epoch 038 | D -0.9155 | G -0.5467
+Epoch 039 | D -0.8937 | G +0.2389
+Epoch 040 | D -0.7469 | G +0.3172 | W1 0.1928 corr 0.2358 score 0.4286 *best*
+Epoch 041 | D -0.7332 | G -0.2393
+Epoch 042 | D -0.7583 | G -0.1238
+Epoch 043 | D -0.7569 | G -0.0584
+Epoch 044 | D -0.6538 | G -0.4067
+Epoch 045 | D -0.6816 | G +0.4146 | W1 0.2292 corr 0.1909 score 0.4201 *best*
+Epoch 046 | D -0.7554 | G +0.3203
+Epoch 047 | D -0.7549 | G +0.8019
+Epoch 048 | D -0.7987 | G +0.3157
+Epoch 049 | D -0.8219 | G +1.3554
+Epoch 050 | D -0.7816 | G +0.9974 | W1 0.4277 corr 0.2177 score 0.6454
+Epoch 051 | D -0.8035 | G +0.6806
+Epoch 052 | D -0.8399 | G +0.5975
+Epoch 053 | D -0.8053 | G +0.7499
+Epoch 054 | D -0.8955 | G +1.5838
+Epoch 055 | D -0.8413 | G +1.3809 | W1 0.2458 corr 0.1970 score 0.4428
+Epoch 056 | D -0.8164 | G +1.2593
+Epoch 057 | D -0.9172 | G +1.1045
+Epoch 058 | D -0.8893 | G +0.4766
+Epoch 059 | D -0.9565 | G +1.2488
+Epoch 060 | D -1.0156 | G +1.5071 | W1 0.3946 corr 0.1926 score 0.5872
+Epoch 061 | D -0.9488 | G +1.3230
+Epoch 062 | D -0.9961 | G +1.0944
+Epoch 063 | D -0.9290 | G +0.5718
+Epoch 064 | D -0.9929 | G +0.8576
+Epoch 065 | D -1.0573 | G +0.6164 | W1 0.2792 corr 0.2353 score 0.5144
+Epoch 066 | D -0.9551 | G +0.5760
+Epoch 067 | D -1.0648 | G +0.0807
+Epoch 068 | D -0.9954 | G -0.2279
+Epoch 069 | D -1.1953 | G +0.5234
+Epoch 070 | D -1.0440 | G +0.2378 | W1 0.2442 corr 0.2044 score 0.4487
+Epoch 071 | D -1.0526 | G +0.0159
+Epoch 072 | D -1.0198 | G +0.7440
+Epoch 073 | D -0.9828 | G +0.5424
+Epoch 074 | D -1.1019 | G -0.1381
+Epoch 075 | D -0.9806 | G +0.0755 | W1 0.2664 corr 0.2096 score 0.4760
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 75.
+[saved] best epoch 45 (score 0.4201) -> outputs/models/capacity_sweep/c7_h8_s42
+[train] c7 h8 (280 params) s43
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +7.0308 | G +0.4348
+Epoch 002 | D +2.8206 | G +0.4512
+Epoch 003 | D +2.1399 | G +0.5161
+Epoch 004 | D +1.3027 | G +1.2089
+Epoch 005 | D -0.0109 | G +1.4691 | W1 0.4785 corr 0.3461 score 0.8246 *best*
+Epoch 006 | D -0.8002 | G +0.1350
+Epoch 007 | D -1.2408 | G -1.7068
+Epoch 008 | D -0.8573 | G -2.9025
+Epoch 009 | D -1.6091 | G -0.8592
+Epoch 010 | D -2.4671 | G +1.8061 | W1 0.5020 corr 0.2967 score 0.7986 *best*
+Epoch 011 | D -2.4250 | G +2.0468
+Epoch 012 | D -2.9044 | G +0.7662
+Epoch 013 | D -3.2131 | G -0.1632
+Epoch 014 | D -2.9542 | G +0.8274
+Epoch 015 | D -2.7353 | G +1.4667 | W1 0.4469 corr 0.2729 score 0.7198 *best*
+Epoch 016 | D -3.1517 | G -0.2878
+Epoch 017 | D -2.9581 | G +1.2807
+Epoch 018 | D -2.9516 | G +1.7649
+Epoch 019 | D -2.6115 | G -0.0382
+Epoch 020 | D -3.4586 | G +1.8885 | W1 0.4228 corr 0.2852 score 0.7080 *best*
+Epoch 021 | D -2.6125 | G +0.4876
+Epoch 022 | D -2.4808 | G +0.8636
+Epoch 023 | D -3.0178 | G +0.9259
+Epoch 024 | D -3.0419 | G +1.0154
+Epoch 025 | D -2.7691 | G +0.7835 | W1 0.4349 corr 0.2853 score 0.7201
+Epoch 026 | D -2.9136 | G +0.2240
+Epoch 027 | D -2.5442 | G +1.1153
+Epoch 028 | D -2.1263 | G +1.3078
+Epoch 029 | D -3.1824 | G +1.4973
+Epoch 030 | D -2.3927 | G -0.0399 | W1 0.3479 corr 0.3117 score 0.6596 *best*
+Epoch 031 | D -2.3320 | G +0.8115
+Epoch 032 | D -2.4383 | G +1.0653
+Epoch 033 | D -2.4762 | G +0.6374
+Epoch 034 | D -2.0879 | G +0.3847
+Epoch 035 | D -2.0554 | G +0.0524 | W1 0.2446 corr 0.3824 score 0.6270 *best*
+Epoch 036 | D -2.0659 | G +0.0881
+Epoch 037 | D -1.7923 | G +0.9367
+Epoch 038 | D -1.4004 | G -0.1954
+Epoch 039 | D -1.3374 | G +0.9768
+Epoch 040 | D -1.4419 | G +0.1278 | W1 0.2616 corr 0.3170 score 0.5786 *best*
+Epoch 041 | D -1.2592 | G +0.7596
+Epoch 042 | D -1.2402 | G -0.2665
+Epoch 043 | D -1.1529 | G +0.6637
+Epoch 044 | D -0.9558 | G -0.4024
+Epoch 045 | D -1.0871 | G +0.3543 | W1 0.2005 corr 0.3263 score 0.5269 *best*
+Epoch 046 | D -0.7769 | G +1.5259
+Epoch 047 | D -0.7963 | G -0.2380
+Epoch 048 | D -0.7693 | G +1.1122
+Epoch 049 | D -0.7562 | G -0.4552
+Epoch 050 | D -0.6910 | G +0.6183 | W1 0.2721 corr 0.2513 score 0.5234 *best*
+Epoch 051 | D -0.6234 | G -0.0419
+Epoch 052 | D -0.5341 | G +0.7085
+Epoch 053 | D -0.6589 | G +0.0875
+Epoch 054 | D -0.4651 | G +1.0056
+Epoch 055 | D -0.5495 | G -0.0756 | W1 0.4910 corr 0.2364 score 0.7274
+Epoch 056 | D -0.5330 | G +0.6455
+Epoch 057 | D -0.6469 | G +0.1157
+Epoch 058 | D -0.6671 | G +0.5023
+Epoch 059 | D -0.6628 | G +1.3567
+Epoch 060 | D -0.5431 | G +0.3948 | W1 0.5676 corr 0.2150 score 0.7826
+Epoch 061 | D -0.7180 | G +0.9201
+Epoch 062 | D -0.6139 | G +1.3978
+Epoch 063 | D -0.5735 | G +1.4536
+Epoch 064 | D -0.6033 | G +0.9938
+Epoch 065 | D -0.6514 | G +0.8770 | W1 0.5179 corr 0.2530 score 0.7709
+Epoch 066 | D -0.7403 | G +1.7782
+Epoch 067 | D -0.7257 | G +2.6673
+Epoch 068 | D -0.7068 | G +2.1001
+Epoch 069 | D -0.8205 | G +1.3607
+Epoch 070 | D -0.7066 | G +2.0220 | W1 0.3712 corr 0.2633 score 0.6345
+Epoch 071 | D -0.7947 | G +2.2347
+Epoch 072 | D -0.8074 | G +1.3784
+Epoch 073 | D -0.8026 | G +2.7730
+Epoch 074 | D -0.8256 | G +2.2282
+Epoch 075 | D -0.8076 | G +2.2200 | W1 0.3313 corr 0.2632 score 0.5945
+Epoch 076 | D -0.8976 | G +1.6903
+Epoch 077 | D -0.8596 | G +2.0630
+Epoch 078 | D -0.8356 | G +2.1439
+Epoch 079 | D -0.9761 | G +2.5149
+Epoch 080 | D -1.0081 | G +2.6629 | W1 0.6142 corr 0.2843 score 0.8985
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 80.
+[saved] best epoch 50 (score 0.5234) -> outputs/models/capacity_sweep/c7_h8_s43
+[train] c7 h16 (544 params) s42
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 544 trainable parameters
+Epoch 001 | D +7.1413 | G -0.3836
+Epoch 002 | D +4.5861 | G -1.8474
+Epoch 003 | D +4.9615 | G -1.4534
+Epoch 004 | D +5.0120 | G -1.2839
+Epoch 005 | D +4.2876 | G -1.3636 | W1 1.6153 corr 0.3488 score 1.9641 *best*
+Epoch 006 | D +3.3120 | G -0.9866
+Epoch 007 | D +2.9111 | G -0.8739
+Epoch 008 | D +2.1136 | G -0.3582
+Epoch 009 | D +1.1269 | G +0.5017
+Epoch 010 | D +0.2974 | G +0.7942 | W1 0.8016 corr 0.2787 score 1.0803 *best*
+Epoch 011 | D +8.6498 | G -0.3166
+Epoch 012 | D +9.8140 | G -2.0730
+Epoch 013 | D +4.9437 | G -1.2108
+Epoch 014 | D +4.5566 | G -1.0404
+Epoch 015 | D +4.5916 | G -0.8374 | W1 0.9894 corr 0.3278 score 1.3172
+Epoch 016 | D +4.9306 | G -1.0421
+Epoch 017 | D +3.2964 | G -1.3478
+Epoch 018 | D +1.0567 | G -1.8318
+Epoch 019 | D -1.1233 | G -2.4408
+Epoch 020 | D -1.3961 | G -2.7158 | W1 0.8935 corr 0.3227 score 1.2162
+Epoch 021 | D -2.1061 | G -2.0225
+Epoch 022 | D -2.1513 | G -1.8521
+Epoch 023 | D -1.3157 | G -1.2139
+Epoch 024 | D -2.1128 | G -1.0570
+Epoch 025 | D -2.0832 | G -0.9685 | W1 0.9145 corr 0.3214 score 1.2359
+Epoch 026 | D -2.3064 | G -0.4458
+Epoch 027 | D -3.2972 | G -0.6116
+Epoch 028 | D -2.9735 | G -0.2606
+Epoch 029 | D -2.8260 | G -0.1722
+Epoch 030 | D -2.0483 | G -3.0792 | W1 0.4311 corr 0.2826 score 0.7137 *best*
+Epoch 031 | D -1.6754 | G -2.2930
+Epoch 032 | D -2.3385 | G -1.8871
+Epoch 033 | D -2.9363 | G -1.5202
+Epoch 034 | D -2.4823 | G -1.3263
+Epoch 035 | D -2.1424 | G -0.7159 | W1 0.4411 corr 0.2999 score 0.7410
+Epoch 036 | D -1.6789 | G -2.7090
+Epoch 037 | D -1.7423 | G -1.3596
+Epoch 038 | D -2.0194 | G -0.6976
+Epoch 039 | D -2.5436 | G -1.2006
+Epoch 040 | D -2.4094 | G -1.0458 | W1 0.4522 corr 0.2811 score 0.7333
+Epoch 041 | D -2.2272 | G -2.0211
+Epoch 042 | D -0.8707 | G -1.7539
+Epoch 043 | D -2.0028 | G +1.7082
+Epoch 044 | D -2.4571 | G -1.0183
+Epoch 045 | D -1.7181 | G -3.1922 | W1 0.5399 corr 0.3106 score 0.8505
+Epoch 046 | D -2.7376 | G -0.2625
+Epoch 047 | D -1.9674 | G +1.8272
+Epoch 048 | D -1.8803 | G -1.1193
+Epoch 049 | D -2.1994 | G -1.9935
+Epoch 050 | D -2.3577 | G -1.1603 | W1 0.5366 corr 0.2607 score 0.7973
+Epoch 051 | D -2.8674 | G +1.3124
+Epoch 052 | D -2.2074 | G +1.3653
+Epoch 053 | D -2.4397 | G -1.4360
+Epoch 054 | D -2.4887 | G -0.6192
+Epoch 055 | D -3.1587 | G -0.6636 | W1 0.4534 corr 0.2702 score 0.7235
+Epoch 056 | D -2.4260 | G -0.1817
+Epoch 057 | D -1.3490 | G -0.0973
+Epoch 058 | D -1.3535 | G -0.5782
+Epoch 059 | D -1.1523 | G -0.3458
+Epoch 060 | D -2.1483 | G +1.0183 | W1 0.3805 corr 0.3020 score 0.6825 *best*
+Epoch 061 | D -1.6732 | G +0.1064
+Epoch 062 | D -2.3333 | G +0.7627
+Epoch 063 | D -2.5130 | G -0.7478
+Epoch 064 | D -2.2968 | G -0.3684
+Epoch 065 | D -1.9513 | G -1.5007 | W1 0.5135 corr 0.2254 score 0.7388
+Epoch 066 | D -2.7265 | G +1.2290
+Epoch 067 | D -0.6792 | G -0.3573
+Epoch 068 | D -0.6669 | G +1.4576
+Epoch 069 | D -1.7508 | G -1.0241
+Epoch 070 | D -2.2356 | G +0.5698 | W1 0.3797 corr 0.2938 score 0.6735 *best*
+Epoch 071 | D -1.6346 | G -0.0132
+Epoch 072 | D -1.7007 | G -1.0744
+Epoch 073 | D -2.2065 | G -0.2258
+Epoch 074 | D -1.3471 | G +0.3241
+Epoch 075 | D -1.6081 | G +1.5119 | W1 0.3508 corr 0.2449 score 0.5956 *best*
+Epoch 076 | D -1.8292 | G -1.3915
+Epoch 077 | D -1.9614 | G +0.0260
+Epoch 078 | D -1.5512 | G +0.8820
+Epoch 079 | D -1.4920 | G +0.2691
+Epoch 080 | D -1.3805 | G -1.8573 | W1 0.6568 corr 0.2996 score 0.9564
+Epoch 081 | D -2.4079 | G +2.0506
+Epoch 082 | D -0.8455 | G -1.5534
+Epoch 083 | D -2.3203 | G +0.4058
+Epoch 084 | D -1.0925 | G -1.1466
+Epoch 085 | D -1.2100 | G +0.9009 | W1 0.3312 corr 0.2608 score 0.5920 *best*
+Epoch 086 | D -1.1190 | G -2.7941
+Epoch 087 | D -1.1534 | G -1.0283
+Epoch 088 | D -1.0513 | G -0.1599
+Epoch 089 | D -0.7957 | G +0.7601
+Epoch 090 | D -0.5536 | G -0.1943 | W1 0.3872 corr 0.2896 score 0.6768
+Epoch 091 | D -0.8618 | G -2.4853
+Epoch 092 | D -0.6027 | G +0.0199
+Epoch 093 | D -0.3796 | G -0.6618
+Epoch 094 | D -0.2826 | G -0.8699
+Epoch 095 | D -0.2367 | G -1.6260 | W1 0.2954 corr 0.2807 score 0.5761 *best*
+Epoch 096 | D -0.2718 | G +0.6906
+Epoch 097 | D -0.2902 | G -0.5506
+Epoch 098 | D -0.2507 | G -0.8141
+Epoch 099 | D -0.3177 | G +1.4638
+Epoch 100 | D -0.1973 | G -1.2248 | W1 0.6783 corr 0.3255 score 1.0038
+[saved] best epoch 95 (score 0.5761) -> outputs/models/capacity_sweep/c7_h16_s42
+[train] c7 h16 (544 params) s43
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 544 trainable parameters
+Epoch 001 | D +7.8771 | G +0.3309
+Epoch 002 | D +4.9318 | G -0.2214
+Epoch 003 | D +4.3432 | G -0.6382
+Epoch 004 | D +3.7282 | G -0.6288
+Epoch 005 | D +3.4888 | G -0.5237 | W1 1.4320 corr 0.3085 score 1.7404 *best*
+Epoch 006 | D +3.6061 | G -0.2509
+Epoch 007 | D +3.5546 | G -0.3997
+Epoch 008 | D +3.6697 | G -0.5686
+Epoch 009 | D +3.3096 | G -0.7796
+Epoch 010 | D +3.1060 | G -0.9508 | W1 1.0354 corr 0.2681 score 1.3035 *best*
+Epoch 011 | D +2.8848 | G -1.2611
+Epoch 012 | D +2.7823 | G -1.4998
+Epoch 013 | D +3.0121 | G -1.6559
+Epoch 014 | D +2.1923 | G -1.9358
+Epoch 015 | D +0.9801 | G -2.2443 | W1 1.2921 corr 0.3103 score 1.6024
+Epoch 016 | D +0.7410 | G -2.4915
+Epoch 017 | D +1.4991 | G -3.0602
+Epoch 018 | D +0.8102 | G -2.9580
+Epoch 019 | D -0.0550 | G -2.2785
+Epoch 020 | D -1.2737 | G -1.6154 | W1 1.2411 corr 0.4048 score 1.6459
+Epoch 021 | D -3.0195 | G -0.7637
+Epoch 022 | D -2.0597 | G -1.2140
+Epoch 023 | D -2.1432 | G -1.2688
+Epoch 024 | D -2.4019 | G -1.1801
+Epoch 025 | D -3.6115 | G -0.6775 | W1 0.9597 corr 0.3036 score 1.2633 *best*
+Epoch 026 | D -3.1950 | G -0.5693
+Epoch 027 | D -2.8188 | G -0.1907
+Epoch 028 | D -2.9417 | G +2.1230
+Epoch 029 | D -3.5961 | G +1.0777
+Epoch 030 | D -3.1318 | G -0.6957 | W1 0.4657 corr 0.2688 score 0.7345 *best*
+Epoch 031 | D -2.9297 | G -2.0441
+Epoch 032 | D -2.8847 | G -0.9222
+Epoch 033 | D -3.2654 | G -0.9279
+Epoch 034 | D -3.0599 | G -1.3013
+Epoch 035 | D -1.6314 | G -1.1643 | W1 0.4578 corr 0.3044 score 0.7621
+Epoch 036 | D -1.6477 | G +0.0464
+Epoch 037 | D -1.4662 | G +0.7764
+Epoch 038 | D -2.3556 | G -1.8252
+Epoch 039 | D -3.0536 | G -1.3874
+Epoch 040 | D -2.9854 | G +0.0291 | W1 0.5086 corr 0.2866 score 0.7952
+Epoch 041 | D -2.8119 | G +1.1832
+Epoch 042 | D -1.4306 | G -0.4781
+Epoch 043 | D -0.8053 | G +0.9080
+Epoch 044 | D -1.2565 | G -0.6418
+Epoch 045 | D -1.7531 | G -0.6488 | W1 0.5374 corr 0.2979 score 0.8353
+Epoch 046 | D -1.7689 | G +0.0889
+Epoch 047 | D -2.3787 | G +2.2167
+Epoch 048 | D -2.2636 | G -0.2447
+Epoch 049 | D -1.8106 | G -2.6052
+Epoch 050 | D -2.4593 | G -0.2979 | W1 0.4488 corr 0.3017 score 0.7505
+Epoch 051 | D -2.9590 | G +0.5000
+Epoch 052 | D -2.8988 | G +0.6060
+Epoch 053 | D -1.2286 | G -0.2915
+Epoch 054 | D -2.0017 | G +0.5115
+Epoch 055 | D -2.3538 | G +0.4355 | W1 0.4529 corr 0.3089 score 0.7619
+Epoch 056 | D -1.2869 | G +0.1427
+Epoch 057 | D -1.4113 | G +1.3735
+Epoch 058 | D -2.5736 | G +0.0460
+Epoch 059 | D -2.9803 | G +0.3816
+Epoch 060 | D -3.2902 | G +0.8343 | W1 0.4296 corr 0.2698 score 0.6994 *best*
+Epoch 061 | D -2.6514 | G +0.2970
+Epoch 062 | D -1.7802 | G -0.4184
+Epoch 063 | D -1.5443 | G +1.2749
+Epoch 064 | D -2.4358 | G +0.9416
+Epoch 065 | D -2.3101 | G +0.9549 | W1 0.3557 corr 0.2657 score 0.6214 *best*
+Epoch 066 | D -1.4358 | G -1.7036
+Epoch 067 | D -2.7093 | G +0.7801
+Epoch 068 | D -1.6444 | G +0.0227
+Epoch 069 | D -1.7133 | G +0.9408
+Epoch 070 | D -1.2775 | G -0.1669 | W1 0.3686 corr 0.2853 score 0.6539
+Epoch 071 | D -1.6749 | G -0.0916
+Epoch 072 | D -1.0684 | G +0.3208
+Epoch 073 | D -1.1288 | G -0.6806
+Epoch 074 | D -0.8539 | G +1.2150
+Epoch 075 | D -0.6338 | G -1.5407 | W1 0.2611 corr 0.3303 score 0.5914 *best*
+Epoch 076 | D -0.7673 | G +0.9395
+Epoch 077 | D -0.3614 | G +0.4510
+Epoch 078 | D -0.8732 | G -0.5460
+Epoch 079 | D -0.5932 | G -0.5479
+Epoch 080 | D -0.7967 | G +0.8858 | W1 0.3497 corr 0.4117 score 0.7614
+Epoch 081 | D -0.8405 | G -0.3130
+Epoch 082 | D -0.6496 | G +0.3178
+Epoch 083 | D -0.5196 | G -1.5250
+Epoch 084 | D -0.8962 | G +2.5426
+Epoch 085 | D -0.6506 | G +2.2079 | W1 0.3985 corr 0.2669 score 0.6654
+Epoch 086 | D -0.9641 | G -0.5445
+Epoch 087 | D -0.5119 | G +1.3647
+Epoch 088 | D -1.0112 | G +1.4663
+Epoch 089 | D -0.5144 | G +1.5802
+Epoch 090 | D -0.9176 | G +0.7819 | W1 0.5116 corr 0.3057 score 0.8172
+Epoch 091 | D -0.5001 | G +0.7541
+Epoch 092 | D -0.5246 | G +2.0573
+Epoch 093 | D -0.6936 | G +1.5121
+Epoch 094 | D -0.6768 | G +1.3738
+Epoch 095 | D -0.6640 | G +1.2609 | W1 0.3560 corr 0.2711 score 0.6271
+Epoch 096 | D -0.4817 | G +1.4821
+Epoch 097 | D -0.8011 | G +2.4459
+Epoch 098 | D -0.5717 | G +1.6645
+Epoch 099 | D -0.9670 | G +0.9786
+Epoch 100 | D -0.4318 | G +2.1234 | W1 0.7129 corr 0.2675 score 0.9804
+[saved] best epoch 75 (score 0.5914) -> outputs/models/capacity_sweep/c7_h16_s43
+[train] c7 h32 (1072 params) s42
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 1072 trainable parameters
+Epoch 001 | D +7.5405 | G -0.8831
+Epoch 002 | D +4.0860 | G -3.3036
+Epoch 003 | D +3.2402 | G -2.4832
+Epoch 004 | D +2.8047 | G -1.6005
+Epoch 005 | D +3.0455 | G -1.4326 | W1 1.7093 corr 0.3237 score 2.0329 *best*
+Epoch 006 | D +3.0056 | G -1.7691
+Epoch 007 | D +3.5474 | G -2.2729
+Epoch 008 | D +4.4724 | G -2.2695
+Epoch 009 | D +4.4431 | G -0.9650
+Epoch 010 | D +3.2175 | G -0.7940 | W1 2.1473 corr 0.3382 score 2.4855
+Epoch 011 | D +2.8811 | G -0.8817
+Epoch 012 | D +2.3616 | G -0.5381
+Epoch 013 | D +2.7163 | G -0.9091
+Epoch 014 | D +2.1514 | G -0.5375
+Epoch 015 | D +13.5203 | G -1.0403 | W1 0.9891 corr 0.3024 score 1.2915 *best*
+Epoch 016 | D +7.4128 | G -1.5798
+Epoch 017 | D +3.1567 | G -1.8541
+Epoch 018 | D +1.5526 | G -2.7050
+Epoch 019 | D -0.4249 | G -3.5088
+Epoch 020 | D -2.4568 | G -2.4856 | W1 1.3949 corr 0.3512 score 1.7461
+Epoch 021 | D -1.6454 | G -2.7028
+Epoch 022 | D -0.8390 | G -2.0643
+Epoch 023 | D +0.0512 | G -1.5043
+Epoch 024 | D -0.2560 | G -1.2956
+Epoch 025 | D -0.4011 | G -0.7290 | W1 1.9557 corr 0.3979 score 2.3536
+Epoch 026 | D -2.5141 | G -0.2396
+Epoch 027 | D -2.1032 | G -0.5876
+Epoch 028 | D -2.8332 | G -0.2792
+Epoch 029 | D -3.6529 | G -0.2491
+Epoch 030 | D -3.8145 | G -0.3879 | W1 0.8155 corr 0.2820 score 1.0975 *best*
+Epoch 031 | D -3.0963 | G -1.3727
+Epoch 032 | D -2.0208 | G -2.0855
+Epoch 033 | D -1.4866 | G +0.3579
+Epoch 034 | D -1.9859 | G -1.3972
+Epoch 035 | D -1.5781 | G -1.8888 | W1 0.5253 corr 0.2889 score 0.8143 *best*
+Epoch 036 | D -2.5028 | G -0.3674
+Epoch 037 | D -2.8342 | G -1.2265
+Epoch 038 | D -2.5356 | G -1.6266
+Epoch 039 | D -2.0610 | G -1.2080
+Epoch 040 | D -1.2793 | G +1.4005 | W1 0.5311 corr 0.2810 score 0.8121 *best*
+Epoch 041 | D -1.0771 | G -1.4596
+Epoch 042 | D -3.1351 | G +0.3514
+Epoch 043 | D -3.6851 | G -1.4639
+Epoch 044 | D -0.9452 | G -1.9538
+Epoch 045 | D -1.8544 | G +0.6220 | W1 0.5011 corr 0.2876 score 0.7887 *best*
+Epoch 046 | D -1.4512 | G -1.6526
+Epoch 047 | D -0.7664 | G -1.9486
+Epoch 048 | D -2.1336 | G +1.3439
+Epoch 049 | D -1.1651 | G -0.7556
+Epoch 050 | D -1.5053 | G -0.4403 | W1 0.5287 corr 0.2813 score 0.8099
+Epoch 051 | D -1.6434 | G -1.0249
+Epoch 052 | D -2.6878 | G -0.4883
+Epoch 053 | D -1.0119 | G -1.6393
+Epoch 054 | D -1.2543 | G +0.9179
+Epoch 055 | D -1.1222 | G -1.6516 | W1 0.5282 corr 0.3263 score 0.8546
+Epoch 056 | D -1.9557 | G +2.3157
+Epoch 057 | D -1.0005 | G -2.1224
+Epoch 058 | D -2.2590 | G +1.0632
+Epoch 059 | D -1.3253 | G -1.5660
+Epoch 060 | D -1.8875 | G +0.5116 | W1 0.4498 corr 0.3123 score 0.7621 *best*
+Epoch 061 | D -0.9639 | G -0.5451
+Epoch 062 | D -1.5275 | G -0.6780
+Epoch 063 | D -2.3185 | G -0.1828
+Epoch 064 | D -2.0266 | G -1.2717
+Epoch 065 | D -0.7940 | G +1.6777 | W1 0.4513 corr 0.2936 score 0.7449 *best*
+Epoch 066 | D -1.5766 | G -1.6850
+Epoch 067 | D -1.5910 | G -1.2660
+Epoch 068 | D -1.2148 | G +1.0928
+Epoch 069 | D -1.3332 | G -1.1322
+Epoch 070 | D -1.1123 | G -0.0765 | W1 0.3211 corr 0.3540 score 0.6751 *best*
+Epoch 071 | D -1.3153 | G -0.6740
+Epoch 072 | D -0.9674 | G +0.1791
+Epoch 073 | D -1.4974 | G -0.4759
+Epoch 074 | D -0.6727 | G -0.1911
+Epoch 075 | D -1.1285 | G -0.4693 | W1 0.2623 corr 0.3653 score 0.6276 *best*
+Epoch 076 | D -0.6341 | G -0.3098
+Epoch 077 | D -0.7603 | G +0.1700
+Epoch 078 | D -0.3422 | G -1.3577
+Epoch 079 | D -0.1869 | G -1.8147
+Epoch 080 | D -0.4023 | G +0.3344 | W1 0.3305 corr 0.4076 score 0.7381
+Epoch 081 | D -0.1615 | G -1.1570
+Epoch 082 | D -0.2595 | G -0.6452
+Epoch 083 | D +0.0398 | G -0.9179
+Epoch 084 | D -0.3527 | G +0.7039
+Epoch 085 | D -0.7714 | G +0.1491 | W1 0.7157 corr 0.4094 score 1.1251
+Epoch 086 | D -0.4912 | G -0.0638
+Epoch 087 | D -0.7086 | G +0.9939
+Epoch 088 | D -0.7471 | G +1.6140
+Epoch 089 | D -1.0505 | G -0.7473
+Epoch 090 | D -0.7727 | G +0.2166 | W1 0.6169 corr 0.4599 score 1.0769
+Epoch 091 | D -0.4544 | G +3.5965
+Epoch 092 | D -0.8748 | G +0.2735
+Epoch 093 | D -0.5448 | G -0.8075
+Epoch 094 | D -1.0206 | G +3.0097
+Epoch 095 | D -0.1317 | G +2.0003 | W1 0.4696 corr 0.3934 score 0.8631
+Epoch 096 | D -1.3367 | G +0.1476
+Epoch 097 | D -1.0948 | G -0.7810
+Epoch 098 | D -0.1954 | G +0.0940
+Epoch 099 | D -1.6291 | G +2.8371
+Epoch 100 | D -0.1822 | G +0.9958 | W1 0.7733 corr 0.3439 score 1.1172
+[saved] best epoch 75 (score 0.6276) -> outputs/models/capacity_sweep/c7_h32_s42
+[train] c7 h32 (1072 params) s43
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 1072 trainable parameters
+Epoch 001 | D +7.3184 | G +0.2635
+Epoch 002 | D +4.3067 | G -0.5980
+Epoch 003 | D +3.0743 | G -0.5064
+Epoch 004 | D +3.0566 | G -0.4890
+Epoch 005 | D +2.1518 | G -0.2811 | W1 1.1080 corr 0.3478 score 1.4558 *best*
+Epoch 006 | D +1.1831 | G -0.5872
+Epoch 007 | D +3.0466 | G -1.1855
+Epoch 008 | D +3.5041 | G -0.7243
+Epoch 009 | D +1.4192 | G -0.2842
+Epoch 010 | D -0.6683 | G -0.4435 | W1 1.0309 corr 0.3023 score 1.3333 *best*
+Epoch 011 | D -0.2044 | G -0.9892
+Epoch 012 | D -0.2194 | G -1.1927
+Epoch 013 | D -0.9687 | G -1.0466
+Epoch 014 | D -0.1863 | G -0.8871
+Epoch 015 | D -1.0175 | G -0.1917 | W1 1.2745 corr 0.3650 score 1.6395
+Epoch 016 | D -1.5702 | G -0.5122
+Epoch 017 | D -2.7163 | G -0.3777
+Epoch 018 | D -2.6795 | G -0.5391
+Epoch 019 | D -2.9977 | G +0.2587
+Epoch 020 | D -3.3798 | G +1.2264 | W1 0.4549 corr 0.2420 score 0.6969 *best*
+Epoch 021 | D -2.0713 | G -1.9451
+Epoch 022 | D -0.9946 | G -2.4708
+Epoch 023 | D -2.3874 | G +2.6071
+Epoch 024 | D -0.9160 | G -0.5123
+Epoch 025 | D -2.2002 | G -1.3923 | W1 0.4853 corr 0.2864 score 0.7717
+Epoch 026 | D -2.3202 | G -1.8532
+Epoch 027 | D -1.5176 | G +0.0108
+Epoch 028 | D -2.3206 | G -0.7169
+Epoch 029 | D -1.9296 | G -1.3510
+Epoch 030 | D -1.6785 | G -0.5892 | W1 0.4475 corr 0.2826 score 0.7301
+Epoch 031 | D -2.0510 | G -0.9891
+Epoch 032 | D -2.3268 | G -2.5011
+Epoch 033 | D -1.7319 | G +0.0044
+Epoch 034 | D -1.9803 | G +1.4449
+Epoch 035 | D -1.2621 | G -0.6650 | W1 0.5140 corr 0.2885 score 0.8025
+Epoch 036 | D -2.1413 | G -1.3093
+Epoch 037 | D -1.2073 | G +0.5881
+Epoch 038 | D -2.6013 | G -0.5980
+Epoch 039 | D -3.0540 | G -0.2956
+Epoch 040 | D -1.2462 | G -0.0764 | W1 0.6925 corr 0.3578 score 1.0503
+Epoch 041 | D -1.9398 | G +1.0734
+Epoch 042 | D -1.7850 | G -1.9916
+Epoch 043 | D -2.0249 | G +1.8793
+Epoch 044 | D -1.1477 | G -0.6446
+Epoch 045 | D -3.1574 | G +1.3170 | W1 0.5246 corr 0.2727 score 0.7973
+Epoch 046 | D -1.3041 | G -0.9113
+Epoch 047 | D -0.9956 | G +1.0222
+Epoch 048 | D -1.8152 | G +0.1925
+Epoch 049 | D -1.1797 | G +0.0896
+Epoch 050 | D -1.5949 | G -1.2828 | W1 0.5156 corr 0.2930 score 0.8086
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 50.
+[saved] best epoch 20 (score 0.6969) -> outputs/models/capacity_sweep/c7_h32_s43
+[train] c7 h64 (2128 params) s42
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 2128 trainable parameters
+Epoch 001 | D +7.2341 | G -0.0187
+Epoch 002 | D +5.9908 | G -0.7872
+Epoch 003 | D +4.6461 | G -1.2133
+Epoch 004 | D +3.9081 | G -1.0648
+Epoch 005 | D +3.8229 | G -0.9141 | W1 1.7445 corr 0.3645 score 2.1089 *best*
+Epoch 006 | D +3.3729 | G -1.2154
+Epoch 007 | D +2.3626 | G -0.9060
+Epoch 008 | D +2.3753 | G -1.2468
+Epoch 009 | D +2.2711 | G -0.9857
+Epoch 010 | D +1.1596 | G -0.0229 | W1 2.0257 corr 0.3147 score 2.3404
+Epoch 011 | D +0.9573 | G +0.2485
+Epoch 012 | D +1.7241 | G -0.6515
+Epoch 013 | D +1.8738 | G -1.1317
+Epoch 014 | D +2.6210 | G -1.4833
+Epoch 015 | D +3.6476 | G -2.1925 | W1 2.2898 corr 0.3571 score 2.6470
+Epoch 016 | D +2.4250 | G -2.3208
+Epoch 017 | D +1.0169 | G -2.5609
+Epoch 018 | D -0.7262 | G -2.4244
+Epoch 019 | D -1.7671 | G -1.8694
+Epoch 020 | D -1.2534 | G -1.6121 | W1 2.1913 corr 0.3228 score 2.5141
+Epoch 021 | D -0.3002 | G -1.2060
+Epoch 022 | D -2.4022 | G -0.8491
+Epoch 023 | D +0.3233 | G -1.6114
+Epoch 024 | D +2.9031 | G -1.3790
+Epoch 025 | D +2.5160 | G -1.0485 | W1 1.7884 corr 0.3041 score 2.0925 *best*
+Epoch 026 | D +0.8180 | G -0.5892
+Epoch 027 | D -0.8059 | G -1.2661
+Epoch 028 | D -1.4851 | G -2.1220
+Epoch 029 | D +0.0825 | G -1.5250
+Epoch 030 | D -0.3312 | G +1.5730 | W1 2.0025 corr 0.4044 score 2.4069
+Epoch 031 | D -2.2232 | G +3.5426
+Epoch 032 | D -4.8376 | G +3.6020
+Epoch 033 | D -3.6329 | G +0.4252
+Epoch 034 | D -1.5602 | G -2.6826
+Epoch 035 | D -2.2362 | G -0.8193 | W1 1.1837 corr 0.3247 score 1.5084 *best*
+Epoch 036 | D -3.2730 | G +0.5393
+Epoch 037 | D -1.7388 | G -1.3843
+Epoch 038 | D -0.7048 | G -1.4251
+Epoch 039 | D -1.6713 | G -1.2910
+Epoch 040 | D -3.0815 | G -1.1105 | W1 0.7819 corr 0.3772 score 1.1591 *best*
+Epoch 041 | D -2.3273 | G -0.7171
+Epoch 042 | D -0.8658 | G +0.3265
+Epoch 043 | D -0.9631 | G -2.1754
+Epoch 044 | D -2.2819 | G -1.4523
+Epoch 045 | D -2.7480 | G -0.2984 | W1 0.6746 corr 0.2501 score 0.9248 *best*
+Epoch 046 | D -2.4716 | G -1.3016
+Epoch 047 | D -1.1524 | G +0.5660
+Epoch 048 | D -2.2537 | G -0.2339
+Epoch 049 | D -1.3542 | G -1.5387
+Epoch 050 | D -1.4721 | G -0.0307 | W1 0.4887 corr 0.2634 score 0.7521 *best*
+Epoch 051 | D -1.6154 | G -2.2167
+Epoch 052 | D -2.4253 | G +0.3835
+Epoch 053 | D -0.7219 | G +1.1180
+Epoch 054 | D -0.5564 | G -4.0176
+Epoch 055 | D -1.0846 | G +0.4935 | W1 0.7258 corr 0.2830 score 1.0088
+Epoch 056 | D -1.4893 | G +1.0146
+Epoch 057 | D -0.7312 | G -4.2972
+Epoch 058 | D -2.8044 | G +1.0320
+Epoch 059 | D -0.5977 | G -0.0746
+Epoch 060 | D -0.9026 | G +0.7484 | W1 0.4893 corr 0.3257 score 0.8150
+Epoch 061 | D -0.8724 | G -2.3383
+Epoch 062 | D -2.4483 | G -0.3452
+Epoch 063 | D -1.2704 | G -0.1856
+Epoch 064 | D -1.5816 | G -0.3601
+Epoch 065 | D -1.9311 | G +0.6477 | W1 0.4900 corr 0.3285 score 0.8185
+Epoch 066 | D -1.0563 | G -1.5153
+Epoch 067 | D -1.7916 | G +1.2713
+Epoch 068 | D -0.8650 | G -0.1974
+Epoch 069 | D -0.5518 | G -0.7560
+Epoch 070 | D -1.0409 | G +0.5065 | W1 1.0661 corr 0.3056 score 1.3717
+Epoch 071 | D -3.4939 | G +1.4173
+Epoch 072 | D -0.4376 | G +0.5736
+Epoch 073 | D +0.6001 | G -1.8531
+Epoch 074 | D -0.8897 | G +1.4698
+Epoch 075 | D -0.8186 | G +1.9998 | W1 0.4900 corr 0.3206 score 0.8106
+Epoch 076 | D -0.1812 | G -0.1349
+Epoch 077 | D -0.9630 | G +1.2791
+Epoch 078 | D -1.1771 | G +1.0617
+Epoch 079 | D -0.6127 | G +0.7201
+Epoch 080 | D -1.5480 | G -1.6499 | W1 0.5567 corr 0.3146 score 0.8713
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 80.
+[saved] best epoch 50 (score 0.7521) -> outputs/models/capacity_sweep/c7_h64_s42
+[train] c7 h64 (2128 params) s43
+Label 7: 420 train / 74 val rows | circuit=classical preproc=quantile
+generator classical: 2128 trainable parameters
+Epoch 001 | D +8.0329 | G -0.0477
+Epoch 002 | D +5.0752 | G -0.5525
+Epoch 003 | D +3.4985 | G -0.3714
+Epoch 004 | D +3.2752 | G -0.5443
+Epoch 005 | D +3.4435 | G -0.7997 | W1 1.3637 corr 0.3267 score 1.6904 *best*
+Epoch 006 | D +3.1423 | G -1.0575
+Epoch 007 | D +3.0098 | G -1.1258
+Epoch 008 | D +2.5765 | G -0.6499
+Epoch 009 | D +3.4629 | G -0.5564
+Epoch 010 | D +3.8205 | G -0.9931 | W1 1.6415 corr 0.3226 score 1.9642
+Epoch 011 | D +3.4118 | G -1.0740
+Epoch 012 | D +2.6991 | G -1.2645
+Epoch 013 | D +3.0237 | G -1.4310
+Epoch 014 | D +1.8015 | G -1.4572
+Epoch 015 | D +0.3056 | G -1.2994 | W1 2.1737 corr 0.3384 score 2.5121
+Epoch 016 | D -0.7361 | G -0.9328
+Epoch 017 | D +0.9832 | G -1.6362
+Epoch 018 | D +1.8847 | G -1.5843
+Epoch 019 | D -0.6101 | G -1.1433
+Epoch 020 | D -0.5683 | G -1.0000 | W1 1.7264 corr 0.3841 score 2.1104
+Epoch 021 | D +1.7525 | G -1.4480
+Epoch 022 | D +0.8698 | G -0.9162
+Epoch 023 | D -2.0700 | G -0.3443
+Epoch 024 | D -2.7508 | G -0.5877
+Epoch 025 | D +0.5492 | G -3.0516 | W1 2.8992 corr 0.3948 score 3.2940
+Epoch 026 | D -1.7030 | G -2.1403
+Epoch 027 | D -2.8324 | G -0.9436
+Epoch 028 | D -2.2062 | G -0.4472
+Epoch 029 | D -1.8609 | G -0.9418
+Epoch 030 | D -0.7506 | G -5.5781 | W1 1.4551 corr 0.3421 score 1.7972
+Epoch 031 | D +0.1215 | G -2.3210
+Epoch 032 | D -0.5287 | G -1.8218
+Epoch 033 | D -1.4463 | G -1.2400
+Epoch 034 | D -0.6935 | G -4.5238
+Epoch 035 | D -1.2598 | G -0.1189 | W1 0.7622 corr 0.2596 score 1.0219 *best*
+Epoch 036 | D -2.3552 | G -1.8689
+Epoch 037 | D -1.4152 | G -2.6633
+Epoch 038 | D -2.3789 | G -3.8670
+Epoch 039 | D -1.3480 | G -1.2372
+Epoch 040 | D -2.6505 | G -2.0706 | W1 0.4101 corr 0.2643 score 0.6743 *best*
+Epoch 041 | D -1.0889 | G -3.0153
+Epoch 042 | D -1.3028 | G -1.1038
+Epoch 043 | D -1.7254 | G -2.3469
+Epoch 044 | D -1.3159 | G -1.5070
+Epoch 045 | D -1.7702 | G -1.6486 | W1 0.4587 corr 0.2672 score 0.7258
+Epoch 046 | D -0.8874 | G -2.0209
+Epoch 047 | D -1.8503 | G -2.5024
+Epoch 048 | D -0.2347 | G -1.6051
+Epoch 049 | D -1.1791 | G +0.1860
+Epoch 050 | D -0.6506 | G -2.6662 | W1 0.5669 corr 0.3834 score 0.9504
+Epoch 051 | D -0.6607 | G -1.1534
+Epoch 052 | D +0.0557 | G -3.1015
+Epoch 053 | D -0.6458 | G -1.9967
+Epoch 054 | D -0.5201 | G -2.2997
+Epoch 055 | D -0.2338 | G -1.8565 | W1 0.4019 corr 0.4103 score 0.8122
+Epoch 056 | D -0.5240 | G -2.5728
+Epoch 057 | D -0.3228 | G -0.0059
+Epoch 058 | D -0.2962 | G -2.4450
+Epoch 059 | D -0.2235 | G -1.3625
+Epoch 060 | D -0.5446 | G -1.1886 | W1 0.6450 corr 0.3346 score 0.9796
+Epoch 061 | D -0.5965 | G -0.8278
+Epoch 062 | D -0.1035 | G -1.4187
+Epoch 063 | D -0.3244 | G -1.6704
+Epoch 064 | D -0.5938 | G -1.0825
+Epoch 065 | D -0.5623 | G -1.1632 | W1 0.4398 corr 0.4682 score 0.9080
+Epoch 066 | D -0.5371 | G -1.1182
+Epoch 067 | D -0.8776 | G -0.0943
+Epoch 068 | D -0.3935 | G -1.3299
+Epoch 069 | D -0.9648 | G -0.9095
+Epoch 070 | D +0.0095 | G +0.1874 | W1 0.4482 corr 0.3744 score 0.8226
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 70.
+[saved] best epoch 40 (score 0.6743) -> outputs/models/capacity_sweep/c7_h64_s43
+[train] c9 h4 (148 params) s42
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +5.4021 | G +0.0576
+Epoch 002 | D +3.3294 | G -0.3339
+Epoch 003 | D +2.5878 | G -0.5237
+Epoch 004 | D +0.6513 | G -0.4139
+Epoch 005 | D -1.3978 | G -0.3843 | W1 0.3965 corr 0.3194 score 0.7159 *best*
+Epoch 006 | D -0.9153 | G -1.0809
+Epoch 007 | D -1.6885 | G -0.5515
+Epoch 008 | D -2.7528 | G -0.2358
+Epoch 009 | D -3.1255 | G +0.3402
+Epoch 010 | D -3.0136 | G -0.0209 | W1 0.3440 corr 0.3365 score 0.6805 *best*
+Epoch 011 | D -2.8997 | G -0.0918
+Epoch 012 | D -2.9133 | G -0.6842
+Epoch 013 | D -2.7404 | G -0.9983
+Epoch 014 | D -2.6139 | G -0.5289
+Epoch 015 | D -2.5396 | G -0.8659 | W1 0.2773 corr 0.3664 score 0.6436 *best*
+Epoch 016 | D -2.3833 | G -0.4523
+Epoch 017 | D -2.3375 | G -0.7970
+Epoch 018 | D -2.2499 | G -0.1595
+Epoch 019 | D -2.2481 | G -0.8433
+Epoch 020 | D -2.1276 | G -0.6965 | W1 0.2780 corr 0.2937 score 0.5717 *best*
+Epoch 021 | D -2.1011 | G -0.8702
+Epoch 022 | D -1.8164 | G -0.6880
+Epoch 023 | D -1.8002 | G -0.3642
+Epoch 024 | D -1.6533 | G -0.6262
+Epoch 025 | D -1.5871 | G -0.8685 | W1 0.2541 corr 0.2267 score 0.4809 *best*
+Epoch 026 | D -1.4279 | G -0.3394
+Epoch 027 | D -1.3846 | G -1.0791
+Epoch 028 | D -1.3022 | G -0.2096
+Epoch 029 | D -1.2396 | G -0.7877
+Epoch 030 | D -1.2064 | G -0.2266 | W1 0.1866 corr 0.2319 score 0.4185 *best*
+Epoch 031 | D -1.1275 | G -0.4313
+Epoch 032 | D -1.0701 | G -0.2243
+Epoch 033 | D -0.9686 | G -0.1932
+Epoch 034 | D -0.9568 | G -0.1521
+Epoch 035 | D -0.9247 | G -0.0279 | W1 0.2323 corr 0.2529 score 0.4852
+Epoch 036 | D -0.9466 | G +0.1614
+Epoch 037 | D -1.0183 | G +0.0475
+Epoch 038 | D -1.0271 | G +0.4686
+Epoch 039 | D -1.0281 | G +0.3325
+Epoch 040 | D -1.0980 | G +0.5633 | W1 0.2660 corr 0.2489 score 0.5149
+Epoch 041 | D -1.0941 | G +0.8941
+Epoch 042 | D -1.0778 | G +0.7417
+Epoch 043 | D -1.0916 | G +1.0744
+Epoch 044 | D -1.0892 | G +1.0680
+Epoch 045 | D -1.1106 | G +0.8179 | W1 0.1904 corr 0.2630 score 0.4534
+Epoch 046 | D -1.0687 | G +0.6540
+Epoch 047 | D -1.0457 | G +0.6424
+Epoch 048 | D -1.0328 | G +0.5991
+Epoch 049 | D -1.0293 | G +0.4247
+Epoch 050 | D -1.0780 | G +0.1951 | W1 0.2834 corr 0.2283 score 0.5117
+Epoch 051 | D -1.0171 | G +0.5063
+Epoch 052 | D -1.0467 | G +0.5738
+Epoch 053 | D -1.0842 | G +0.2496
+Epoch 054 | D -1.0735 | G +0.6837
+Epoch 055 | D -1.1041 | G +0.7472 | W1 0.2153 corr 0.2201 score 0.4354
+Epoch 056 | D -1.0570 | G +0.4131
+Epoch 057 | D -1.0899 | G +0.7332
+Epoch 058 | D -1.0320 | G +0.7070
+Epoch 059 | D -1.0823 | G +0.9731
+Epoch 060 | D -1.1223 | G +1.1453 | W1 0.2293 corr 0.2234 score 0.4527
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 60.
+[saved] best epoch 30 (score 0.4185) -> outputs/models/capacity_sweep/c9_h4_s42
+[train] c9 h4 (148 params) s43
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +4.9669 | G +0.0729
+Epoch 002 | D +2.4696 | G -0.4985
+Epoch 003 | D +2.3108 | G -0.4925
+Epoch 004 | D +1.9154 | G -0.6173
+Epoch 005 | D -0.8805 | G -0.7039 | W1 0.4831 corr 0.2816 score 0.7647 *best*
+Epoch 006 | D -2.0973 | G -0.6090
+Epoch 007 | D -1.7125 | G -0.7842
+Epoch 008 | D -2.7842 | G -0.4270
+Epoch 009 | D -3.1090 | G +1.0055
+Epoch 010 | D -3.0978 | G +0.3176 | W1 0.4072 corr 0.2524 score 0.6596 *best*
+Epoch 011 | D -3.1168 | G +0.0879
+Epoch 012 | D -3.0518 | G -1.1210
+Epoch 013 | D -3.1164 | G -0.4280
+Epoch 014 | D -2.9323 | G -0.4344
+Epoch 015 | D -2.9144 | G -0.6668 | W1 0.3885 corr 0.2886 score 0.6771
+Epoch 016 | D -2.7523 | G -0.7601
+Epoch 017 | D -2.5542 | G -0.8882
+Epoch 018 | D -2.2052 | G -1.2195
+Epoch 019 | D -1.9264 | G -1.3865
+Epoch 020 | D -1.7442 | G -1.3936 | W1 0.2886 corr 0.3238 score 0.6124 *best*
+Epoch 021 | D -1.6048 | G -1.4523
+Epoch 022 | D -1.4183 | G -1.3586
+Epoch 023 | D -1.2961 | G -0.9432
+Epoch 024 | D -1.2468 | G -1.5260
+Epoch 025 | D -1.1656 | G -1.0171 | W1 0.2755 corr 0.2700 score 0.5456 *best*
+Epoch 026 | D -1.1777 | G -1.4210
+Epoch 027 | D -1.1768 | G -1.4988
+Epoch 028 | D -1.1651 | G -1.1866
+Epoch 029 | D -1.1024 | G -1.6319
+Epoch 030 | D -1.0002 | G -0.9079 | W1 0.2134 corr 0.2366 score 0.4501 *best*
+Epoch 031 | D -1.0013 | G -1.8494
+Epoch 032 | D -0.8843 | G -0.8604
+Epoch 033 | D -0.9853 | G -0.8231
+Epoch 034 | D -1.0099 | G -0.9676
+Epoch 035 | D -0.9661 | G -1.6053 | W1 0.2219 corr 0.2249 score 0.4468 *best*
+Epoch 036 | D -0.8983 | G -0.6788
+Epoch 037 | D -0.9899 | G -0.5298
+Epoch 038 | D -1.0339 | G -0.6322
+Epoch 039 | D -1.0739 | G +0.1953
+Epoch 040 | D -1.0712 | G -0.1291 | W1 0.3110 corr 0.2241 score 0.5351
+Epoch 041 | D -1.0508 | G -0.1222
+Epoch 042 | D -1.1135 | G +0.3062
+Epoch 043 | D -1.1577 | G -0.1983
+Epoch 044 | D -1.1146 | G -0.2647
+Epoch 045 | D -1.1719 | G -0.1385 | W1 0.2280 corr 0.2195 score 0.4475
+Epoch 046 | D -1.2006 | G -0.3279
+Epoch 047 | D -1.1550 | G -0.0128
+Epoch 048 | D -1.1464 | G +0.0187
+Epoch 049 | D -1.1555 | G +0.0529
+Epoch 050 | D -1.1555 | G +0.2738 | W1 0.3272 corr 0.2627 score 0.5899
+Epoch 051 | D -1.1069 | G +0.1123
+Epoch 052 | D -1.1484 | G +0.2572
+Epoch 053 | D -1.1370 | G +0.3528
+Epoch 054 | D -1.1444 | G +0.1502
+Epoch 055 | D -1.1530 | G -0.0368 | W1 0.3213 corr 0.2875 score 0.6088
+Epoch 056 | D -1.1903 | G +0.1055
+Epoch 057 | D -1.1995 | G +0.1563
+Epoch 058 | D -1.2607 | G +0.1066
+Epoch 059 | D -1.3173 | G +0.1962
+Epoch 060 | D -1.2576 | G +0.2459 | W1 0.3450 corr 0.2524 score 0.5973
+Epoch 061 | D -1.2767 | G +0.0237
+Epoch 062 | D -1.2491 | G +0.0371
+Epoch 063 | D -1.2698 | G -0.0258
+Epoch 064 | D -1.2560 | G -0.1416
+Epoch 065 | D -1.2886 | G +0.2000 | W1 0.2813 corr 0.2713 score 0.5526
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 65.
+[saved] best epoch 35 (score 0.4468) -> outputs/models/capacity_sweep/c9_h4_s43
+[train] c9 h8 (280 params) s42
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +6.1894 | G +0.1284
+Epoch 002 | D +4.0824 | G -0.2270
+Epoch 003 | D +3.5381 | G -0.2899
+Epoch 004 | D +3.7777 | G -0.4443
+Epoch 005 | D +2.8432 | G -0.7347 | W1 0.6812 corr 0.2662 score 0.9474 *best*
+Epoch 006 | D +1.3161 | G -1.1813
+Epoch 007 | D +0.3438 | G -1.3592
+Epoch 008 | D -1.7390 | G -1.0269
+Epoch 009 | D -1.8152 | G -0.7760
+Epoch 010 | D -2.4327 | G -0.6095 | W1 0.4164 corr 0.3036 score 0.7200 *best*
+Epoch 011 | D -2.8215 | G -0.4893
+Epoch 012 | D -2.7182 | G -0.4765
+Epoch 013 | D -2.5882 | G -0.3008
+Epoch 014 | D -3.0785 | G +0.3496
+Epoch 015 | D -2.7160 | G -0.8264 | W1 0.3399 corr 0.2761 score 0.6161 *best*
+Epoch 016 | D -2.7417 | G -1.7689
+Epoch 017 | D -2.7459 | G -0.9463
+Epoch 018 | D -2.5349 | G -0.8237
+Epoch 019 | D -2.4098 | G -0.3516
+Epoch 020 | D -2.1988 | G -0.9828 | W1 0.2745 corr 0.3253 score 0.5998 *best*
+Epoch 021 | D -2.2018 | G -0.4335
+Epoch 022 | D -2.1053 | G -1.3777
+Epoch 023 | D -1.8110 | G -1.2628
+Epoch 024 | D -1.7637 | G -0.9480
+Epoch 025 | D -1.6526 | G -0.9375 | W1 0.2162 corr 0.3250 score 0.5412 *best*
+Epoch 026 | D -1.5402 | G -1.0297
+Epoch 027 | D -1.4920 | G -0.8244
+Epoch 028 | D -1.5253 | G -1.1290
+Epoch 029 | D -1.3450 | G -1.5586
+Epoch 030 | D -1.3145 | G -0.8469 | W1 0.2455 corr 0.2945 score 0.5400 *best*
+Epoch 031 | D -1.2186 | G -0.5172
+Epoch 032 | D -1.0712 | G -0.7850
+Epoch 033 | D -1.0364 | G -0.7289
+Epoch 034 | D -0.9880 | G -0.4877
+Epoch 035 | D -1.2608 | G +0.0138 | W1 0.1953 corr 0.2788 score 0.4741 *best*
+Epoch 036 | D -1.2350 | G -0.1022
+Epoch 037 | D -1.2908 | G -0.1285
+Epoch 038 | D -1.3114 | G -0.0774
+Epoch 039 | D -1.3051 | G -0.3127
+Epoch 040 | D -1.3729 | G -0.0674 | W1 0.1935 corr 0.2774 score 0.4709 *best*
+Epoch 041 | D -1.3654 | G +0.1717
+Epoch 042 | D -1.3413 | G +0.3609
+Epoch 043 | D -1.2324 | G +0.2065
+Epoch 044 | D -1.1457 | G +0.5011
+Epoch 045 | D -1.2038 | G +0.0998 | W1 0.2054 corr 0.2626 score 0.4680 *best*
+Epoch 046 | D -1.1009 | G +0.4162
+Epoch 047 | D -1.0389 | G +0.4185
+Epoch 048 | D -1.0039 | G +0.1599
+Epoch 049 | D -1.0158 | G +0.4815
+Epoch 050 | D -0.9610 | G +0.2448 | W1 0.1858 corr 0.2119 score 0.3978 *best*
+Epoch 051 | D -0.9193 | G +0.5550
+Epoch 052 | D -0.8395 | G +0.4730
+Epoch 053 | D -0.7743 | G +1.0863
+Epoch 054 | D -0.7993 | G +0.7818
+Epoch 055 | D -0.8226 | G +0.9280 | W1 0.2201 corr 0.1949 score 0.4150
+Epoch 056 | D -0.9069 | G +1.4099
+Epoch 057 | D -0.9218 | G +1.5321
+Epoch 058 | D -0.8645 | G +1.6444
+Epoch 059 | D -0.9117 | G +2.1095
+Epoch 060 | D -0.9357 | G +2.3072 | W1 0.2117 corr 0.1834 score 0.3950 *best*
+Epoch 061 | D -0.9290 | G +2.2476
+Epoch 062 | D -1.0113 | G +2.4859
+Epoch 063 | D -0.9484 | G +2.6167
+Epoch 064 | D -0.9160 | G +2.3859
+Epoch 065 | D -0.9344 | G +2.4750 | W1 0.2011 corr 0.1979 score 0.3990
+Epoch 066 | D -0.9475 | G +2.4342
+Epoch 067 | D -0.8717 | G +2.3824
+Epoch 068 | D -0.9660 | G +2.6914
+Epoch 069 | D -1.0081 | G +2.8520
+Epoch 070 | D -0.9801 | G +2.5573 | W1 0.4128 corr 0.2247 score 0.6375
+Epoch 071 | D -1.0069 | G +2.5267
+Epoch 072 | D -0.9439 | G +2.0691
+Epoch 073 | D -0.9891 | G +2.1381
+Epoch 074 | D -0.9887 | G +1.8759
+Epoch 075 | D -0.9621 | G +1.9209 | W1 0.3702 corr 0.2107 score 0.5809
+Epoch 076 | D -0.9091 | G +2.1401
+Epoch 077 | D -1.0100 | G +1.8821
+Epoch 078 | D -0.9295 | G +1.8106
+Epoch 079 | D -0.9400 | G +1.6891
+Epoch 080 | D -0.9307 | G +1.4942 | W1 0.3427 corr 0.2129 score 0.5556
+Epoch 081 | D -0.9175 | G +1.7319
+Epoch 082 | D -0.9112 | G +1.3662
+Epoch 083 | D -0.8614 | G +1.5094
+Epoch 084 | D -0.8704 | G +1.3842
+Epoch 085 | D -0.8777 | G +1.4177 | W1 0.1818 corr 0.1803 score 0.3622 *best*
+Epoch 086 | D -0.9058 | G +1.3053
+Epoch 087 | D -0.8835 | G +1.3348
+Epoch 088 | D -0.9410 | G +1.4727
+Epoch 089 | D -0.9234 | G +1.3374
+Epoch 090 | D -0.9381 | G +1.4094 | W1 0.2455 corr 0.1933 score 0.4388
+Epoch 091 | D -0.9994 | G +1.4780
+Epoch 092 | D -0.9197 | G +1.4360
+Epoch 093 | D -0.9560 | G +1.3194
+Epoch 094 | D -0.9473 | G +1.5846
+Epoch 095 | D -0.9073 | G +1.2786 | W1 0.3106 corr 0.2009 score 0.5115
+Epoch 096 | D -0.9541 | G +1.3696
+Epoch 097 | D -0.8820 | G +1.1788
+Epoch 098 | D -0.9004 | G +1.4480
+Epoch 099 | D -0.9319 | G +1.6247
+Epoch 100 | D -0.9394 | G +1.4248 | W1 0.2978 corr 0.2019 score 0.4998
+[saved] best epoch 85 (score 0.3622) -> outputs/models/capacity_sweep/c9_h8_s42
+[train] c9 h8 (280 params) s43
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +6.5041 | G -0.9305
+Epoch 002 | D +2.8378 | G -2.5612
+Epoch 003 | D +1.8423 | G -3.2394
+Epoch 004 | D +0.1341 | G -2.1845
+Epoch 005 | D -1.7865 | G +1.2624 | W1 0.5004 corr 0.2508 score 0.7512 *best*
+Epoch 006 | D -1.3440 | G +1.9793
+Epoch 007 | D -2.0464 | G +1.0850
+Epoch 008 | D -2.7456 | G +0.3905
+Epoch 009 | D -2.5112 | G +0.6286
+Epoch 010 | D -2.6372 | G +1.3223 | W1 0.4131 corr 0.2820 score 0.6951 *best*
+Epoch 011 | D -2.7524 | G +0.9438
+Epoch 012 | D -2.7712 | G +0.2491
+Epoch 013 | D -2.6878 | G +1.0861
+Epoch 014 | D -2.9498 | G +1.3911
+Epoch 015 | D -2.4967 | G +1.4511 | W1 0.4023 corr 0.3504 score 0.7527
+Epoch 016 | D -2.7943 | G +0.3520
+Epoch 017 | D -2.3127 | G +1.0683
+Epoch 018 | D -2.3892 | G +1.0683
+Epoch 019 | D -2.3422 | G +1.1116
+Epoch 020 | D -2.2213 | G +0.7782 | W1 0.3920 corr 0.3015 score 0.6935 *best*
+Epoch 021 | D -2.0492 | G +0.1595
+Epoch 022 | D -1.8632 | G +1.0195
+Epoch 023 | D -1.8972 | G -0.3314
+Epoch 024 | D -1.7367 | G +0.8176
+Epoch 025 | D -1.6311 | G +0.3475 | W1 0.2809 corr 0.3201 score 0.6009 *best*
+Epoch 026 | D -1.3656 | G +0.7745
+Epoch 027 | D -1.2438 | G +0.7493
+Epoch 028 | D -1.0121 | G +0.9169
+Epoch 029 | D -0.9258 | G +0.8523
+Epoch 030 | D -0.8727 | G +0.6485 | W1 0.4814 corr 0.2898 score 0.7711
+Epoch 031 | D -1.0428 | G +1.1935
+Epoch 032 | D -0.9730 | G +1.6070
+Epoch 033 | D -0.9699 | G +1.8045
+Epoch 034 | D -1.0117 | G +0.4515
+Epoch 035 | D -1.0914 | G +2.0000 | W1 0.3652 corr 0.2561 score 0.6214
+Epoch 036 | D -1.0662 | G +1.4005
+Epoch 037 | D -1.0825 | G +1.7760
+Epoch 038 | D -1.1653 | G +1.6041
+Epoch 039 | D -1.0693 | G +1.8159
+Epoch 040 | D -1.0893 | G +1.9117 | W1 0.3645 corr 0.2716 score 0.6362
+Epoch 041 | D -1.0115 | G +2.1761
+Epoch 042 | D -0.9802 | G +1.2530
+Epoch 043 | D -0.9462 | G +2.4942
+Epoch 044 | D -0.8496 | G +1.1495
+Epoch 045 | D -0.9307 | G +2.7083 | W1 0.3122 corr 0.2290 score 0.5413 *best*
+Epoch 046 | D -0.8388 | G +1.8707
+Epoch 047 | D -0.6617 | G +1.7465
+Epoch 048 | D -0.7244 | G +2.5201
+Epoch 049 | D -0.6814 | G +2.5794
+Epoch 050 | D -0.7919 | G +2.4373 | W1 0.3452 corr 0.2020 score 0.5473
+Epoch 051 | D -0.7719 | G +2.7280
+Epoch 052 | D -0.8131 | G +2.7469
+Epoch 053 | D -0.6943 | G +2.6097
+Epoch 054 | D -0.7706 | G +3.1123
+Epoch 055 | D -0.6728 | G +2.6562 | W1 0.3950 corr 0.2234 score 0.6184
+Epoch 056 | D -0.6483 | G +3.4821
+Epoch 057 | D -0.7302 | G +3.6012
+Epoch 058 | D -0.7043 | G +3.3843
+Epoch 059 | D -0.7310 | G +3.1267
+Epoch 060 | D -0.8035 | G +4.0039 | W1 0.3340 corr 0.1770 score 0.5110 *best*
+Epoch 061 | D -0.8249 | G +3.1977
+Epoch 062 | D -0.8140 | G +3.3423
+Epoch 063 | D -0.8353 | G +2.9810
+Epoch 064 | D -0.7888 | G +3.5099
+Epoch 065 | D -0.7492 | G +2.5137 | W1 0.2619 corr 0.1940 score 0.4559 *best*
+Epoch 066 | D -0.7768 | G +3.1706
+Epoch 067 | D -0.7785 | G +2.8985
+Epoch 068 | D -0.8560 | G +2.8739
+Epoch 069 | D -0.8483 | G +2.9808
+Epoch 070 | D -0.8717 | G +2.8587 | W1 0.3975 corr 0.2193 score 0.6168
+Epoch 071 | D -0.8366 | G +3.1412
+Epoch 072 | D -0.8321 | G +2.6988
+Epoch 073 | D -0.8685 | G +3.0762
+Epoch 074 | D -0.8244 | G +2.8867
+Epoch 075 | D -0.8207 | G +2.8489 | W1 0.3240 corr 0.2193 score 0.5433
+Epoch 076 | D -0.8272 | G +2.7141
+Epoch 077 | D -0.8496 | G +2.9151
+Epoch 078 | D -0.8335 | G +2.9004
+Epoch 079 | D -0.8114 | G +2.8343
+Epoch 080 | D -0.8099 | G +2.5163 | W1 0.5040 corr 0.2157 score 0.7197
+Epoch 081 | D -0.7877 | G +2.8951
+Epoch 082 | D -0.8715 | G +2.9456
+Epoch 083 | D -0.8575 | G +3.0405
+Epoch 084 | D -0.7988 | G +2.6279
+Epoch 085 | D -0.8890 | G +2.5439 | W1 0.4745 corr 0.2128 score 0.6873
+Epoch 086 | D -0.8106 | G +2.6519
+Epoch 087 | D -0.7546 | G +2.6075
+Epoch 088 | D -0.8396 | G +2.4218
+Epoch 089 | D -0.6839 | G +2.7567
+Epoch 090 | D -0.6982 | G +2.1168 | W1 0.4273 corr 0.2364 score 0.6637
+Epoch 091 | D -0.7020 | G +2.2974
+Epoch 092 | D -0.7415 | G +2.4096
+Epoch 093 | D -0.8001 | G +1.9664
+Epoch 094 | D -0.7655 | G +2.1984
+Epoch 095 | D -0.7221 | G +1.9297 | W1 0.3601 corr 0.2053 score 0.5654
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 95.
+[saved] best epoch 65 (score 0.4559) -> outputs/models/capacity_sweep/c9_h8_s43
+[train] c9 h16 (544 params) s42
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 544 trainable parameters
+Epoch 001 | D +6.7938 | G -0.7372
+Epoch 002 | D +4.4559 | G -1.4861
+Epoch 003 | D +4.6128 | G -1.2416
+Epoch 004 | D +4.2532 | G -0.8951
+Epoch 005 | D +2.4366 | G -0.8314 | W1 1.5457 corr 0.2626 score 1.8083 *best*
+Epoch 006 | D +2.2440 | G -0.9799
+Epoch 007 | D +4.7429 | G -1.5266
+Epoch 008 | D +4.6327 | G -2.4595
+Epoch 009 | D +4.5444 | G -4.3522
+Epoch 010 | D +3.6383 | G -5.8586 | W1 1.4892 corr 0.3114 score 1.8006 *best*
+Epoch 011 | D +0.9168 | G -4.5670
+Epoch 012 | D -1.1156 | G -2.8572
+Epoch 013 | D -2.1458 | G -1.7053
+Epoch 014 | D -2.3476 | G -0.9751
+Epoch 015 | D -2.4069 | G -1.1925 | W1 0.4727 corr 0.2382 score 0.7109 *best*
+Epoch 016 | D -4.5700 | G -0.9819
+Epoch 017 | D -3.1702 | G -0.7207
+Epoch 018 | D -3.0873 | G +1.1397
+Epoch 019 | D -3.4052 | G -0.9726
+Epoch 020 | D -1.8864 | G -1.2180 | W1 0.4524 corr 0.2374 score 0.6898 *best*
+Epoch 021 | D -2.6911 | G -1.1274
+Epoch 022 | D -2.3977 | G -0.9321
+Epoch 023 | D -2.4834 | G -2.3480
+Epoch 024 | D -2.0452 | G +0.6113
+Epoch 025 | D -2.5153 | G -2.7098 | W1 0.6084 corr 0.2405 score 0.8489
+Epoch 026 | D -1.1038 | G +1.7971
+Epoch 027 | D -2.9007 | G -1.5311
+Epoch 028 | D -1.2871 | G +0.2425
+Epoch 029 | D -2.7582 | G -2.2668
+Epoch 030 | D -1.6497 | G +0.7768 | W1 0.3474 corr 0.2306 score 0.5780 *best*
+Epoch 031 | D -1.9050 | G -2.2058
+Epoch 032 | D -1.8404 | G -0.2661
+Epoch 033 | D -1.2907 | G -0.4676
+Epoch 034 | D -1.5332 | G +0.2775
+Epoch 035 | D -2.0337 | G -1.2583 | W1 0.4301 corr 0.2715 score 0.7016
+Epoch 036 | D -1.3797 | G -0.5496
+Epoch 037 | D -0.9734 | G -0.4529
+Epoch 038 | D -1.5070 | G -1.3689
+Epoch 039 | D -1.4120 | G -0.8366
+Epoch 040 | D -1.2097 | G +0.8858 | W1 0.3682 corr 0.3567 score 0.7249
+Epoch 041 | D -1.5373 | G -1.0624
+Epoch 042 | D -1.4863 | G -0.4341
+Epoch 043 | D -1.3014 | G -0.8509
+Epoch 044 | D -1.1575 | G +0.3194
+Epoch 045 | D -0.7671 | G -0.7660 | W1 0.4056 corr 0.3121 score 0.7177
+Epoch 046 | D -1.0669 | G -0.4925
+Epoch 047 | D -0.8864 | G +0.6349
+Epoch 048 | D -0.9227 | G -0.3017
+Epoch 049 | D -1.1559 | G +1.4059
+Epoch 050 | D -1.0301 | G +0.2461 | W1 0.3455 corr 0.3383 score 0.6838
+Epoch 051 | D -1.2586 | G +0.9133
+Epoch 052 | D -0.8432 | G +1.8533
+Epoch 053 | D -1.1506 | G +0.5283
+Epoch 054 | D -0.9425 | G +1.3974
+Epoch 055 | D -1.0347 | G +0.4652 | W1 0.4452 corr 0.3134 score 0.7586
+Epoch 056 | D -0.9110 | G +1.2019
+Epoch 057 | D -0.7148 | G +1.3747
+Epoch 058 | D -0.7341 | G +0.6853
+Epoch 059 | D -0.8081 | G +0.0684
+Epoch 060 | D -0.6176 | G +0.6564 | W1 0.4910 corr 0.2701 score 0.7611
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 60.
+[saved] best epoch 30 (score 0.5780) -> outputs/models/capacity_sweep/c9_h16_s42
+[train] c9 h16 (544 params) s43
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 544 trainable parameters
+Epoch 001 | D +6.9909 | G -0.2790
+Epoch 002 | D +4.2754 | G -0.3663
+Epoch 003 | D +3.0562 | G -0.4362
+Epoch 004 | D +3.0958 | G -0.4882
+Epoch 005 | D +2.7724 | G -0.4238 | W1 0.7848 corr 0.2694 score 1.0543 *best*
+Epoch 006 | D +3.7510 | G -0.6579
+Epoch 007 | D +2.8433 | G -0.9561
+Epoch 008 | D +5.1629 | G -1.2546
+Epoch 009 | D +2.4467 | G -1.9354
+Epoch 010 | D +1.4779 | G -1.9498 | W1 1.3613 corr 0.3099 score 1.6712
+Epoch 011 | D +0.1972 | G -1.6057
+Epoch 012 | D -1.3141 | G -1.1416
+Epoch 013 | D -2.6335 | G -0.9982
+Epoch 014 | D -3.6040 | G -0.8498
+Epoch 015 | D -3.6912 | G -0.1402 | W1 0.6888 corr 0.3122 score 1.0010 *best*
+Epoch 016 | D -3.3245 | G -0.7052
+Epoch 017 | D -2.5049 | G -2.5961
+Epoch 018 | D -2.3533 | G -2.3828
+Epoch 019 | D -1.9794 | G -1.0459
+Epoch 020 | D -2.4360 | G -2.8713 | W1 0.5234 corr 0.2766 score 0.8000 *best*
+Epoch 021 | D -2.2952 | G -1.0272
+Epoch 022 | D -2.2903 | G -2.3084
+Epoch 023 | D -2.2034 | G -1.0004
+Epoch 024 | D -2.1132 | G -2.2697
+Epoch 025 | D -1.6991 | G -1.4730 | W1 0.3489 corr 0.4060 score 0.7549 *best*
+Epoch 026 | D -1.6106 | G -2.4160
+Epoch 027 | D -1.5654 | G -2.1819
+Epoch 028 | D -1.4309 | G -2.1787
+Epoch 029 | D -1.3113 | G -1.5016
+Epoch 030 | D -1.1024 | G -1.7592 | W1 0.3156 corr 0.3306 score 0.6462 *best*
+Epoch 031 | D -1.2944 | G -1.2247
+Epoch 032 | D -1.0256 | G -1.5705
+Epoch 033 | D -1.1057 | G -0.8014
+Epoch 034 | D -1.0747 | G -1.7070
+Epoch 035 | D -0.8487 | G +0.5744 | W1 0.3783 corr 0.3211 score 0.6994
+Epoch 036 | D -0.8653 | G -0.6832
+Epoch 037 | D -0.8724 | G -1.8579
+Epoch 038 | D -0.8358 | G +0.8080
+Epoch 039 | D -0.6884 | G -1.0907
+Epoch 040 | D -0.7278 | G -0.6585 | W1 0.3684 corr 0.2181 score 0.5865 *best*
+Epoch 041 | D -0.5993 | G -1.1145
+Epoch 042 | D -0.4549 | G -0.1115
+Epoch 043 | D -0.6026 | G -0.5262
+Epoch 044 | D -0.7322 | G -0.6697
+Epoch 045 | D -0.7720 | G +1.0177 | W1 0.2711 corr 0.1886 score 0.4597 *best*
+Epoch 046 | D -0.6269 | G -0.1260
+Epoch 047 | D -0.5515 | G +0.4482
+Epoch 048 | D -0.5899 | G +0.7379
+Epoch 049 | D -0.7803 | G +0.2477
+Epoch 050 | D -0.8498 | G +0.7856 | W1 0.6351 corr 0.2436 score 0.8788
+Epoch 051 | D -0.7141 | G +2.0887
+Epoch 052 | D -0.7376 | G +0.8911
+Epoch 053 | D -0.7977 | G +1.5846
+Epoch 054 | D -0.4637 | G +1.1884
+Epoch 055 | D -0.6165 | G +1.3827 | W1 0.4365 corr 0.1953 score 0.6318
+Epoch 056 | D -0.5275 | G +1.3643
+Epoch 057 | D -0.5925 | G +0.9880
+Epoch 058 | D -0.5873 | G +1.9056
+Epoch 059 | D -0.6467 | G +0.7599
+Epoch 060 | D -0.6643 | G +1.9648 | W1 0.3802 corr 0.2007 score 0.5809
+Epoch 061 | D -0.6695 | G +1.1884
+Epoch 062 | D -0.7377 | G +1.8353
+Epoch 063 | D -0.7352 | G +2.4661
+Epoch 064 | D -0.7262 | G +2.1466
+Epoch 065 | D -0.7189 | G +2.9259 | W1 0.3772 corr 0.2035 score 0.5807
+Epoch 066 | D -0.8026 | G +2.6689
+Epoch 067 | D -0.7979 | G +2.4177
+Epoch 068 | D -0.7733 | G +2.5911
+Epoch 069 | D -0.7333 | G +2.4712
+Epoch 070 | D -0.7856 | G +2.7590 | W1 0.3390 corr 0.1957 score 0.5346
+Epoch 071 | D -0.7219 | G +2.4957
+Epoch 072 | D -0.7509 | G +2.6206
+Epoch 073 | D -0.7733 | G +2.3513
+Epoch 074 | D -0.6852 | G +2.4589
+Epoch 075 | D -0.8337 | G +2.2344 | W1 0.3476 corr 0.2032 score 0.5508
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 75.
+[saved] best epoch 45 (score 0.4597) -> outputs/models/capacity_sweep/c9_h16_s43
+[train] c9 h32 (1072 params) s42
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 1072 trainable parameters
+Epoch 001 | D +6.1369 | G -1.8746
+Epoch 002 | D +2.9310 | G -1.1460
+Epoch 003 | D +3.0927 | G -0.2480
+Epoch 004 | D +4.3031 | G -0.3955
+Epoch 005 | D +3.2858 | G -0.5256 | W1 1.2306 corr 0.3133 score 1.5439 *best*
+Epoch 006 | D +4.2243 | G -0.7575
+Epoch 007 | D +3.1019 | G -1.8809
+Epoch 008 | D +3.5305 | G -2.3833
+Epoch 009 | D +2.2512 | G -2.2313
+Epoch 010 | D +1.6412 | G -2.1538 | W1 1.1589 corr 0.3157 score 1.4747 *best*
+Epoch 011 | D +1.5195 | G -1.8559
+Epoch 012 | D -0.9567 | G -1.8357
+Epoch 013 | D -1.3360 | G -1.3435
+Epoch 014 | D -3.6850 | G -0.5787
+Epoch 015 | D -3.3558 | G -0.5730 | W1 0.8729 corr 0.3032 score 1.1761 *best*
+Epoch 016 | D -3.6532 | G -0.0946
+Epoch 017 | D -1.5243 | G -2.3380
+Epoch 018 | D -3.0005 | G -1.7335
+Epoch 019 | D -2.1102 | G -1.4983
+Epoch 020 | D -0.9067 | G -2.8867 | W1 0.4325 corr 0.2933 score 0.7258 *best*
+Epoch 021 | D -1.9887 | G -1.3750
+Epoch 022 | D -1.4491 | G -2.3223
+Epoch 023 | D -1.3488 | G -1.8380
+Epoch 024 | D -1.2474 | G +0.5797
+Epoch 025 | D -1.3085 | G -2.3635 | W1 0.5006 corr 0.2484 score 0.7490
+Epoch 026 | D -2.3780 | G +0.4457
+Epoch 027 | D -1.9951 | G -1.6964
+Epoch 028 | D -2.1165 | G -1.0174
+Epoch 029 | D -1.4042 | G -0.1802
+Epoch 030 | D -1.7351 | G +0.7207 | W1 0.3377 corr 0.2347 score 0.5724 *best*
+Epoch 031 | D -0.5543 | G -1.1437
+Epoch 032 | D -1.6052 | G -0.2587
+Epoch 033 | D -2.9911 | G +2.6590
+Epoch 034 | D -1.5653 | G +0.2643
+Epoch 035 | D -2.2714 | G +0.1590 | W1 0.3368 corr 0.2788 score 0.6156
+Epoch 036 | D -1.3642 | G -0.4413
+Epoch 037 | D -1.5209 | G -0.1408
+Epoch 038 | D -1.7997 | G +1.0300
+Epoch 039 | D -0.9097 | G +0.0932
+Epoch 040 | D -1.0384 | G +0.1611 | W1 0.3859 corr 0.2480 score 0.6339
+Epoch 041 | D -1.4374 | G -0.6122
+Epoch 042 | D -1.2730 | G +0.7404
+Epoch 043 | D -1.4591 | G -1.3694
+Epoch 044 | D -1.1423 | G +0.6247
+Epoch 045 | D -1.1955 | G -0.4323 | W1 0.6230 corr 0.3003 score 0.9232
+Epoch 046 | D -1.1170 | G +0.6362
+Epoch 047 | D -1.1722 | G +0.5767
+Epoch 048 | D -0.7461 | G +0.2184
+Epoch 049 | D -0.6085 | G +0.2430
+Epoch 050 | D -0.5579 | G -0.4577 | W1 0.3525 corr 0.3486 score 0.7010
+Epoch 051 | D -0.5150 | G +1.1533
+Epoch 052 | D -1.0536 | G -0.1273
+Epoch 053 | D -0.2497 | G +0.9938
+Epoch 054 | D -0.6338 | G +0.2923
+Epoch 055 | D -0.6334 | G +0.9741 | W1 0.4423 corr 0.3289 score 0.7712
+Epoch 056 | D -0.7225 | G +0.6097
+Epoch 057 | D -0.7980 | G +1.2057
+Epoch 058 | D -0.6491 | G +0.6359
+Epoch 059 | D -0.4793 | G +1.2997
+Epoch 060 | D -0.4273 | G +0.1600 | W1 0.3605 corr 0.2986 score 0.6591
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 60.
+[saved] best epoch 30 (score 0.5724) -> outputs/models/capacity_sweep/c9_h32_s42
+[train] c9 h32 (1072 params) s43
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 1072 trainable parameters
+Epoch 001 | D +6.0330 | G -1.2955
+Epoch 002 | D +4.8617 | G -0.7003
+Epoch 003 | D +3.9897 | G -0.5596
+Epoch 004 | D +2.8206 | G -0.9724
+Epoch 005 | D +2.6099 | G -1.8878 | W1 1.4536 corr 0.3761 score 1.8296 *best*
+Epoch 006 | D +2.0305 | G -2.3026
+Epoch 007 | D +1.3016 | G -2.0702
+Epoch 008 | D +0.3666 | G -1.3107
+Epoch 009 | D +0.2144 | G -1.1109
+Epoch 010 | D -0.7738 | G -1.5573 | W1 1.6754 corr 0.3353 score 2.0108
+Epoch 011 | D -1.3538 | G -1.2815
+Epoch 012 | D -1.4137 | G -0.6502
+Epoch 013 | D -2.3029 | G -1.7956
+Epoch 014 | D -1.8976 | G -0.8979
+Epoch 015 | D -1.9534 | G -0.3305 | W1 0.6449 corr 0.2813 score 0.9262 *best*
+Epoch 016 | D -2.4061 | G -0.9810
+Epoch 017 | D -2.5139 | G -1.4006
+Epoch 018 | D -2.4213 | G -0.8190
+Epoch 019 | D -1.9224 | G -1.4554
+Epoch 020 | D -2.2360 | G -1.9029 | W1 0.4662 corr 0.2259 score 0.6920 *best*
+Epoch 021 | D -2.0202 | G -1.9724
+Epoch 022 | D -3.5388 | G -1.9102
+Epoch 023 | D -1.8337 | G -0.8265
+Epoch 024 | D -1.0301 | G -1.4597
+Epoch 025 | D -2.2417 | G -0.1243 | W1 0.4454 corr 0.2333 score 0.6787 *best*
+Epoch 026 | D -1.9103 | G -1.6091
+Epoch 027 | D -1.9821 | G -0.9494
+Epoch 028 | D -1.6225 | G -0.6313
+Epoch 029 | D -1.4437 | G -0.2822
+Epoch 030 | D -1.2692 | G -0.0387 | W1 0.4212 corr 0.2411 score 0.6623 *best*
+Epoch 031 | D -1.3526 | G -1.5529
+Epoch 032 | D -1.9518 | G -0.7518
+Epoch 033 | D -1.8019 | G +0.2843
+Epoch 034 | D -1.3058 | G -1.3133
+Epoch 035 | D -1.4480 | G -0.7069 | W1 0.5290 corr 0.2502 score 0.7791
+Epoch 036 | D -0.9133 | G -0.8751
+Epoch 037 | D -1.2563 | G +0.5866
+Epoch 038 | D -1.0401 | G -1.2693
+Epoch 039 | D -0.9503 | G -0.2496
+Epoch 040 | D -0.9675 | G -1.0383 | W1 0.2991 corr 0.3905 score 0.6896
+Epoch 041 | D -0.8463 | G -0.3256
+Epoch 042 | D -0.4377 | G -1.3019
+Epoch 043 | D -0.6285 | G +0.7948
+Epoch 044 | D -0.6609 | G -1.4754
+Epoch 045 | D -0.9949 | G +0.7590 | W1 0.4020 corr 0.2538 score 0.6559 *best*
+Epoch 046 | D -0.6594 | G -0.2850
+Epoch 047 | D -0.4767 | G +1.2215
+Epoch 048 | D -0.4288 | G -0.6990
+Epoch 049 | D -0.6752 | G +0.2486
+Epoch 050 | D -0.5464 | G +1.1007 | W1 0.4084 corr 0.2827 score 0.6911
+Epoch 051 | D -0.4713 | G +0.1296
+Epoch 052 | D -0.4977 | G +0.4203
+Epoch 053 | D -0.3115 | G +1.1927
+Epoch 054 | D -0.7656 | G -0.0882
+Epoch 055 | D -0.4146 | G +1.0460 | W1 0.3838 corr 0.3248 score 0.7087
+Epoch 056 | D -0.3867 | G +0.3334
+Epoch 057 | D -0.5666 | G +0.8887
+Epoch 058 | D -0.4839 | G +0.0932
+Epoch 059 | D -0.5850 | G +1.7808
+Epoch 060 | D -0.2814 | G -0.1933 | W1 0.3549 corr 0.2518 score 0.6067 *best*
+Epoch 061 | D -0.5060 | G +1.1215
+Epoch 062 | D -0.4952 | G +0.8729
+Epoch 063 | D -0.5328 | G +1.5231
+Epoch 064 | D -0.3845 | G +0.9171
+Epoch 065 | D -0.3935 | G +0.4113 | W1 0.6647 corr 0.2918 score 0.9565
+Epoch 066 | D -0.5101 | G +1.2721
+Epoch 067 | D -0.3713 | G +1.3670
+Epoch 068 | D -0.5574 | G +0.4760
+Epoch 069 | D -0.4460 | G +1.0644
+Epoch 070 | D -0.4742 | G +0.6021 | W1 0.6712 corr 0.2619 score 0.9331
+Epoch 071 | D -0.6464 | G +1.3255
+Epoch 072 | D -0.8302 | G +1.2466
+Epoch 073 | D -0.8269 | G +1.9567
+Epoch 074 | D -0.7237 | G +1.5135
+Epoch 075 | D -0.5223 | G +1.9815 | W1 0.3939 corr 0.2877 score 0.6816
+Epoch 076 | D -0.5630 | G +2.0673
+Epoch 077 | D -0.4405 | G +1.7077
+Epoch 078 | D -0.3749 | G +0.9717
+Epoch 079 | D -0.3424 | G +1.4920
+Epoch 080 | D -0.4026 | G +1.1195 | W1 0.3333 corr 0.2783 score 0.6116
+Epoch 081 | D -0.5138 | G +1.1576
+Epoch 082 | D -0.5841 | G +1.4400
+Epoch 083 | D -0.7138 | G +1.8005
+Epoch 084 | D -0.5033 | G +1.6355
+Epoch 085 | D -0.5185 | G +1.4756 | W1 0.4200 corr 0.2102 score 0.6302
+Epoch 086 | D -0.6020 | G +1.9377
+Epoch 087 | D -0.7002 | G +2.3786
+Epoch 088 | D -0.5493 | G +2.1363
+Epoch 089 | D -0.6455 | G +1.7867
+Epoch 090 | D -0.7339 | G +2.2945 | W1 0.4169 corr 0.2538 score 0.6707
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 90.
+[saved] best epoch 60 (score 0.6067) -> outputs/models/capacity_sweep/c9_h32_s43
+[train] c9 h64 (2128 params) s42
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 2128 trainable parameters
+Epoch 001 | D +6.8941 | G -0.3166
+Epoch 002 | D +4.7313 | G -0.6150
+Epoch 003 | D +3.9161 | G -0.8787
+Epoch 004 | D +3.7716 | G -1.5976
+Epoch 005 | D +2.9927 | G -1.9910 | W1 2.8859 corr 0.3269 score 3.2128 *best*
+Epoch 006 | D +2.9826 | G -0.8368
+Epoch 007 | D +2.4447 | G -0.3145
+Epoch 008 | D +2.9531 | G -0.8171
+Epoch 009 | D +2.4610 | G -1.2385
+Epoch 010 | D +1.3545 | G -1.2005 | W1 2.0288 corr 0.2676 score 2.2964 *best*
+Epoch 011 | D -1.7260 | G -1.1990
+Epoch 012 | D -2.3835 | G -0.7213
+Epoch 013 | D -3.1069 | G -0.2227
+Epoch 014 | D -1.2864 | G -1.8285
+Epoch 015 | D -1.1598 | G +0.4417 | W1 0.4645 corr 0.2397 score 0.7042 *best*
+Epoch 016 | D -1.7134 | G -1.3684
+Epoch 017 | D -2.2444 | G -2.1764
+Epoch 018 | D -2.2444 | G +0.1654
+Epoch 019 | D -1.9721 | G -0.3177
+Epoch 020 | D -1.4397 | G -0.4431 | W1 0.8154 corr 0.3053 score 1.1206
+Epoch 021 | D -1.8383 | G -0.3496
+Epoch 022 | D -1.0387 | G -0.8777
+Epoch 023 | D -2.1808 | G -1.5240
+Epoch 024 | D -2.1501 | G -2.1520
+Epoch 025 | D -0.8879 | G +0.2023 | W1 0.5069 corr 0.2489 score 0.7558
+Epoch 026 | D -1.7113 | G -0.9940
+Epoch 027 | D -1.3587 | G -1.2703
+Epoch 028 | D -1.3423 | G -1.0159
+Epoch 029 | D -2.4013 | G -0.5106
+Epoch 030 | D -0.3317 | G -0.5052 | W1 0.5285 corr 0.2792 score 0.8077
+Epoch 031 | D -1.1135 | G +0.4033
+Epoch 032 | D -1.2777 | G -1.3148
+Epoch 033 | D -0.7612 | G -0.9666
+Epoch 034 | D -0.8739 | G +0.1863
+Epoch 035 | D -1.2996 | G -0.6658 | W1 0.4064 corr 0.3674 score 0.7738
+Epoch 036 | D -0.9751 | G +0.1733
+Epoch 037 | D +0.1708 | G -0.9319
+Epoch 038 | D -0.6730 | G -0.8164
+Epoch 039 | D -0.3237 | G -1.3930
+Epoch 040 | D -0.4608 | G -1.9080 | W1 0.3415 corr 0.4012 score 0.7427
+Epoch 041 | D -0.2422 | G -0.4441
+Epoch 042 | D -0.4702 | G -1.1137
+Epoch 043 | D -0.2664 | G -0.9123
+Epoch 044 | D -0.5548 | G -0.4454
+Epoch 045 | D -0.4025 | G +0.4080 | W1 0.4844 corr 0.4196 score 0.9039
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 45.
+[saved] best epoch 15 (score 0.7042) -> outputs/models/capacity_sweep/c9_h64_s42
+[train] c9 h64 (2128 params) s43
+Label 9: 746 train / 131 val rows | circuit=classical preproc=quantile
+generator classical: 2128 trainable parameters
+Epoch 001 | D +4.6824 | G -2.5012
+Epoch 002 | D +1.8946 | G -1.6905
+Epoch 003 | D +2.2951 | G -1.5888
+Epoch 004 | D +1.4106 | G -2.3626
+Epoch 005 | D +1.4993 | G -1.7301 | W1 1.7277 corr 0.2940 score 2.0217 *best*
+Epoch 006 | D +1.6372 | G -0.8335
+Epoch 007 | D +1.5660 | G -1.4965
+Epoch 008 | D +0.7903 | G -0.9375
+Epoch 009 | D +0.5732 | G -1.1813
+Epoch 010 | D +2.6180 | G -0.5491 | W1 1.3843 corr 0.3961 score 1.7805 *best*
+Epoch 011 | D +3.3787 | G -0.3942
+Epoch 012 | D +0.4137 | G -0.6639
+Epoch 013 | D -0.3064 | G -1.2016
+Epoch 014 | D +0.0935 | G -0.5103
+Epoch 015 | D -1.7556 | G -0.3038 | W1 1.9054 corr 0.2724 score 2.1778
+Epoch 016 | D -2.0795 | G +2.3524
+Epoch 017 | D -4.1607 | G +0.9493
+Epoch 018 | D -3.2115 | G +1.3900
+Epoch 019 | D -0.8426 | G +0.5910
+Epoch 020 | D -1.2659 | G +0.6591 | W1 0.5726 corr 0.2357 score 0.8082 *best*
+Epoch 021 | D -1.1520 | G +0.8648
+Epoch 022 | D -1.8681 | G +1.0575
+Epoch 023 | D -0.8147 | G +0.7437
+Epoch 024 | D -0.8807 | G +1.2727
+Epoch 025 | D -1.6159 | G +2.0142 | W1 0.5101 corr 0.2791 score 0.7892 *best*
+Epoch 026 | D -1.1235 | G +0.8925
+Epoch 027 | D -2.0190 | G +1.2095
+Epoch 028 | D -1.3128 | G +1.9850
+Epoch 029 | D -1.5327 | G +2.2461
+Epoch 030 | D -1.5565 | G +1.6446 | W1 0.4710 corr 0.2424 score 0.7134 *best*
+Epoch 031 | D -2.4609 | G +1.1644
+Epoch 032 | D -1.2162 | G +1.2738
+Epoch 033 | D -1.7719 | G +2.1134
+Epoch 034 | D -1.6324 | G +1.0033
+Epoch 035 | D -2.2026 | G +0.6871 | W1 0.6947 corr 0.2231 score 0.9177
+Epoch 036 | D -0.4119 | G +1.7251
+Epoch 037 | D -1.2568 | G +2.5988
+Epoch 038 | D -0.5886 | G +0.9620
+Epoch 039 | D -1.3843 | G +1.9856
+Epoch 040 | D -0.9417 | G +0.9932 | W1 0.3850 corr 0.2678 score 0.6529 *best*
+Epoch 041 | D -0.9898 | G +1.7879
+Epoch 042 | D -0.7888 | G +2.6016
+Epoch 043 | D -0.6657 | G +1.4187
+Epoch 044 | D -0.2868 | G +0.8418
+Epoch 045 | D -0.2883 | G +1.5261 | W1 0.4916 corr 0.2783 score 0.7699
+Epoch 046 | D -0.2404 | G +2.0125
+Epoch 047 | D -0.2002 | G +0.9996
+Epoch 048 | D -0.1378 | G +2.3116
+Epoch 049 | D -0.3388 | G +1.2610
+Epoch 050 | D -0.3504 | G +2.7152 | W1 0.4872 corr 0.3459 score 0.8331
+Epoch 051 | D -0.3913 | G +1.3370
+Epoch 052 | D -0.3984 | G +1.8310
+Epoch 053 | D -0.2192 | G +2.3912
+Epoch 054 | D -0.2906 | G +1.8986
+Epoch 055 | D -0.2782 | G +1.8352 | W1 0.8408 corr 0.3083 score 1.1491
+Epoch 056 | D -0.4895 | G +2.7647
+Epoch 057 | D -0.5299 | G +1.3920
+Epoch 058 | D -0.3850 | G +1.9053
+Epoch 059 | D -0.4713 | G +1.4112
+Epoch 060 | D -0.5577 | G +1.2682 | W1 0.7073 corr 0.2614 score 0.9687
+Epoch 061 | D -0.5762 | G +2.4807
+Epoch 062 | D -0.6686 | G +2.4236
+Epoch 063 | D -0.7736 | G +2.5498
+Epoch 064 | D -0.7732 | G +2.7139
+Epoch 065 | D -0.6795 | G +2.1377 | W1 0.4228 corr 0.3255 score 0.7483
+Epoch 066 | D -0.4138 | G +1.6652
+Epoch 067 | D -0.4892 | G +2.1106
+Epoch 068 | D -0.5611 | G +2.2246
+Epoch 069 | D -0.6245 | G +2.1815
+Epoch 070 | D -0.6555 | G +1.8264 | W1 0.4239 corr 0.2769 score 0.7008
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 70.
+[saved] best epoch 40 (score 0.6529) -> outputs/models/capacity_sweep/c9_h64_s43
+[train] c8 h4 (148 params) s42
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +3.1975 | G -0.9511
+Epoch 002 | D +0.5469 | G +0.1269
+Epoch 003 | D -1.8323 | G +1.0619
+Epoch 004 | D -3.0105 | G +0.3280
+Epoch 005 | D -3.1278 | G -0.1958 | W1 0.3890 corr 0.3514 score 0.7404 *best*
+Epoch 006 | D -3.0417 | G -0.0566
+Epoch 007 | D -2.9062 | G -0.4968
+Epoch 008 | D -2.4892 | G -0.7869
+Epoch 009 | D -2.1255 | G -0.8000
+Epoch 010 | D -1.6824 | G -1.4168 | W1 0.2788 corr 0.3472 score 0.6260 *best*
+Epoch 011 | D -1.3586 | G -1.2367
+Epoch 012 | D -1.2048 | G -0.9983
+Epoch 013 | D -1.1066 | G -0.6373
+Epoch 014 | D -0.9903 | G -0.7873
+Epoch 015 | D -0.8965 | G -0.4805 | W1 0.2035 corr 0.2684 score 0.4720 *best*
+Epoch 016 | D -0.8275 | G -0.5797
+Epoch 017 | D -0.8937 | G -0.2387
+Epoch 018 | D -0.9488 | G -0.3423
+Epoch 019 | D -0.9682 | G +0.1234
+Epoch 020 | D -1.0202 | G +0.1319 | W1 0.2030 corr 0.2747 score 0.4777
+Epoch 021 | D -1.0258 | G +0.3666
+Epoch 022 | D -0.9475 | G +0.4406
+Epoch 023 | D -0.9338 | G +0.3881
+Epoch 024 | D -0.8880 | G +0.2276
+Epoch 025 | D -0.8844 | G +0.5914 | W1 0.2329 corr 0.2481 score 0.4810
+Epoch 026 | D -0.9746 | G +0.7185
+Epoch 027 | D -0.9533 | G +0.6370
+Epoch 028 | D -1.0191 | G +0.7952
+Epoch 029 | D -1.0519 | G +0.9153
+Epoch 030 | D -0.9625 | G +0.9067 | W1 0.4829 corr 0.2505 score 0.7334
+Epoch 031 | D -1.0066 | G +0.9639
+Epoch 032 | D -0.9655 | G +0.7991
+Epoch 033 | D -0.9548 | G +0.7459
+Epoch 034 | D -0.9669 | G +1.1848
+Epoch 035 | D -0.9969 | G +1.3061 | W1 0.2495 corr 0.2621 score 0.5116
+Epoch 036 | D -1.0113 | G +1.3775
+Epoch 037 | D -1.0581 | G +1.4937
+Epoch 038 | D -1.1036 | G +2.1184
+Epoch 039 | D -1.0706 | G +1.9300
+Epoch 040 | D -1.0206 | G +2.0024 | W1 0.3348 corr 0.2643 score 0.5991
+Epoch 041 | D -1.0788 | G +2.1067
+Epoch 042 | D -1.1132 | G +2.0929
+Epoch 043 | D -1.1566 | G +2.0176
+Epoch 044 | D -1.1912 | G +2.2482
+Epoch 045 | D -1.1739 | G +2.2218 | W1 0.3359 corr 0.2575 score 0.5934
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 45.
+[saved] best epoch 15 (score 0.4720) -> outputs/models/capacity_sweep/c8_h4_s42
+[train] c8 h4 (148 params) s43
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +4.6772 | G -0.0858
+Epoch 002 | D +3.0229 | G -0.5489
+Epoch 003 | D +0.1239 | G -0.4870
+Epoch 004 | D -0.9430 | G -1.6104
+Epoch 005 | D -2.6271 | G -0.4126 | W1 0.4608 corr 0.4124 score 0.8732 *best*
+Epoch 006 | D -3.2797 | G +0.8765
+Epoch 007 | D -2.6148 | G +1.1941
+Epoch 008 | D -2.8413 | G -0.3758
+Epoch 009 | D -2.5064 | G -0.3661
+Epoch 010 | D -2.2579 | G -0.4985 | W1 0.3834 corr 0.4708 score 0.8542 *best*
+Epoch 011 | D -1.9137 | G -0.8200
+Epoch 012 | D -1.4755 | G -0.4728
+Epoch 013 | D -1.3326 | G -0.3760
+Epoch 014 | D -1.1880 | G -0.7304
+Epoch 015 | D -1.1380 | G -0.2482 | W1 0.2592 corr 0.3086 score 0.5678 *best*
+Epoch 016 | D -0.9971 | G -0.1590
+Epoch 017 | D -1.0009 | G -0.3502
+Epoch 018 | D -0.8634 | G -0.0486
+Epoch 019 | D -0.7974 | G -0.0214
+Epoch 020 | D -0.8444 | G +0.7460 | W1 0.3109 corr 0.3003 score 0.6112
+Epoch 021 | D -0.9058 | G +0.6207
+Epoch 022 | D -0.9519 | G +0.7313
+Epoch 023 | D -0.8767 | G +0.3857
+Epoch 024 | D -0.9367 | G +1.1314
+Epoch 025 | D -0.9357 | G +1.7259 | W1 0.2451 corr 0.2770 score 0.5220 *best*
+Epoch 026 | D -0.8421 | G +1.7718
+Epoch 027 | D -0.8070 | G +1.6935
+Epoch 028 | D -0.7221 | G +1.9188
+Epoch 029 | D -0.7324 | G +1.3160
+Epoch 030 | D -0.6284 | G +1.2951 | W1 0.2972 corr 0.2640 score 0.5612
+Epoch 031 | D -0.6813 | G +1.9126
+Epoch 032 | D -0.7389 | G +1.3588
+Epoch 033 | D -0.8364 | G +1.5349
+Epoch 034 | D -0.8321 | G +1.2948
+Epoch 035 | D -0.8487 | G +1.2381 | W1 0.2552 corr 0.2607 score 0.5160 *best*
+Epoch 036 | D -0.7908 | G +0.9619
+Epoch 037 | D -0.8178 | G +1.3331
+Epoch 038 | D -0.8860 | G +1.7029
+Epoch 039 | D -0.8964 | G +1.8004
+Epoch 040 | D -0.9070 | G +1.9365 | W1 0.2740 corr 0.2563 score 0.5303
+Epoch 041 | D -0.9619 | G +1.4931
+Epoch 042 | D -1.0173 | G +1.8646
+Epoch 043 | D -1.0281 | G +1.6337
+Epoch 044 | D -1.0286 | G +1.4915
+Epoch 045 | D -1.0175 | G +1.9131 | W1 0.3114 corr 0.2727 score 0.5841
+Epoch 046 | D -1.0492 | G +1.6180
+Epoch 047 | D -0.9781 | G +1.5067
+Epoch 048 | D -1.0734 | G +1.4510
+Epoch 049 | D -1.0604 | G +1.5975
+Epoch 050 | D -1.0450 | G +1.5637 | W1 0.2993 corr 0.2575 score 0.5568
+Epoch 051 | D -1.0630 | G +1.5214
+Epoch 052 | D -1.0604 | G +1.6023
+Epoch 053 | D -1.0747 | G +1.6581
+Epoch 054 | D -1.0421 | G +1.4143
+Epoch 055 | D -1.0913 | G +1.4005 | W1 0.2838 corr 0.3044 score 0.5882
+Epoch 056 | D -1.0730 | G +1.4983
+Epoch 057 | D -1.0865 | G +1.1875
+Epoch 058 | D -1.1023 | G +1.1597
+Epoch 059 | D -1.0825 | G +1.1440
+Epoch 060 | D -1.1418 | G +1.4078 | W1 0.2731 corr 0.2739 score 0.5470
+Epoch 061 | D -1.0765 | G +1.1540
+Epoch 062 | D -1.0965 | G +1.1002
+Epoch 063 | D -1.1371 | G +1.2667
+Epoch 064 | D -1.1325 | G +1.4135
+Epoch 065 | D -1.1365 | G +1.3502 | W1 0.3168 corr 0.3182 score 0.6350
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 65.
+[saved] best epoch 35 (score 0.5160) -> outputs/models/capacity_sweep/c8_h4_s43
+[train] c8 h8 (280 params) s42
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +4.2034 | G +0.4858
+Epoch 002 | D +0.4925 | G +0.3782
+Epoch 003 | D -0.2678 | G -2.6210
+Epoch 004 | D -2.7527 | G +1.5928
+Epoch 005 | D -2.8441 | G +0.9152 | W1 0.3944 corr 0.2530 score 0.6473 *best*
+Epoch 006 | D -2.9301 | G -0.0534
+Epoch 007 | D -2.7460 | G +0.9663
+Epoch 008 | D -2.4156 | G +0.6528
+Epoch 009 | D -2.5253 | G +0.6417
+Epoch 010 | D -2.3741 | G -0.4701 | W1 0.3620 corr 0.3792 score 0.7412
+Epoch 011 | D -1.8440 | G +0.2376
+Epoch 012 | D -1.4927 | G -0.1357
+Epoch 013 | D -1.4252 | G +0.4368
+Epoch 014 | D -1.4376 | G +0.3896
+Epoch 015 | D -1.3178 | G +0.3170 | W1 0.2666 corr 0.4612 score 0.7278
+Epoch 016 | D -1.1131 | G +1.1158
+Epoch 017 | D -1.0547 | G +0.5711
+Epoch 018 | D -1.1146 | G +0.7023
+Epoch 019 | D -1.0121 | G +1.3140
+Epoch 020 | D -0.9551 | G +0.9617 | W1 0.2376 corr 0.3430 score 0.5805 *best*
+Epoch 021 | D -0.8992 | G +1.1670
+Epoch 022 | D -0.8653 | G +1.2906
+Epoch 023 | D -0.7872 | G +1.4219
+Epoch 024 | D -0.6391 | G +1.2967
+Epoch 025 | D -0.7368 | G +2.0196 | W1 0.2374 corr 0.2472 score 0.4847 *best*
+Epoch 026 | D -0.7295 | G +2.1528
+Epoch 027 | D -0.7936 | G +2.1995
+Epoch 028 | D -0.7318 | G +2.7022
+Epoch 029 | D -0.6721 | G +2.6213
+Epoch 030 | D -0.6256 | G +2.6932 | W1 0.2542 corr 0.2249 score 0.4791 *best*
+Epoch 031 | D -0.6035 | G +2.4785
+Epoch 032 | D -0.6577 | G +2.1790
+Epoch 033 | D -0.8374 | G +1.9236
+Epoch 034 | D -0.8810 | G +1.8426
+Epoch 035 | D -0.8726 | G +1.9179 | W1 0.2414 corr 0.2634 score 0.5048
+Epoch 036 | D -0.8769 | G +2.2727
+Epoch 037 | D -0.7615 | G +2.0671
+Epoch 038 | D -0.7472 | G +1.9398
+Epoch 039 | D -0.7110 | G +1.9394
+Epoch 040 | D -0.7024 | G +2.0216 | W1 0.2363 corr 0.2519 score 0.4882
+Epoch 041 | D -0.7856 | G +2.0318
+Epoch 042 | D -0.7373 | G +1.7335
+Epoch 043 | D -0.8505 | G +1.7657
+Epoch 044 | D -0.9258 | G +1.5860
+Epoch 045 | D -0.9308 | G +1.5154 | W1 0.1979 corr 0.2891 score 0.4870
+Epoch 046 | D -0.9150 | G +1.4796
+Epoch 047 | D -0.8996 | G +1.2532
+Epoch 048 | D -0.8542 | G +1.6891
+Epoch 049 | D -0.8874 | G +1.9436
+Epoch 050 | D -0.8493 | G +1.8650 | W1 0.2104 corr 0.2558 score 0.4662 *best*
+Epoch 051 | D -0.8589 | G +1.5319
+Epoch 052 | D -0.8531 | G +1.5022
+Epoch 053 | D -0.8671 | G +1.3554
+Epoch 054 | D -0.7921 | G +1.2920
+Epoch 055 | D -0.8515 | G +1.6084 | W1 0.2341 corr 0.2525 score 0.4866
+Epoch 056 | D -0.8258 | G +1.5244
+Epoch 057 | D -0.8359 | G +1.3591
+Epoch 058 | D -0.8818 | G +1.6071
+Epoch 059 | D -0.8835 | G +1.4654
+Epoch 060 | D -0.8957 | G +1.8812 | W1 0.2705 corr 0.2473 score 0.5178
+Epoch 061 | D -0.8541 | G +1.5794
+Epoch 062 | D -0.9021 | G +1.7567
+Epoch 063 | D -0.9512 | G +1.7368
+Epoch 064 | D -0.9085 | G +1.9104
+Epoch 065 | D -0.9332 | G +1.7273 | W1 0.1896 corr 0.2252 score 0.4148 *best*
+Epoch 066 | D -0.9234 | G +1.7630
+Epoch 067 | D -0.8821 | G +1.6009
+Epoch 068 | D -0.9282 | G +1.5018
+Epoch 069 | D -0.8643 | G +1.4578
+Epoch 070 | D -0.9126 | G +1.3955 | W1 0.2298 corr 0.2332 score 0.4630
+Epoch 071 | D -0.9167 | G +1.7242
+Epoch 072 | D -0.9084 | G +1.7849
+Epoch 073 | D -0.8868 | G +1.4978
+Epoch 074 | D -0.8802 | G +1.5387
+Epoch 075 | D -0.8823 | G +1.5897 | W1 0.2250 corr 0.2286 score 0.4536
+Epoch 076 | D -0.8903 | G +1.5746
+Epoch 077 | D -0.8799 | G +1.4244
+Epoch 078 | D -0.9036 | G +1.3804
+Epoch 079 | D -0.8599 | G +1.5292
+Epoch 080 | D -0.8637 | G +1.5134 | W1 0.1643 corr 0.2525 score 0.4168
+Epoch 081 | D -0.8512 | G +1.4694
+Epoch 082 | D -0.8235 | G +1.4993
+Epoch 083 | D -0.8292 | G +1.2908
+Epoch 084 | D -0.8296 | G +1.5078
+Epoch 085 | D -0.8771 | G +1.5072 | W1 0.1616 corr 0.2464 score 0.4081 *best*
+Epoch 086 | D -0.8692 | G +1.1448
+Epoch 087 | D -0.8643 | G +1.2650
+Epoch 088 | D -0.8496 | G +0.9401
+Epoch 089 | D -0.8242 | G +1.0662
+Epoch 090 | D -0.8140 | G +1.2705 | W1 0.2228 corr 0.2406 score 0.4634
+Epoch 091 | D -0.8371 | G +0.8243
+Epoch 092 | D -0.8235 | G +0.7864
+Epoch 093 | D -0.8573 | G +0.8384
+Epoch 094 | D -0.7773 | G +1.0265
+Epoch 095 | D -0.8313 | G +0.7547 | W1 0.1581 corr 0.2385 score 0.3965 *best*
+Epoch 096 | D -0.8172 | G +0.6332
+Epoch 097 | D -0.8551 | G +0.5665
+Epoch 098 | D -0.8726 | G +0.3788
+Epoch 099 | D -0.8371 | G +0.5515
+Epoch 100 | D -0.8647 | G +0.3554 | W1 0.2094 corr 0.2458 score 0.4552
+[saved] best epoch 95 (score 0.3965) -> outputs/models/capacity_sweep/c8_h8_s42
+[train] c8 h8 (280 params) s43
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 280 trainable parameters
+Epoch 001 | D +5.6348 | G -0.1244
+Epoch 002 | D +3.5781 | G -0.2751
+Epoch 003 | D +3.6033 | G -0.5192
+Epoch 004 | D +2.6455 | G -1.2914
+Epoch 005 | D +1.4405 | G -2.5434 | W1 0.5814 corr 0.4057 score 0.9871 *best*
+Epoch 006 | D +0.3645 | G -2.1032
+Epoch 007 | D -2.1307 | G -1.5444
+Epoch 008 | D -2.6220 | G +0.1116
+Epoch 009 | D -2.9346 | G -0.2062
+Epoch 010 | D -2.6284 | G -1.2146 | W1 0.4288 corr 0.3070 score 0.7359 *best*
+Epoch 011 | D -2.5334 | G -0.1803
+Epoch 012 | D -2.5525 | G -0.4330
+Epoch 013 | D -2.1482 | G -0.7743
+Epoch 014 | D -2.0679 | G -0.3661
+Epoch 015 | D -1.8625 | G -0.9555 | W1 0.4350 corr 0.3493 score 0.7843
+Epoch 016 | D -1.4930 | G -1.1547
+Epoch 017 | D -1.1303 | G -1.0905
+Epoch 018 | D -1.0251 | G -0.3859
+Epoch 019 | D -0.9234 | G -0.0388
+Epoch 020 | D -0.6932 | G -0.2608 | W1 0.2920 corr 0.2687 score 0.5607 *best*
+Epoch 021 | D -0.5566 | G +0.1397
+Epoch 022 | D -0.6923 | G +0.1927
+Epoch 023 | D -0.8826 | G +0.2201
+Epoch 024 | D -0.8070 | G +0.4893
+Epoch 025 | D -0.7148 | G +0.9095 | W1 0.3244 corr 0.2370 score 0.5613
+Epoch 026 | D -0.7685 | G +1.0991
+Epoch 027 | D -0.7717 | G +0.5484
+Epoch 028 | D -0.7516 | G +1.0298
+Epoch 029 | D -0.6886 | G +0.8827
+Epoch 030 | D -0.7092 | G +0.8419 | W1 0.2553 corr 0.2280 score 0.4833 *best*
+Epoch 031 | D -0.7578 | G +0.9466
+Epoch 032 | D -0.7363 | G +1.3861
+Epoch 033 | D -0.7174 | G +1.2181
+Epoch 034 | D -0.7058 | G +1.2269
+Epoch 035 | D -0.7321 | G +1.5237 | W1 0.3456 corr 0.2026 score 0.5482
+Epoch 036 | D -0.7453 | G +1.0551
+Epoch 037 | D -0.7344 | G +1.2922
+Epoch 038 | D -0.7341 | G +1.3571
+Epoch 039 | D -0.8116 | G +0.9692
+Epoch 040 | D -0.8146 | G +1.0178 | W1 0.2996 corr 0.2338 score 0.5334
+Epoch 041 | D -0.8596 | G +0.7699
+Epoch 042 | D -0.8009 | G +0.7744
+Epoch 043 | D -0.8260 | G +0.7340
+Epoch 044 | D -0.7961 | G +0.8990
+Epoch 045 | D -0.7411 | G +0.7090 | W1 0.2807 corr 0.2149 score 0.4956
+Epoch 046 | D -0.7724 | G +0.8732
+Epoch 047 | D -0.7310 | G +0.8354
+Epoch 048 | D -0.7320 | G +0.6356
+Epoch 049 | D -0.7558 | G +0.9923
+Epoch 050 | D -0.6817 | G +0.8093 | W1 0.3339 corr 0.2210 score 0.5550
+Epoch 051 | D -0.6781 | G +1.0620
+Epoch 052 | D -0.7267 | G +0.8196
+Epoch 053 | D -0.7598 | G +1.0469
+Epoch 054 | D -0.7953 | G +0.8930
+Epoch 055 | D -0.7989 | G +0.8316 | W1 0.3821 corr 0.2086 score 0.5906
+Epoch 056 | D -0.8265 | G +1.2758
+Epoch 057 | D -0.7817 | G +0.7989
+Epoch 058 | D -0.8065 | G +0.7188
+Epoch 059 | D -0.8188 | G +0.8637
+Epoch 060 | D -0.8131 | G +0.8761 | W1 0.2483 corr 0.2439 score 0.4922
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 60.
+[saved] best epoch 30 (score 0.4833) -> outputs/models/capacity_sweep/c8_h8_s43
+[skip] c8 h16 s42
+[train] c8 h16 (544 params) s43
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 544 trainable parameters
+Epoch 001 | D +5.7801 | G -1.0936
+Epoch 002 | D +3.6110 | G -1.1701
+Epoch 003 | D +2.8638 | G -0.8788
+Epoch 004 | D +4.1773 | G -1.0667
+Epoch 005 | D +2.6541 | G -1.2123 | W1 0.8718 corr 0.3083 score 1.1800 *best*
+Epoch 006 | D +1.2186 | G -1.7968
+Epoch 007 | D +0.0295 | G -2.1324
+Epoch 008 | D -2.5767 | G -1.0732
+Epoch 009 | D -1.6316 | G -0.0643
+Epoch 010 | D -2.6086 | G +0.2867 | W1 0.6051 corr 0.2960 score 0.9011 *best*
+Epoch 011 | D -2.1691 | G +0.5097
+Epoch 012 | D -1.5029 | G -0.1549
+Epoch 013 | D -0.8872 | G -0.0293
+Epoch 014 | D -2.3220 | G +0.3352
+Epoch 015 | D -2.5768 | G -0.2466 | W1 0.4758 corr 0.2943 score 0.7701 *best*
+Epoch 016 | D -1.7385 | G +0.0030
+Epoch 017 | D -2.4639 | G +0.1493
+Epoch 018 | D -1.3763 | G +0.6738
+Epoch 019 | D -2.0258 | G -0.1217
+Epoch 020 | D -1.5516 | G -0.2095 | W1 0.4648 corr 0.3195 score 0.7843
+Epoch 021 | D -1.6257 | G +0.0701
+Epoch 022 | D -1.3318 | G +0.5801
+Epoch 023 | D -1.5556 | G +0.2073
+Epoch 024 | D -1.6371 | G +0.5201
+Epoch 025 | D -1.2501 | G -0.0105 | W1 0.3255 corr 0.3586 score 0.6841 *best*
+Epoch 026 | D -1.0321 | G +0.7286
+Epoch 027 | D -0.7186 | G -0.1774
+Epoch 028 | D -0.5047 | G -0.0922
+Epoch 029 | D -0.6167 | G +0.2704
+Epoch 030 | D -0.4692 | G +0.8040 | W1 0.3621 corr 0.3397 score 0.7017
+Epoch 031 | D -0.5912 | G +0.9002
+Epoch 032 | D -0.6068 | G +0.5424
+Epoch 033 | D -0.5599 | G +1.7320
+Epoch 034 | D -0.5125 | G +1.2281
+Epoch 035 | D -0.5594 | G +1.4921 | W1 0.4399 corr 0.2986 score 0.7385
+Epoch 036 | D -0.5885 | G +1.4126
+Epoch 037 | D -0.6304 | G +1.9916
+Epoch 038 | D -0.6008 | G +1.5419
+Epoch 039 | D -0.4349 | G +2.0260
+Epoch 040 | D -0.3650 | G +1.4457 | W1 0.5007 corr 0.2258 score 0.7265
+Epoch 041 | D -0.4148 | G +1.9587
+Epoch 042 | D -0.5233 | G +1.6772
+Epoch 043 | D -0.5862 | G +2.0581
+Epoch 044 | D -0.5845 | G +2.0829
+Epoch 045 | D -0.6648 | G +2.0157 | W1 0.3551 corr 0.2341 score 0.5892 *best*
+Epoch 046 | D -0.6247 | G +2.0465
+Epoch 047 | D -0.5832 | G +1.7025
+Epoch 048 | D -0.6607 | G +1.9582
+Epoch 049 | D -0.5703 | G +1.9095
+Epoch 050 | D -0.3921 | G +1.6506 | W1 0.2959 corr 0.2339 score 0.5298 *best*
+Epoch 051 | D -0.3785 | G +1.5634
+Epoch 052 | D -0.5920 | G +1.8617
+Epoch 053 | D -0.6056 | G +1.6214
+Epoch 054 | D -0.5297 | G +1.6968
+Epoch 055 | D -0.5581 | G +1.7810 | W1 0.3000 corr 0.2385 score 0.5386
+Epoch 056 | D -0.5489 | G +1.7768
+Epoch 057 | D -0.5034 | G +1.3163
+Epoch 058 | D -0.5935 | G +1.7956
+Epoch 059 | D -0.5632 | G +1.4182
+Epoch 060 | D -0.5145 | G +1.5448 | W1 0.3634 corr 0.2729 score 0.6363
+Epoch 061 | D -0.5078 | G +1.5072
+Epoch 062 | D -0.5170 | G +1.3383
+Epoch 063 | D -0.4526 | G +1.2379
+Epoch 064 | D -0.4667 | G +1.7024
+Epoch 065 | D -0.4775 | G +1.5448 | W1 0.3442 corr 0.2594 score 0.6036
+Epoch 066 | D -0.5395 | G +1.3295
+Epoch 067 | D -0.4644 | G +1.5757
+Epoch 068 | D -0.4851 | G +1.5454
+Epoch 069 | D -0.5281 | G +1.5205
+Epoch 070 | D -0.5337 | G +1.5152 | W1 0.2957 corr 0.2479 score 0.5437
+Epoch 071 | D -0.5459 | G +1.5530
+Epoch 072 | D -0.5263 | G +1.5542
+Epoch 073 | D -0.5308 | G +1.8717
+Epoch 074 | D -0.5460 | G +1.6848
+Epoch 075 | D -0.5421 | G +1.6585 | W1 0.3848 corr 0.2406 score 0.6254
+Epoch 076 | D -0.4931 | G +1.7129
+Epoch 077 | D -0.5742 | G +1.9311
+Epoch 078 | D -0.5360 | G +1.7879
+Epoch 079 | D -0.5509 | G +1.8333
+Epoch 080 | D -0.5942 | G +1.8347 | W1 0.3053 corr 0.2082 score 0.5135 *best*
+Epoch 081 | D -0.5680 | G +1.9311
+Epoch 082 | D -0.6028 | G +1.9746
+Epoch 083 | D -0.5876 | G +1.5725
+Epoch 084 | D -0.5974 | G +1.8383
+Epoch 085 | D -0.6406 | G +1.6490 | W1 0.3780 corr 0.2177 score 0.5957
+Epoch 086 | D -0.6092 | G +2.0406
+Epoch 087 | D -0.5544 | G +2.2417
+Epoch 088 | D -0.6173 | G +2.2265
+Epoch 089 | D -0.6086 | G +2.1732
+Epoch 090 | D -0.5944 | G +2.1613 | W1 0.2659 corr 0.2354 score 0.5012 *best*
+Epoch 091 | D -0.6483 | G +2.3091
+Epoch 092 | D -0.6163 | G +2.3411
+Epoch 093 | D -0.6260 | G +2.4339
+Epoch 094 | D -0.6343 | G +2.0873
+Epoch 095 | D -0.6061 | G +2.3787 | W1 0.2495 corr 0.2374 score 0.4869 *best*
+Epoch 096 | D -0.6494 | G +2.7432
+Epoch 097 | D -0.6627 | G +2.7013
+Epoch 098 | D -0.6317 | G +2.8735
+Epoch 099 | D -0.6932 | G +3.1276
+Epoch 100 | D -0.6355 | G +3.2412 | W1 0.2159 corr 0.1826 score 0.3985 *best*
+[saved] best epoch 100 (score 0.3985) -> outputs/models/capacity_sweep/c8_h16_s43
+[skip] c8 h32 s42
+[train] c8 h32 (1072 params) s43
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 1072 trainable parameters
+Epoch 001 | D +4.9637 | G -1.9177
+Epoch 002 | D +3.3698 | G -0.2660
+Epoch 003 | D +4.5866 | G -0.5337
+Epoch 004 | D +3.2990 | G -1.2463
+Epoch 005 | D +3.1132 | G -0.7132 | W1 1.3218 corr 0.3490 score 1.6708 *best*
+Epoch 006 | D +3.2528 | G -1.2133
+Epoch 007 | D +0.6114 | G -2.2222
+Epoch 008 | D +0.5103 | G -1.8551
+Epoch 009 | D -2.0276 | G -1.9783
+Epoch 010 | D -3.1307 | G -0.9950 | W1 1.0648 corr 0.3437 score 1.4084 *best*
+Epoch 011 | D -2.8690 | G -1.0435
+Epoch 012 | D -1.2402 | G -3.0231
+Epoch 013 | D -2.3597 | G -1.8514
+Epoch 014 | D -2.4870 | G -2.1067
+Epoch 015 | D -0.6634 | G -1.1340 | W1 0.6419 corr 0.2715 score 0.9134 *best*
+Epoch 016 | D -2.1178 | G -1.1987
+Epoch 017 | D -1.3624 | G -1.4159
+Epoch 018 | D -1.9480 | G -0.2544
+Epoch 019 | D -1.4657 | G -0.7256
+Epoch 020 | D -1.6633 | G -0.8996 | W1 0.4870 corr 0.3256 score 0.8127 *best*
+Epoch 021 | D -1.3492 | G -0.5179
+Epoch 022 | D -0.8960 | G -0.1380
+Epoch 023 | D -1.1922 | G -0.3841
+Epoch 024 | D -0.5694 | G -0.6080
+Epoch 025 | D -0.7589 | G -0.3865 | W1 0.3981 corr 0.3983 score 0.7964 *best*
+Epoch 026 | D -0.8548 | G -1.1281
+Epoch 027 | D -0.5298 | G -0.9883
+Epoch 028 | D -0.6781 | G -0.3439
+Epoch 029 | D -0.3177 | G +0.6059
+Epoch 030 | D -0.4448 | G -0.7411 | W1 0.4892 corr 0.3694 score 0.8586
+Epoch 031 | D -0.5985 | G +0.7695
+Epoch 032 | D -0.3310 | G +0.3061
+Epoch 033 | D -0.6337 | G +0.6948
+Epoch 034 | D -0.7847 | G +1.1050
+Epoch 035 | D -0.6908 | G +1.5091 | W1 0.3490 corr 0.3398 score 0.6888 *best*
+Epoch 036 | D -0.2970 | G +1.2385
+Epoch 037 | D -0.4411 | G +1.2815
+Epoch 038 | D -0.3360 | G +1.3450
+Epoch 039 | D -0.4613 | G +1.4726
+Epoch 040 | D -0.5872 | G +1.0638 | W1 0.3876 corr 0.2823 score 0.6699 *best*
+Epoch 041 | D -0.5994 | G +1.4286
+Epoch 042 | D -0.5203 | G +1.4450
+Epoch 043 | D -0.3005 | G +1.2011
+Epoch 044 | D -0.3146 | G +1.1828
+Epoch 045 | D -0.3804 | G +1.1030 | W1 0.2900 corr 0.2715 score 0.5615 *best*
+Epoch 046 | D -0.4347 | G +1.2853
+Epoch 047 | D -0.4601 | G +1.8633
+Epoch 048 | D -0.5152 | G +1.8460
+Epoch 049 | D -0.5337 | G +1.8282
+Epoch 050 | D -0.5753 | G +2.0344 | W1 0.4109 corr 0.2826 score 0.6935
+Epoch 051 | D -0.5165 | G +1.9898
+Epoch 052 | D -0.3950 | G +1.9462
+Epoch 053 | D -0.3845 | G +2.1573
+Epoch 054 | D -0.4311 | G +2.0539
+Epoch 055 | D -0.4807 | G +2.1659 | W1 0.4079 corr 0.2889 score 0.6968
+Epoch 056 | D -0.5404 | G +2.1428
+Epoch 057 | D -0.5147 | G +2.2173
+Epoch 058 | D -0.4815 | G +2.1852
+Epoch 059 | D -0.4158 | G +2.2836
+Epoch 060 | D -0.4255 | G +2.3538 | W1 0.3620 corr 0.3163 score 0.6784
+Epoch 061 | D -0.4689 | G +2.2499
+Epoch 062 | D -0.6052 | G +2.7194
+Epoch 063 | D -0.5226 | G +2.2080
+Epoch 064 | D -0.4770 | G +2.4729
+Epoch 065 | D -0.4685 | G +2.7765 | W1 0.4810 corr 0.3389 score 0.8199
+Epoch 066 | D -0.4915 | G +2.8671
+Epoch 067 | D -0.5560 | G +3.3301
+Epoch 068 | D -0.4912 | G +3.3633
+Epoch 069 | D -0.5540 | G +3.4306
+Epoch 070 | D -0.6303 | G +3.6294 | W1 0.2958 corr 0.3107 score 0.6065
+Epoch 071 | D -0.5203 | G +3.7206
+Epoch 072 | D -0.6138 | G +3.8349
+Epoch 073 | D -0.6693 | G +3.9888
+Epoch 074 | D -0.6072 | G +3.5698
+Epoch 075 | D -0.5651 | G +3.6208 | W1 0.2519 corr 0.2553 score 0.5072 *best*
+Epoch 076 | D -0.6361 | G +4.0971
+Epoch 077 | D -0.6483 | G +4.3688
+Epoch 078 | D -0.6263 | G +3.9722
+Epoch 079 | D -0.6634 | G +4.5328
+Epoch 080 | D -0.5726 | G +4.5685 | W1 0.2770 corr 0.2821 score 0.5591
+Epoch 081 | D -0.5770 | G +4.2680
+Epoch 082 | D -0.6157 | G +4.1228
+Epoch 083 | D -0.5636 | G +4.1852
+Epoch 084 | D -0.5537 | G +3.9806
+Epoch 085 | D -0.5322 | G +3.8776 | W1 0.2338 corr 0.2265 score 0.4604 *best*
+Epoch 086 | D -0.5709 | G +3.8739
+Epoch 087 | D -0.5776 | G +4.0141
+Epoch 088 | D -0.5824 | G +4.0287
+Epoch 089 | D -0.5848 | G +3.9878
+Epoch 090 | D -0.5938 | G +3.9778 | W1 0.2172 corr 0.2351 score 0.4523 *best*
+Epoch 091 | D -0.5826 | G +3.8697
+Epoch 092 | D -0.5907 | G +3.7126
+Epoch 093 | D -0.6205 | G +3.8094
+Epoch 094 | D -0.5400 | G +3.7052
+Epoch 095 | D -0.6297 | G +3.6332 | W1 0.2421 corr 0.2135 score 0.4556
+Epoch 096 | D -0.6227 | G +3.5571
+Epoch 097 | D -0.5930 | G +3.8884
+Epoch 098 | D -0.5821 | G +3.6360
+Epoch 099 | D -0.5617 | G +3.6371
+Epoch 100 | D -0.5734 | G +3.7877 | W1 0.2395 corr 0.2200 score 0.4595
+[saved] best epoch 90 (score 0.4523) -> outputs/models/capacity_sweep/c8_h32_s43
+[skip] c8 h64 s42
+[train] c8 h64 (2128 params) s43
+Label 8: 1252 train / 220 val rows | circuit=classical preproc=quantile
+generator classical: 2128 trainable parameters
+Epoch 001 | D +6.0120 | G -0.6603
+Epoch 002 | D +5.4577 | G -0.8408
+Epoch 003 | D +3.3302 | G -0.6748
+Epoch 004 | D +2.9863 | G -0.9423
+Epoch 005 | D +1.7171 | G +1.0652 | W1 0.8424 corr 0.3039 score 1.1463 *best*
+Epoch 006 | D +26.8448 | G -1.2966
+Epoch 007 | D +2.6041 | G -0.6494
+Epoch 008 | D +2.2916 | G -2.4791
+Epoch 009 | D +3.1435 | G -4.6125
+Epoch 010 | D +1.2936 | G -3.7328 | W1 5.4272 corr 0.4577 score 5.8849
+Epoch 011 | D -1.1062 | G -2.1003
+Epoch 012 | D -2.5102 | G -1.1169
+Epoch 013 | D -4.1571 | G -0.9358
+Epoch 014 | D -2.7932 | G +0.3998
+Epoch 015 | D -3.5228 | G +1.2213 | W1 0.7403 corr 0.3015 score 1.0418 *best*
+Epoch 016 | D -2.4380 | G -0.7117
+Epoch 017 | D -1.3603 | G -1.2020
+Epoch 018 | D -2.0608 | G -1.5759
+Epoch 019 | D -0.9113 | G -0.0178
+Epoch 020 | D -0.8357 | G -0.9430 | W1 0.5568 corr 0.2649 score 0.8216 *best*
+Epoch 021 | D -1.3268 | G -0.9756
+Epoch 022 | D -1.2098 | G -0.1779
+Epoch 023 | D -1.0819 | G -1.1785
+Epoch 024 | D -1.4921 | G -0.3491
+Epoch 025 | D -1.0982 | G -0.3419 | W1 0.6425 corr 0.2976 score 0.9401
+Epoch 026 | D -1.6008 | G -0.2258
+Epoch 027 | D -1.4909 | G +0.2556
+Epoch 028 | D -1.3482 | G -0.6403
+Epoch 029 | D -0.6109 | G +0.4527
+Epoch 030 | D -0.6028 | G +0.1349 | W1 0.4168 corr 0.3321 score 0.7489 *best*
+Epoch 031 | D -0.1411 | G -1.2065
+Epoch 032 | D -0.0678 | G -0.6009
+Epoch 033 | D -0.0327 | G -0.3200
+Epoch 034 | D -0.1272 | G -0.1744
+Epoch 035 | D -0.1180 | G +0.0021 | W1 0.5539 corr 0.4002 score 0.9540
+Epoch 036 | D -0.4217 | G +0.5950
+Epoch 037 | D -0.4323 | G +0.4194
+Epoch 038 | D -0.4368 | G +0.6624
+Epoch 039 | D -0.7143 | G +0.6797
+Epoch 040 | D -0.7248 | G +0.5928 | W1 0.6583 corr 0.4122 score 1.0705
+Epoch 041 | D -0.5875 | G +0.5118
+Epoch 042 | D -0.6647 | G +0.2777
+Epoch 043 | D -0.6713 | G +0.6704
+Epoch 044 | D -0.4763 | G +0.4795
+Epoch 045 | D -0.6014 | G +0.1666 | W1 0.3600 corr 0.2619 score 0.6219 *best*
+Epoch 046 | D -0.5624 | G +0.1387
+Epoch 047 | D -0.5574 | G +0.3886
+Epoch 048 | D -0.4569 | G +0.7371
+Epoch 049 | D -0.5512 | G +0.4451
+Epoch 050 | D -0.5768 | G +0.0406 | W1 0.3575 corr 0.2786 score 0.6362
+Epoch 051 | D -0.4326 | G +0.8874
+Epoch 052 | D -0.5251 | G +0.7091
+Epoch 053 | D -0.4918 | G +0.3112
+Epoch 054 | D -0.5826 | G +0.3511
+Epoch 055 | D -0.5003 | G +0.5066 | W1 0.2988 corr 0.2767 score 0.5754 *best*
+Epoch 056 | D -0.5391 | G +0.8272
+Epoch 057 | D -0.5960 | G +0.3372
+Epoch 058 | D -0.4705 | G +0.6231
+Epoch 059 | D -0.5497 | G +0.6601
+Epoch 060 | D -0.5092 | G +0.3258 | W1 0.3590 corr 0.3265 score 0.6854
+Epoch 061 | D -0.5705 | G +0.5653
+Epoch 062 | D -0.5168 | G +0.8544
+Epoch 063 | D -0.5399 | G +0.6662
+Epoch 064 | D -0.5697 | G +0.5886
+Epoch 065 | D -0.4986 | G +0.2977 | W1 0.4497 corr 0.3147 score 0.7644
+Epoch 066 | D -0.6067 | G +0.4644
+Epoch 067 | D -0.5242 | G +0.6686
+Epoch 068 | D -0.5069 | G +0.7210
+Epoch 069 | D -0.4873 | G +0.7170
+Epoch 070 | D -0.5410 | G +0.4427 | W1 0.5264 corr 0.2865 score 0.8129
+Epoch 071 | D -0.5661 | G +0.6725
+Epoch 072 | D -0.5438 | G +0.3884
+Epoch 073 | D -0.6109 | G +0.3122
+Epoch 074 | D -0.6427 | G +0.4185
+Epoch 075 | D -0.4283 | G +0.6985 | W1 0.4272 corr 0.2956 score 0.7228
+Epoch 076 | D -0.4692 | G +0.5673
+Epoch 077 | D -0.5521 | G +0.3332
+Epoch 078 | D -0.5227 | G +0.0723
+Epoch 079 | D -0.5320 | G +0.2195
+Epoch 080 | D -0.5455 | G +0.0068 | W1 0.5936 corr 0.2698 score 0.8634
+Epoch 081 | D -0.5932 | G +0.2737
+Epoch 082 | D -0.5497 | G -0.0559
+Epoch 083 | D -0.5728 | G -0.1222
+Epoch 084 | D -0.5710 | G -0.1057
+Epoch 085 | D -0.6090 | G -0.1430 | W1 0.3620 corr 0.2851 score 0.6470
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 85.
+[saved] best epoch 55 (score 0.5754) -> outputs/models/capacity_sweep/c8_h64_s43
+ label  hidden  params  seed  best_epoch  std_w1  corr_dist  score
+     4       4     148    46          85  0.1914     0.2180 0.4094
+     4       8     280    46          40  0.1732     0.2779 0.4511
+     4      16     544    46          90  0.2621     0.2725 0.5346
+     4      32    1072    46          70  0.2661     0.3665 0.6327
+     4      64    2128    46         100  0.3008     0.3168 0.6176
+     7       4     148    49          70  0.1701     0.2191 0.3892
+     7       4     148    50          65  0.1838     0.2577 0.4415
+     7       8     280    49          45  0.2292     0.1909 0.4201
+     7       8     280    50          50  0.2721     0.2513 0.5234
+     7      16     544    49          95  0.2954     0.2807 0.5761
+     7      16     544    50          75  0.2611     0.3303 0.5914
+     7      32    1072    49          75  0.2623     0.3653 0.6276
+     7      32    1072    50          20  0.4549     0.2420 0.6969
+     7      64    2128    49          50  0.4887     0.2634 0.7521
+     7      64    2128    50          40  0.4101     0.2643 0.6743
+     8       4     148    50          15  0.2035     0.2684 0.4720
+     8       4     148    51          35  0.2552     0.2607 0.5160
+     8       8     280    50          95  0.1581     0.2385 0.3965
+     8       8     280    51          30  0.2553     0.2280 0.4833
+     8      16     544    50          30  0.2836     0.3137 0.5973
+     8      16     544    51         100  0.2159     0.1826 0.3985
+     8      32    1072    50         100  0.1751     0.2161 0.3912
+     8      32    1072    51          90  0.2172     0.2351 0.4523
+     8      64    2128    50          95  0.1599     0.2299 0.3899
+     8      64    2128    51          55  0.2988     0.2767 0.5754
+     9       4     148    51          30  0.1866     0.2319 0.4185
+     9       4     148    52          35  0.2219     0.2249 0.4468
+     9       8     280    51          85  0.1818     0.1803 0.3622
+     9       8     280    52          65  0.2619     0.1940 0.4559
+     9      16     544    51          30  0.3474     0.2306 0.5780
+     9      16     544    52          45  0.2711     0.1886 0.4597
+     9      32    1072    51          30  0.3377     0.2347 0.5724
+     9      32    1072    52          60  0.3549     0.2518 0.6067
+     9      64    2128    51          15  0.4645     0.2397 0.7042
+     9      64    2128    52          40  0.3850     0.2678 0.6529
+[saved] /home/maru/qgan/outputs/results/figures/classical_capacity_curve.png
+[saved] /home/maru/qgan/outputs/results/figures/classical_capacity_curve.pdf

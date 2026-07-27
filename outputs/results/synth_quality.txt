@@ -1,0 +1,12 @@
+
+mean over classes (lower better except c2st_auc->0.5, dcr_ratio->~1):
+           js_quantile  std_w1  corr_mad  c2st_auc  dcr_ratio  copy_frac
+generator                                                               
+classical       0.2277  0.2098    0.2338    0.9995    17.1947        0.0
+ctgan           0.4260  0.3063    0.2292    1.0000    43.1156        0.0
+qgan            0.3151  0.2639    0.2283    0.9995    21.5750        0.0
+
+reading guide: for quantile-preprocessed runs, judge on corr_* and
+c2st_auc; js/w1 match by construction. dcr_ratio << 1 or copy_frac
+high = memorization, disqualifying regardless of other scores; c2st_auc
+well BELOW 0.5 is also a memorization signature (copies pass as real).

@@ -1,0 +1,29 @@
+minority classes (derived): [np.int64(1), np.int64(2), np.int64(4), np.int64(5), np.int64(7), np.int64(8), np.int64(9)]
+class 1: 800 real rows -> training CTGAN (300 epochs), will sample 1200
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/1/synthetic.csv (1200 rows, generator params: 198175)
+class 2: 535 real rows -> training CTGAN (300 epochs), will sample 1465
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/2/synthetic.csv (1465 rows, generator params: 184792)
+class 4: 622 real rows -> training CTGAN (300 epochs), will sample 1378
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/4/synthetic.csv (1378 rows, generator params: 192298)
+class 5: 893 real rows -> training CTGAN (300 epochs), will sample 1107
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/5/synthetic.csv (1107 rows, generator params: 196816)
+class 7: 494 real rows -> training CTGAN (300 epochs), will sample 1506
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/7/synthetic.csv (1506 rows, generator params: 186677)
+class 8: 1472 real rows -> training CTGAN (300 epochs), will sample 528
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/8/synthetic.csv (528 rows, generator params: 200740)
+class 9: 877 real rows -> training CTGAN (300 epochs), will sample 1123
+/home/maru/miniconda3/envs/qml/lib/python3.10/site-packages/ctgan/synthesizers/_utils.py:16: FutureWarning: `cuda` parameter is deprecated and will be removed in a future release. Please use `enable_gpu` instead.
+  warnings.warn(
+[saved] /home/maru/qgan/outputs/models/ctgan/9/synthetic.csv (1123 rows, generator params: 199432)

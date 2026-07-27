@@ -1,0 +1,13 @@
+PHASE-1 DATA AUDIT (regenerated from raw data)
+============================================================
+raw flows:                46742
+zero-variance cols:      14 dropped (['fwd_seg_size_min', 'fwd_urg_flags', 'bwd_urg_flags', 'urg_flag_cnt', 'ece_flag_cnt', 'active_max', 'active_min', 'active_mean', 'active_std', 'idle_max', 'idle_min', 'idle_mean', 'idle_std', 'cwr_flag_count'])
+label-conflict groups:   55 groups, 7331 rows (15.7%)
+exact duplicates:        7542 rows
+final flows:             31869 (68.2% retained)
+
+duplicate leakage BEFORE cleaning (random 80/20): 32.1%
+duplicate leakage AFTER  cleaning (session split, 62-dim): 0.00%
+duplicate leakage AFTER  cleaning (session split, 16-dim): 0.40%
+
+per-class table: data_audit_table.csv

@@ -1,0 +1,79 @@
+Label 5: 760 train / 133 val rows | circuit=classical preproc=quantile
+generator classical: 148 trainable parameters
+Epoch 001 | D +5.2555 | G +0.2449
+Epoch 002 | D +1.1824 | G +0.4515
+Epoch 003 | D -1.0223 | G +1.0907
+Epoch 004 | D -2.2418 | G +0.9854
+Epoch 005 | D -3.0793 | G +1.2198 | W1 0.4648 corr 0.3096 score 0.7744 *best*
+Epoch 006 | D -3.2415 | G +0.4039
+Epoch 007 | D -3.2296 | G -0.1628
+Epoch 008 | D -3.3929 | G +0.4224
+Epoch 009 | D -3.2200 | G +0.3604
+Epoch 010 | D -3.1406 | G -0.0166 | W1 0.4490 corr 0.3187 score 0.7677 *best*
+Epoch 011 | D -2.9339 | G +0.4294
+Epoch 012 | D -2.9577 | G +0.8021
+Epoch 013 | D -2.6941 | G -0.3186
+Epoch 014 | D -2.5342 | G +0.4163
+Epoch 015 | D -2.5873 | G -0.3784 | W1 0.3979 corr 0.2829 score 0.6809 *best*
+Epoch 016 | D -2.3775 | G -0.7407
+Epoch 017 | D -2.1398 | G -0.0913
+Epoch 018 | D -1.9042 | G -0.5789
+Epoch 019 | D -1.7709 | G -0.8977
+Epoch 020 | D -1.5900 | G -0.8811 | W1 0.2777 corr 0.2207 score 0.4985 *best*
+Epoch 021 | D -1.4233 | G -1.0196
+Epoch 022 | D -1.3881 | G -0.7907
+Epoch 023 | D -1.2516 | G -0.3939
+Epoch 024 | D -1.1597 | G -0.7182
+Epoch 025 | D -1.1602 | G -0.5076 | W1 0.2038 corr 0.2828 score 0.4866 *best*
+Epoch 026 | D -1.0494 | G -0.0142
+Epoch 027 | D -1.0523 | G -0.4430
+Epoch 028 | D -1.1500 | G -0.3967
+Epoch 029 | D -1.0929 | G -0.1306
+Epoch 030 | D -1.0969 | G -0.2332 | W1 0.2292 corr 0.2747 score 0.5038
+Epoch 031 | D -1.1321 | G -0.2604
+Epoch 032 | D -1.1334 | G -0.0812
+Epoch 033 | D -1.1600 | G -0.2256
+Epoch 034 | D -1.1052 | G -0.2494
+Epoch 035 | D -1.1203 | G +0.1376 | W1 0.1919 corr 0.2874 score 0.4793 *best*
+Epoch 036 | D -1.1448 | G -0.3325
+Epoch 037 | D -1.1384 | G -0.2201
+Epoch 038 | D -1.1605 | G -0.3360
+Epoch 039 | D -1.2031 | G -0.2528
+Epoch 040 | D -1.0806 | G -0.8338 | W1 0.2692 corr 0.2401 score 0.5094
+Epoch 041 | D -1.1581 | G -0.4405
+Epoch 042 | D -1.0956 | G -0.7465
+Epoch 043 | D -1.1537 | G -0.4987
+Epoch 044 | D -1.1190 | G -0.8650
+Epoch 045 | D -1.0671 | G -0.7984 | W1 0.2184 corr 0.1925 score 0.4110 *best*
+Epoch 046 | D -1.0732 | G -0.6719
+Epoch 047 | D -1.0307 | G -0.5806
+Epoch 048 | D -1.0061 | G -0.9943
+Epoch 049 | D -1.0525 | G -0.3591
+Epoch 050 | D -1.0887 | G -0.9210 | W1 0.3559 corr 0.1942 score 0.5500
+Epoch 051 | D -1.0520 | G -0.2526
+Epoch 052 | D -0.9732 | G -0.7252
+Epoch 053 | D -0.9644 | G -0.5444
+Epoch 054 | D -0.9263 | G -0.4922
+Epoch 055 | D -0.9743 | G -0.1883 | W1 0.2491 corr 0.2104 score 0.4596
+Epoch 056 | D -0.9762 | G -0.2769
+Epoch 057 | D -0.9012 | G -0.5809
+Epoch 058 | D -1.0029 | G -0.0486
+Epoch 059 | D -0.9299 | G -0.3417
+Epoch 060 | D -0.9899 | G -0.1905 | W1 0.3260 corr 0.2246 score 0.5506
+Epoch 061 | D -0.9534 | G -0.1536
+Epoch 062 | D -1.0251 | G -0.2775
+Epoch 063 | D -0.9807 | G -0.4693
+Epoch 064 | D -0.9954 | G +0.1383
+Epoch 065 | D -1.0169 | G -0.0497 | W1 0.3511 corr 0.2315 score 0.5826
+Epoch 066 | D -1.0452 | G +0.1885
+Epoch 067 | D -1.0048 | G +0.1434
+Epoch 068 | D -1.0277 | G +0.2805
+Epoch 069 | D -1.0363 | G +0.2101
+Epoch 070 | D -1.0266 | G +0.2269 | W1 0.3054 corr 0.2572 score 0.5626
+Epoch 071 | D -1.0235 | G +0.1006
+Epoch 072 | D -0.9571 | G +0.5211
+Epoch 073 | D -0.9783 | G +0.3373
+Epoch 074 | D -1.0043 | G +0.1367
+Epoch 075 | D -0.9814 | G +0.3275 | W1 0.3762 corr 0.2442 score 0.6203
+[early stop] no improvement for 6 evaluations (30 epochs); stopping at epoch 75.
+[saved] best epoch 45 (score 0.4110) -> /home/maru/qgan/outputs/models/classical/5

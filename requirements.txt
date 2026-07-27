@@ -1,0 +1,11 @@
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.15.3
+scikit-learn==1.7.2
+matplotlib==3.10.8
+seaborn==0.13.2
+joblib==1.5.3
+torch==2.5.1+cu121
+pennylane==0.42.3
+pennylane-lightning==0.42.0
+ctgan==0.12.1

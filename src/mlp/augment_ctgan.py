@@ -20,6 +20,8 @@ df_train = pd.read_csv(INPUT_TRAIN_FILE)
 balanced_dataframes = []
 
 for category in range(3, 7):
+    # FIXME(step1): This range (3, 7) covers only classes 3-6; it is a KNOWN bug.
+    # The fix to cover all minority classes should be implemented as a separate, measured experiment.
     df_cat_real = df_train[df_train['Label'] == category].copy()
     current_count = len(df_cat_real)
     

@@ -1,288 +1,215 @@
-import pandas as pd
+"""Multi-seed MLP evaluation over all training-set conditions.
+
+Step-6 rewrite of src/mlp/train.py. The CLASSIFIER is frozen from
+impg@735bdfc (64-LayerNorm-32 MLP, Adam lr=1e-3, batch 128, CrossEntropy;
+StandardScaler fitted on the baseline training set and shared across all
+conditions; fixed feature order). What changed is the EVALUATION PROTOCOL:
+
+  * every condition is trained with N seeds (default 5: 42..46) - with
+    condition gaps around 0.002 macro-F1, single-seed numbers are noise
+  * 10% stratified validation split with early stopping on val macro-F1
+    (patience 10), best-epoch weights restored - replaces fixed 100 epochs
+  * test metrics: accuracy, macro P/R/F1, per-class F1
+  * paired significance tests (paired t-test + Wilcoxon, paired by seed)
+    of every condition against BOTH reference points:
+      - baseline    ("does anything help at all?")
+      - undersample ("does it help beyond mere rebalancing?")
+    The second comparison is the one that can credit the generators.
+
+Outputs (all under outputs/results/):
+  mlp_runs.csv      one row per (condition, seed)
+  mlp_summary.csv   mean +/- std per condition + significance columns
+  mlp_per_class.csv per-class F1 mean per condition
+  result.txt        human-readable report
+
+Usage:
+    python src/mlp/train.py                          # all built conditions
+    python src/mlp/train.py --conditions baseline undersample qgan --seeds 5
+"""
+
+import argparse
+import copy
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
+from scipy import stats
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, f1_score, classification_report, recall_score
-import matplotlib.pyplot as plt
-import seaborn as sns
-import random
-import os
-import warnings
-warnings.filterwarnings('ignore')
-from sklearn.metrics import confusion_matrix
+from torch.utils.data import DataLoader, TensorDataset
 
-RESULTS_TEXT_PATH = "./outputs/results/result.txt"
+from src.config import (
+    FEATURES16_TEST, LABEL_COLUMN, MANUAL_FEATURES_16, NUM_CLASSES,
+    RESULTS_DIR, SEED, TRAIN_CONDITIONS, condition_file, set_seed,
+)
 
-def set_global_seed(seed=42):
-    print(f"Setting global random seed to {seed}...")
-    
-    # 1. Python built-in random module
-    random.seed(seed)
-    
-    # 2. OS-level environment variable
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    
-    # 3. Numpy random seed
-    np.random.seed(seed)
-    
-    # 4. PyTorch random seed (CPU)
-    torch.manual_seed(seed)
-    
-    # 5. PyTorch random seed (GPU)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)  
-        
-        # Force deterministic behavior for cuDNN
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
-
-
-
-
-# 1. Experiment configuration
-
-# Training file paths
-TRAIN_FILES = {
-    "Baseline": "./data/processed/selected_features_train.csv", 
-    "CTGAN Augmented": "./outputs/synthetic_data/Train_Balanced_CTGAN.csv",
-    "QGAN Augmented": "./outputs/synthetic_data/Train_Balanced_QGAN.csv"
-}
-
-# Real test set
-TEST_FILE = "./data/processed/selected_features_test.csv"
-
-INPUT_DIM = 16
-NUM_CLASSES = 10
-EPOCHS = 100
+EPOCHS_MAX = 100
 BATCH_SIZE = 128
 LR = 0.001
+VAL_FRACTION = 0.10
+PATIENCE = 10  # epochs without val macro-F1 improvement
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Current compute device: {device}")
-
-
-# 2. MLP
 
 class TrafficClassifierMLP(nn.Module):
-    def __init__(self, input_dim=16, num_classes=10):
-        super(TrafficClassifierMLP, self).__init__()
+    """Frozen architecture from impg@735bdfc."""
+
+    def __init__(self, input_dim=16, num_classes=NUM_CLASSES):
+        super().__init__()
         self.network = nn.Sequential(
-            nn.Linear(input_dim, 64),
-            nn.LayerNorm(64),
-            nn.ReLU(),
-            nn.Dropout(0.1),
-            
-            nn.Linear(64, 32),
-            nn.LayerNorm(32),
-            nn.ReLU(),
-            #nn.Dropout(0.2),
-            
-            nn.Linear(32, num_classes)  # CrossEntropyLoss includes Softmax
+            nn.Linear(input_dim, 64), nn.LayerNorm(64), nn.ReLU(), nn.Dropout(0.1),
+            nn.Linear(64, 32), nn.LayerNorm(32), nn.ReLU(),
+            nn.Linear(32, num_classes),
         )
 
     def forward(self, x):
         return self.network(x)
 
 
-# 3. Core training and evaluation functions
-def train_and_evaluate(train_path, test_path, experiment_name, scaler=None, feature_order=None):
-    print(f"\n" + "="*50)
-    print(f"Starting experiment: {experiment_name}")
-    print("="*50)
-    
-    # 1. Load data
-    df_train = pd.read_csv(train_path)
-    df_test = pd.read_csv(test_path)
-    
-    # Determine feature column order. If a canonical feature_order is provided,
-    # use it to ensure scaler columns align across experiments.
-    feature_cols = feature_order if feature_order is not None else [c for c in df_train.columns if c != 'Label']
+def run_once(condition: str, seed: int, scaler: StandardScaler,
+             X_test: np.ndarray, y_test: np.ndarray, device) -> dict:
+    set_seed(seed)
+    df = pd.read_csv(condition_file(condition))
+    X = scaler.transform(df[MANUAL_FEATURES_16].values)
+    y = df[LABEL_COLUMN].values
 
-    X_train = df_train[feature_cols].values
-    y_train = df_train['Label'].values.astype(np.int64)
-    X_test = df_test[feature_cols].values
-    y_test = df_test['Label'].values.astype(np.int64)
-    
-    # 2. Independent standardization
-    # Use provided scaler (fitted on real baseline) when available to ensure
-    # all experiments are transformed consistently. Otherwise fit a local scaler.
-    if scaler is None:
-        local_scaler = StandardScaler()
-        X_train_scaled = local_scaler.fit_transform(X_train)
-        X_test_scaled = local_scaler.transform(X_test)
-    else:
-        X_train_scaled = scaler.transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
-    
-    train_loader = DataLoader(TensorDataset(torch.FloatTensor(X_train_scaled), torch.LongTensor(y_train)), 
-                              batch_size=BATCH_SIZE, shuffle=True)
-    test_loader = DataLoader(TensorDataset(torch.FloatTensor(X_test_scaled), torch.LongTensor(y_test)), 
-                             batch_size=BATCH_SIZE, shuffle=False)
-    
-    # 3. Initialize model
-    model = TrafficClassifierMLP(INPUT_DIM, NUM_CLASSES).to(device)
+    X_tr, X_val, y_tr, y_val = train_test_split(
+        X, y, test_size=VAL_FRACTION, random_state=seed, stratify=y)
+
+    tr_loader = DataLoader(TensorDataset(torch.FloatTensor(X_tr), torch.LongTensor(y_tr)),
+                           batch_size=BATCH_SIZE, shuffle=True)
+    X_val_t = torch.FloatTensor(X_val).to(device)
+
+    model = TrafficClassifierMLP().to(device)
+    opt = optim.Adam(model.parameters(), lr=LR)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=LR)
-    
-    # 4. Training loop
-    for epoch in range(EPOCHS):
-        model.train()
-        for X_batch, y_batch in train_loader:
-            X_batch, y_batch = X_batch.to(device), y_batch.to(device)
-            optimizer.zero_grad()
-            outputs = model(X_batch)
-            loss = criterion(outputs, y_batch)
-            loss.backward()
-            optimizer.step()
-            
-    # 5. Evaluation on test set
-    model.eval()
-    all_preds, all_targets = [], []
-    with torch.no_grad():
-        for X_batch, y_batch in test_loader:
-            X_batch = X_batch.to(device)
-            outputs = model(X_batch)
-            _, predicted = torch.max(outputs.data, 1)
-            all_preds.extend(predicted.cpu().numpy())
-            all_targets.extend(y_batch.numpy())
-            
-    # 6. Compute metrics
-    acc = accuracy_score(all_targets, all_preds)
-    macro_f1 = f1_score(all_targets, all_preds, average='macro')
-    macro_recall = recall_score(all_targets, all_preds, average='macro')
 
-    cm_save_path = f"./outputs/results/plots/CM_{experiment_name.replace(' ', '_')}.png"
-    plot_academic_confusion_matrix(all_targets, all_preds, 
-                                   title=f"Confusion Matrix: {experiment_name}", 
-                                   save_path=cm_save_path)
-    
-    print(f"Final results for {experiment_name}:")
-    print(f"Overall Accuracy : {acc:.4f}")
-    print(f"Macro F1-Score   : {macro_f1:.4f}")
-    print(f"Macro Recall     : {macro_recall:.4f}")
-    
+    best_f1, best_state, best_epoch, since = -1.0, None, 0, 0
+    for epoch in range(1, EPOCHS_MAX + 1):
+        model.train()
+        for xb, yb in tr_loader:
+            xb, yb = xb.to(device), yb.to(device)
+            opt.zero_grad()
+            criterion(model(xb), yb).backward()
+            opt.step()
+
+        model.eval()
+        with torch.no_grad():
+            val_pred = model(X_val_t).argmax(1).cpu().numpy()
+        val_f1 = f1_score(y_val, val_pred, average="macro")
+        if val_f1 > best_f1:
+            best_f1, best_state, best_epoch, since = val_f1, copy.deepcopy(model.state_dict()), epoch, 0
+        else:
+            since += 1
+            if since >= PATIENCE:
+                break
+
+    model.load_state_dict(best_state)
+    model.eval()
+    with torch.no_grad():
+        pred = model(torch.FloatTensor(X_test).to(device)).argmax(1).cpu().numpy()
+
+    per_class = f1_score(y_test, pred, average=None, labels=range(NUM_CLASSES))
     return {
-        "Experiment": experiment_name,
-        "Accuracy": acc,
-        "Macro-F1": macro_f1,
-        "Macro-Recall": macro_recall,
-        "Report": classification_report(all_targets, all_preds, digits=4)
+        "condition": condition, "seed": seed,
+        "accuracy": accuracy_score(y_test, pred),
+        "macro_precision": precision_score(y_test, pred, average="macro", zero_division=0),
+        "macro_recall": recall_score(y_test, pred, average="macro", zero_division=0),
+        "macro_f1": f1_score(y_test, pred, average="macro"),
+        "best_epoch": best_epoch, "stopped_epoch": epoch,
+        **{f"f1_class_{c}": float(per_class[c]) for c in range(NUM_CLASSES)},
     }
 
-def build_results_text(results):
-    lines = []
-    for result in results:
-        lines.append(f">>> Group: {result['Experiment']}" )
-        lines.append(result["Report"].rstrip())
-        lines.append("")
-    return "\n".join(lines).rstrip() + "\n"
 
-def plot_academic_confusion_matrix(y_true, y_pred, title="Confusion Matrix", save_path=None):
-    """
-    Plot and save the confusion matrix.
-
-    Args:
-    y_true: list or array of true labels
-    y_pred: list or array of predicted labels
-    title: chart title
-    save_path: path to save image
-    """
-    # 1. Compute confusion matrix data
-    classes = np.arange(10)  # classes 0 through 9
-    cm = confusion_matrix(y_true, y_pred, labels=classes)
-    
-    # 2. Compute percentages
-    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-    cm_normalized = np.nan_to_num(cm_normalized)  # Prevent NaN from division by zero
-    
-    # 3. Set plot style and figure size
-    plt.figure(figsize=(12, 10))
-    sns.set_theme(style="white")
-    
-    # 4. Draw heatmap
-    ax = sns.heatmap(cm_normalized,
-                     annot=True,         # show values
-                     fmt='.2f',          # format to two decimals
-                     cmap='Blues',       # blue colormap
-                     square=True,        # force square cells
-                     cbar_kws={'label': 'Prediction Probability'},
-                     xticklabels=classes,
-                     yticklabels=classes)
-    
-    # 5. Styling details
-    plt.title(title, fontsize=16, pad=20, fontweight='bold')
-    plt.xlabel('Predicted Label', fontsize=14, labelpad=10)
-    plt.ylabel('True Label', fontsize=14, labelpad=10)
-    
-    # Adjust tick label font size
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12, rotation=0)
-    
-    plt.tight_layout()
-    
-    # 6. Save or display
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print(f"Confusion matrix saved to: {save_path}")
-    else:
-        plt.show()
-    
-    plt.close()
+def paired_tests(runs: pd.DataFrame, cond: str, ref: str) -> dict:
+    a = runs[runs.condition == cond].sort_values("seed")["macro_f1"].values
+    b = runs[runs.condition == ref].sort_values("seed")["macro_f1"].values
+    if len(a) != len(b) or len(a) < 2:
+        return {"delta": np.nan, "t_p": np.nan, "wilcoxon_p": np.nan}
+    t_p = stats.ttest_rel(a, b).pvalue
+    try:
+        w_p = stats.wilcoxon(a, b).pvalue
+    except ValueError:  # all differences zero
+        w_p = 1.0
+    return {"delta": float(np.mean(a - b)), "t_p": float(t_p), "wilcoxon_p": float(w_p)}
 
 
-# 4. Main function and visualization
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--conditions", nargs="+", default=None,
+                   help=f"subset of {TRAIN_CONDITIONS}; default = all with a built file")
+    p.add_argument("--seeds", type=int, default=5, help="number of seeds (42..42+n-1)")
+    a = p.parse_args()
+
+    conditions = a.conditions or [c for c in TRAIN_CONDITIONS
+                                  if os.path.exists(condition_file(c))]
+    missing = [c for c in conditions if not os.path.exists(condition_file(c))]
+    if missing:
+        p.error(f"condition files missing (run fusion/build_datasets.py): {missing}")
+    seeds = list(range(SEED, SEED + a.seeds))
+    device = torch.device("cpu")
+    print(f"conditions: {conditions} | seeds: {seeds}")
+
+    # shared scaler: fitted ONCE on the baseline (real) training distribution
+    base = pd.read_csv(condition_file("baseline")) if os.path.exists(condition_file("baseline")) \
+        else pd.read_csv(condition_file(conditions[0]))
+    scaler = StandardScaler().fit(base[MANUAL_FEATURES_16].values)
+
+    test = pd.read_csv(FEATURES16_TEST)
+    X_test = scaler.transform(test[MANUAL_FEATURES_16].values)
+    y_test = test[LABEL_COLUMN].values
+
+    rows = []
+    for cond in conditions:
+        for seed in seeds:
+            r = run_once(cond, seed, scaler, X_test, y_test, device)
+            rows.append(r)
+            print(f"[{cond:12s} seed {seed}] macro-F1 {r['macro_f1']:.4f} "
+                  f"acc {r['accuracy']:.4f} (best epoch {r['best_epoch']})")
+    runs = pd.DataFrame(rows)
+
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    runs.to_csv(os.path.join(RESULTS_DIR, "mlp_runs.csv"), index=False)
+
+    metrics = ["accuracy", "macro_precision", "macro_recall", "macro_f1"]
+    summary = runs.groupby("condition")[metrics].agg(["mean", "std"]).round(4)
+    summary = summary.reindex([c for c in conditions])
+
+    sig_rows = []
+    for cond in conditions:
+        row = {"condition": cond}
+        for ref in ("baseline", "undersample"):
+            if ref in conditions and cond != ref:
+                t = paired_tests(runs, cond, ref)
+                row[f"dF1_vs_{ref}"] = round(t["delta"], 4)
+                row[f"p_t_vs_{ref}"] = round(t["t_p"], 4)
+                row[f"p_wilcoxon_vs_{ref}"] = round(t["wilcoxon_p"], 4)
+        sig_rows.append(row)
+    sig = pd.DataFrame(sig_rows).set_index("condition")
+
+    per_class = (runs.groupby("condition")[[f"f1_class_{c}" for c in range(NUM_CLASSES)]]
+                 .mean().round(4).reindex(conditions))
+    per_class.to_csv(os.path.join(RESULTS_DIR, "mlp_per_class.csv"))
+    summary.to_csv(os.path.join(RESULTS_DIR, "mlp_summary.csv"))
+
+    report = ["=" * 72, f"MLP evaluation | {len(seeds)} seeds {seeds} | test rows: {len(y_test)}",
+              "=" * 72, "", summary.to_string(), "",
+              "significance (paired by seed, macro-F1):", sig.to_string(), "",
+              "per-class F1 (mean over seeds):", per_class.to_string(), "",
+              "reading guide: dF1_vs_undersample > 0 with small p is the only",
+              "result that can credit a generator; dF1_vs_baseline conflates",
+              "rebalancing with synthesis quality."]
+    text = "\n".join(report)
+    with open(os.path.join(RESULTS_DIR, "result.txt"), "w", encoding="utf-8") as f:
+        f.write(text + "\n")
+    print("\n" + text)
+
+
 if __name__ == "__main__":
-
-    set_global_seed(seed=42)
-
-    results = []
-    # Fit scaler on the real (Baseline) training data and use it for all experiments
-    baseline_path = TRAIN_FILES.get("Baseline")
-    baseline_df = pd.read_csv(baseline_path)
-    baseline_feature_order = [c for c in baseline_df.columns if c != 'Label']
-    baseline_X = baseline_df[baseline_feature_order].values
-    baseline_scaler = StandardScaler().fit(baseline_X)
-
-    for exp_name, train_file in TRAIN_FILES.items():
-        res = train_and_evaluate(train_file, TEST_FILE, exp_name, scaler=baseline_scaler, feature_order=baseline_feature_order)
-        results.append(res)
-        
-    print("\n" + "#"*50)
-    print("10-class comparison report (Classification Report)")
-    print("#"*50)
-    for r in results:
-        print(f"\n>>> Group: {r['Experiment']}")
-        print(r['Report'])
-
-    os.makedirs(os.path.dirname(RESULTS_TEXT_PATH), exist_ok=True)
-    with open(RESULTS_TEXT_PATH, "w", encoding="utf-8") as f:
-        f.write(build_results_text(results))
-    print(f"\nResults text saved to: {RESULTS_TEXT_PATH}")
-        
-    df_results = pd.DataFrame(results)
-    
-    df_melted = df_results.melt(id_vars="Experiment", 
-                                value_vars=["Accuracy", "Macro-F1", "Macro-Recall"],
-                                var_name="Metric", value_name="Score")
-    
-    plt.figure(figsize=(10, 6))
-    sns.set_theme(style="whitegrid")
-    ax = sns.barplot(x="Metric", y="Score", hue="Experiment", data=df_melted, palette="Set2")
-    
-    for container in ax.containers:
-        ax.bar_label(container, fmt='%.3f', padding=3)
-        
-    plt.title("Evaluation", fontsize=14, pad=15)
-    plt.ylim(0, 1.1)
-    plt.ylabel("Score", fontsize=12)
-    plt.xlabel("Evaluation Metrics", fontsize=12)
-    plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
-    plt.tight_layout()
-    
-    # Save image
-    plt.savefig("./outputs/results/plots/Experiment_Comparison_Chart.png", dpi=300)
-    print("\nExperiment comparison chart saved to: ./outputs/results/plots/Experiment_Comparison_Chart.png")
+    main()
